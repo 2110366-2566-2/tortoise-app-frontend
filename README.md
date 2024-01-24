@@ -15,9 +15,3 @@ yarn dev
 ```
 3. Open [localhost:3000](http://localhost:3000/) on your browser
 4. You're ready!
-
-# Task Done
-1. Create new branch from develop
-2. Commit with format [TASKID] DESCRIPTION
-3. Push + (Merge?)
-4. (Optional) Inform your team to review your code before merging would be great
