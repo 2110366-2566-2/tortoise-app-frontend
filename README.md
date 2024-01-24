@@ -1,5 +1,5 @@
 # Setting Up
-1. Download and login GitKraken 👉https://www.gitkraken.com/download
+1. Download, Open and Login GitKraken 👉https://www.gitkraken.com/download
 2. New Tab
 3. Clone a repo
 4. GitHub.com
