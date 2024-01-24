@@ -6,7 +6,7 @@
 5. Specify your directory and select repository to clone as 'tortoise-app-frontend'
 
 # Running Code
-1. Open the code folder in your VSCode
+1. Open the code directory folder in your VSCode
 2. Go to 'Terminal' and run this code
 ```
 cd pet
