@@ -13,5 +13,5 @@ cd pet
 yarn
 yarn dev
 ```
-3. Open [localhost:3000](http://localhost:3000/) on your browser
+3. Open [[localhost:3000](http://localhost:3000/)] on your browser
 4. You're ready!
