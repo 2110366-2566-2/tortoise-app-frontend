@@ -1,6 +1,7 @@
 'use client';
 import { Tabs, Tab, TextField, Typography, Box } from '@mui/material';
 import { useState } from 'react';
+import LoginForm from '../../../../modules/login/LoginForm';
 
 export default function LoginRegisterPage() {
     const [value, setValue] = useState(0);
@@ -15,11 +16,7 @@ export default function LoginRegisterPage() {
                 <Tab icon={''} label="REGISTER" />
             </Tabs>
             {value === 0 ? (
-                <form>
-                    <Typography variant={'h5'}>Login</Typography>
-                    <TextField label={'Username or Email'} />
-                    <TextField label={'Password'} />
-                </form>
+                <LoginForm />
             ) : (
                 <form>
                     <Typography variant={'h5'}>Register</Typography>
