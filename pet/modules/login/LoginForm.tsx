@@ -23,7 +23,7 @@ export default function LoginForm() {
                     variant="filled"
                     type={showPassword ? 'text' : 'password'}
                     autoComplete="current-password"
-                    sx={{ boxShadow: 1 }}
+                    sx={{ boxShadow: 1, overflow: 'hidden' }}
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">

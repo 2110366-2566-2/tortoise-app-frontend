@@ -5,6 +5,7 @@ import LoginForm from '../../../../modules/login/LoginForm';
 import LoginIcon from '@mui/icons-material/Login';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import LoginBackground from '../../../../public/image/bg_login.png';
+import LoginLeftFrame from '../../../../public/image/login_hero.png';
 import Image from 'next/image';
 import RegisterForm from '../../../../modules/register/RegisterForm';
 
@@ -22,7 +23,7 @@ export default function LoginRegisterPage() {
                 alignItems: 'center',
                 width: '100vw',
                 height: '100vh',
-                backgroundColor: '#F9C067',
+                backgroundColor: '#FFD4B7',
             }}
         >
             <Box
@@ -36,7 +37,35 @@ export default function LoginRegisterPage() {
                     boxShadow: 20,
                 }}
             >
-                <Box sx={{ width: '64%', height: '100%' }}>{/* FILL <Image/> HERE */}</Box>
+                <Box
+                    sx={{
+                        width: '64%',
+                        height: '100%',
+                        backgroundColor: '#EEBC97',
+                        position: 'relative',
+                        display: 'block',
+                    }}
+                >
+                    <Image
+                        src={LoginLeftFrame}
+                        alt="login_frame"
+                        priority
+                        fill={true}
+                        objectFit="cover"
+                        objectPosition="bottom"
+                    />
+                    <Typography
+                        sx={{
+                            pt: '30%',
+                            font: 'inherit',
+                            fontSize: '20px',
+                            textAlign: 'center',
+                            whiteSpace: 'pre-line',
+                        }}
+                    >
+                        {`WHERE PETS\nFIND NEW FAMILIES`}
+                    </Typography>
+                </Box>
                 <Box
                     sx={{
                         backgroundColor: '#FFFEED',
