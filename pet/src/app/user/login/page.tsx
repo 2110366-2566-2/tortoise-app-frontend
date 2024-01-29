@@ -56,8 +56,8 @@ export default function LoginRegisterPage() {
                     />
                     <Typography
                         sx={{
-                            pt: '30%',
-                            font: 'inherit',
+                            py: '30%',
+                            fontWeight: 'bold',
                             fontSize: '20px',
                             textAlign: 'center',
                             whiteSpace: 'pre-line',
