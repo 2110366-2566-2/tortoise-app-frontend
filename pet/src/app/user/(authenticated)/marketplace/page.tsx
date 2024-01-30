@@ -1,8 +1,5 @@
+import PetCatalog from '../../../../../components/PetCatalogue';
 import TopBar from '../../../../../components/TopBar';
-import PetCard from '../../../../../components/PetCard';
-import Dog1 from '../../../../../public/image/mockdog1.jpg'
-import Dog2 from '../../../../../public/image/mockdog2.jpg'
-
 
 export default function MarketplacePage() {
     return (
@@ -10,10 +7,11 @@ export default function MarketplacePage() {
             <TopBar />
             {/* <h1>This Is My Simple Home Page</h1>
             <h1>Project Name: PETPAL by Tortoise not lonely</h1> */}
-            <div className='m-12 flex flex-row flex-wrap justify-around content-around'>
-                <PetCard petName='Mha1' imgSrc={Dog1}/>
-                <PetCard petName='Mha2' imgSrc={Dog2}/>
+            <div className='mt-8 mx-8'>
+                <div className='text-center text-2xl font-bold'>Explore Marketplace</div>
+                <PetCatalog />
             </div>
+            
         </div>
     );
 }
