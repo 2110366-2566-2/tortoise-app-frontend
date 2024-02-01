@@ -11,9 +11,9 @@ export default function MarketplacePage() {
             <Box sx={{ p: '16px 10%', textAlign: '-webkit-center' }}>
                 <SearchField />
             </Box>
-            <div className="mt-8 mx-8">
+            <Box sx={{ p: '16px 10%' }}>
                 <PetCatalogue />
-            </div>
+            </Box>
         </div>
     );
 }
