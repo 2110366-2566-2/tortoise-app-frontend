@@ -1,7 +1,8 @@
 import { Box } from "@mui/material"
 import Image, { StaticImageData } from "next/image"
 
-export default function PetCard({petName, imgSrc} : {petName: string, imgSrc: StaticImageData}) {
+export default function PetCard({petName, breed, seller, price, imgSrc} : 
+    {petName: string, breed: string, seller: string, price: number, imgSrc: StaticImageData}) {
 
     return(
         <div style={{border: '2px solid black', boxShadow: '5px 4px #472F05'}}>
@@ -14,11 +15,15 @@ export default function PetCard({petName, imgSrc} : {petName: string, imgSrc: St
                     className="object-fit rounded-t-xl border-b"
                     />
             </div>
-            <div style={{padding: 6, textAlign: 'center'}}>{petName}</div>
-            <div></div>
-            <div className="flex flex-row justify-around">
-                <div></div>
+            <div style={{padding: 10}}>
+                <div style={{textAlign: 'center', fontSize: 20}}>{petName}</div>
+                <div>Breed: {breed}</div>
+                <div className="flex flex-row justify-between">
+                    <div>Seller:  {seller}</div>
+                    <div>Price:  {price}</div>
+                </div>
             </div>
+            
         </div>
 
         // <Box sx={{margin: 4, height: '300px', boxShadow: 10, border: '2px solid grey'}}>
