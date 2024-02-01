@@ -8,6 +8,8 @@
 
 # Running Code
 
+MAKE SURE YOU HAVE yarn INSTALLED ON YOUR OS
+
 1. Open the code directory folder in your VSCode
 2. Go to 'Terminal' and run this code
 

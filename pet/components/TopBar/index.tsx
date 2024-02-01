@@ -13,13 +13,14 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
-const pages = ['MARKETPLACE', 'COMMUNITY'];
-const settings = ['PROFILE', 'ACCOUNT', 'LOGOUT'];
+const pages = ['My Shop', 'Marketplace', 'My Orders'];
+const settings = ['Account', 'Logout'];
 
 function TopBar() {
     const path = usePathname();
+    const router = useRouter();
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -40,7 +41,7 @@ function TopBar() {
     };
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: '#F3DDD1' }}>
+        <AppBar id="topbar" position="static" sx={{ backgroundColor: '#F3DDD1', boxShadow: 'none', height: 'auto' }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     {/* START LARGE TABS OF LOGO */}
@@ -95,7 +96,13 @@ function TopBar() {
                             }}
                         >
                             {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                                <MenuItem
+                                    key={page}
+                                    onClick={() => {
+                                        handleCloseNavMenu;
+                                        router.push(`/user/${page.toLowerCase().replace(' ', '-')}`);
+                                    }}
+                                >
                                     <Typography textAlign="center">{page}</Typography>
                                 </MenuItem>
                             ))}
@@ -129,16 +136,24 @@ function TopBar() {
                             <Box
                                 key={page}
                                 sx={{
-                                    borderBottom: path.includes(page.toLowerCase()) ? '3px solid #671E14' : 'none',
+                                    borderBottom: path.includes(page.toLowerCase().replace(' ', '-'))
+                                        ? '3px solid #671E14'
+                                        : 'none',
                                     px: '2%',
+                                    whiteSpace: 'pre',
                                 }}
                             >
                                 <Button
-                                    onClick={handleCloseNavMenu}
+                                    onClick={() => {
+                                        handleCloseNavMenu;
+                                        router.push(`/user/${page.toLowerCase().replace(' ', '-')}`);
+                                    }}
                                     sx={{
                                         px: '1%',
                                         my: 2,
-                                        color: path.includes(page.toLowerCase()) ? '#671E14' : 'black',
+                                        color: path.includes(page.toLowerCase().replace(' ', '-'))
+                                            ? '#671E14'
+                                            : 'black',
                                         letterSpacing: '.1rem',
                                         display: 'block',
                                         fontSize: '14px',
