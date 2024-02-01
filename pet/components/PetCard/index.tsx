@@ -1,8 +1,8 @@
 import { Box } from "@mui/material"
 import Image, { StaticImageData } from "next/image"
 
-export default function PetCard({petName, breed, seller, price, imgSrc} : 
-    {petName: string, breed: string, seller: string, price: number, imgSrc: StaticImageData}) {
+export default function PetCard({petId, petName, breed, seller, price, imgSrc} : 
+    {petId: string, petName: string, breed: string, seller: string, price: number, imgSrc: StaticImageData}) {
 
     return(
         <div style={{border: '2px solid black', boxShadow: '5px 4px #472F05'}}>
