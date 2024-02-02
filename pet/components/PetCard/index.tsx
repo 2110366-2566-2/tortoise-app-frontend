@@ -22,7 +22,7 @@ export default function PetCard({petId, petName, breed, seller, price, imgSrc} :
                 <div>Breed: {breed}</div>
                 <div className="flex flex-row justify-between">
                     <div>Seller:  {seller}</div>
-                    <div>Price:  {price}</div>
+                    <div>Price:  ฿{price}</div>
                 </div>
             </div>
         </InteractionPetCard>
