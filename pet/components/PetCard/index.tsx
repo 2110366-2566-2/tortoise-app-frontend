@@ -1,9 +1,11 @@
 import { Box } from "@mui/material"
 import Image, { StaticImageData } from "next/image"
 import InteractionPetCard from "../InteractionPetCard"
+import { PetCardProps } from "../PetCatalogue";
 
-export default function PetCard({petId, petName, breed, seller, price, imgSrc} : 
-    {petId: string, petName: string, breed: string, seller: string, price: number, imgSrc: StaticImageData}) {
+export default function PetCard(props: PetCardProps) {
+
+    const { petId, petName, breed, seller, price, imgSrc } = props
 
     return(
         <InteractionPetCard>

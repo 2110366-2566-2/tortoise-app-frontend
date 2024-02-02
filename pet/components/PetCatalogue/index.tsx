@@ -10,7 +10,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { StaticImageData } from 'next/image';
 
-interface PetCardProps {
+export interface PetCardProps {
     petId: string
     petName: string;
     breed: string;
