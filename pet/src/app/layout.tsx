@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google';
 import { Fira_Sans_Condensed } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@mui/material/styles';
-import { THEME } from '../../helper/theme';
+import { THEME } from '../../core/theme/theme';
 
 const inter = Inter({ subsets: ['latin'] });
 const fira_sans_condensed = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] });

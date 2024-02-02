@@ -601,6 +601,18 @@
   dependencies:
     defer-to-connect "^2.0.0"
 
+"@tanstack/query-core@5.18.1":
+  version "5.18.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.18.1.tgz#b653ee354b7f4712d53565ccc5c6d8fb83ec866c"
+  integrity sha512-fYhrG7bHgSNbnkIJF2R4VUXb4lF7EBiQjKkDc5wOlB7usdQOIN4LxxHpDxyE3qjqIst1WBGvDtL48T0sHJGKCw==
+
+"@tanstack/react-query@^5.18.1":
+  version "5.18.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.18.1.tgz#fd4e7b87260e82c5277355ad64f0e431a9302e02"
+  integrity sha512-PdI07BbsahZ+04PxSuDQsQvBWe008eWFk/YYWzt8fvzt2sALUM0TpAJa/DFpqa7+SSo7j1EQR6Jx6znXNHyaXw==
+  dependencies:
+    "@tanstack/query-core" "5.18.1"
+
 "@tokenizer/token@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@tokenizer/token/-/token-0.3.0.tgz#fe98a93fe789247e998c75e74e9c7c63217aa276"
@@ -2635,7 +2647,15 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
 
-next@^14.1.0:
+next-runtime-env@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/next-runtime-env/-/next-runtime-env-3.2.0.tgz#096bbe8079aa531aa087e1f409bda346675425df"
+  integrity sha512-rwe3flUgSRm51hzRN4Vt5MMSYMS4aDMEPJa0r+CMONA3UyUZl8Y5O8zjHSIlaNb3yquTCttZ0ahObPyPprBj9g==
+  dependencies:
+    next "^14"
+    react "^18"
+
+next@^14, next@^14.1.0:
   version "14.1.0"
   resolved "https://registry.yarnpkg.com/next/-/next-14.1.0.tgz#b31c0261ff9caa6b4a17c5af019ed77387174b69"
   integrity sha512-wlzrsbfeSU48YQBjZhDzOwhWhGsy+uQycR8bHAOt1LY1bn3zZEcDyHQOEoN3aWzQ8LHCAJ1nqrWCc9XF2+O45Q==
@@ -3051,6 +3071,11 @@ react-dom@^18:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
+react-hook-form@^7.50.0:
+  version "7.50.0"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.50.0.tgz#379802d85c7b78e0056229c53607946d34f99a36"
+  integrity sha512-AOhuzM3RdP09ZCnq+Z0yvKGHK25yiOX5phwxjV9L7U6HMla10ezkBnvQ+Pk4GTuDfsC5P2zza3k8mawFwFLVuQ==
+
 react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
@@ -3071,7 +3096,7 @@ react-transition-group@^4.4.5:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react@^18.2.0:
+react@^18, react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
