@@ -14,11 +14,14 @@ export default function SearchField() {
             sx={{
                 p: '2px 4px',
                 display: 'flex',
-                boxShadow: 2,
+                boxShadow: '5px 4px #472F05',
                 alignItems: 'center',
                 width: '60%',
                 overflow: 'hidden',
-                backgroundColor: '#EAEAEA !important',
+                // backgroundColor: '#EAEAEA !important',
+                backgroundColor: '#FFF',
+                border: '2px solid black',
+                borderRadius: 0
             }}
         >
             <IconButton sx={{ p: '10px' }} aria-label="menu">
