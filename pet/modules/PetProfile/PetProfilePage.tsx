@@ -1,3 +1,4 @@
+<<<<<<< refs/remotes/origin/develop
 'use client';
 import React, { useState } from 'react';
 import Grid from '@mui/material/Grid';
@@ -58,3 +59,9 @@ export default function PetProfile() {
         </Box>
     );
 }
+|||||||
+=======
+export default function PetProfilePage() {
+    return <></>;
+}
+>>>>>>> [WIP] Pet profile waited for fix
