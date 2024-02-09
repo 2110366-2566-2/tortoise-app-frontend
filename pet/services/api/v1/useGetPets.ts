@@ -4,7 +4,7 @@ import { IPetProfile } from './type';
 
 export async function useGetPets() {
     try {
-        const { data } = await requestClient.get('/api/v1/pets');
+        const { data } = await requestClient.get('/api/v1/pets/');
         if (!data.result.data) {
             return data.result as IPetProfile[];
         }

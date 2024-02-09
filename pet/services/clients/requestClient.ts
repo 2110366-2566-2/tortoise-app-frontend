@@ -8,6 +8,7 @@ const RequestClient = axios.create({
 });
 
 RequestClient.interceptors.request.use(async (config) => {
+
   const sessionId = await getLocalStorageValue('session_id');
   const token = sessionId ?? DEFAULT_DEV_TOKEN;
 
@@ -18,7 +19,6 @@ RequestClient.interceptors.request.use(async (config) => {
   } else {
     config.headers.Authorization = `Bearer ${token}`;
   }
-  config.headers['Access-Control-Allow-Origin'] = '*';
 
   return config;
 });
