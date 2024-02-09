@@ -455,34 +455,26 @@ export default function SettingsCard(props: any) {
 |||||||
 =======
 'use client';
-// IMPORTS
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
-import InputAdornment from "@mui/material/InputAdornment";
 import MenuItem from "@mui/material/MenuItem";
-import IconButton from "@mui/material/IconButton";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Visibility from "@mui/icons-material/Visibility";
 import CardContent from "@mui/material/CardContent";
 import Box from "@mui/material/Box";
 import { Grid } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
-import Button from "@mui/material/Button";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import CustomInput from "../CustomInput";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
 
-//APP
 export default function SettingsCard(props: any) {
-  //TAB STATES
-  const [value, setValue] = React.useState("one");
+  const [value, setValue] = useState("one");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
 
-  // GENDER SELECT STATES
   const genderSelect = [
     {
       value: "male",
@@ -494,37 +486,28 @@ export default function SettingsCard(props: any) {
     }
   ];
 
-  // FORM STATES
-  const [user, setUser] = useState({
-    // DEFAULT VALUES
-    name: props.name,
-    birth: props.birth,
-    breed: props.breed,
-    gender: props.gender,
-    weight: props.weight,
-    characteristics: props.characteristics,
-    phone: props.phone,
-    email: props.email,
-    
-  });
+  const [name, setName] = useState("จุ้บเหมง");
+  const [birth, setBirth] = useState("27.07.2002");
+  const [breed, setBreed] = useState("Dog");
+  const [gender, setGender] = useState("female");
+  const [weight, setWeight] = useState("30");
+  const [characteristics, setCharacteristics] = useState("Lazy");
+  const [phone, setPhone] = useState("932-555-4247");
+  const [email, setEmail] = useState("janedoe@gmail.com");
 
-  const changeField = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...user, [event.target.name]: event.target.value });
-  };
+  useEffect(() => {
+    setName("จุ้บเหมง");
+    setBirth("27.07.2002");
+    setBreed("Dog");
+    setGender("female");
+    setWeight("30");
+    setCharacteristics("Lazy");
+    setPhone("932-555-4247");
+    setEmail("janedoe@gmail.com");
+  }, []);
 
-  //BUTTON STATES
-  const [edit, update] = useState({
-    required: true,
-    disabled: true,
-    isEdit: true
-  });
-
-
-  //RETURN
   return (
     <Card variant="outlined" sx={{ height: "100%", width: "100%" }}>
-      {/* TABS */}
-      
       <Tabs
         value={value}
         onChange={handleChange}
@@ -533,149 +516,168 @@ export default function SettingsCard(props: any) {
         style={{ backgroundColor: '#F9C067' }}
       >
         <Tab value="one" label="Pet Information" />
-        
       </Tabs>
-      <Divider></Divider>
-
-      {/* MAIN CONTENT CONTAINER */}
-      <form>
-        <CardContent
-          sx={{
-            p: 3,
-            maxHeight: { md: "100vh" },
-            textAlign: { xs: "center", md: "start" }
-          }}
-        >
-          {/* FIELDS */}
-          <FormControl fullWidth >
-            <Grid
-              container
-              direction={{ xs: "column", md: "row" }}
-              columnSpacing={5}
-              rowSpacing={3}
-            >
-              {/* ROW 1: FIRST NAME */}
-              <Grid component="form" item xs={6} >
-                <CustomInput
+      <Divider />
+      <CardContent
+        sx={{
+          p: 3,
+          maxHeight: { md: "100vh" },
+          textAlign: { xs: "center", md: "start" }
+        }}
+      >
+        <FormControl fullWidth>
+          <Grid
+            container
+            direction={{ xs: "column", md: "row" }}
+            columnSpacing={5}
+            rowSpacing={3}
+          >
+            <Grid component="form" item xs={6} >
+              <Box>
+                <label style={{ fontWeight: "bold" }} htmlFor="name">
+                  Name
+                </label>
+                <TextField
+                  fullWidth
+                  margin="dense"
+                  size="small"
                   id="name"
                   name="name"
-                  value={user.name }
-                  onChange={changeField}
-                  title="Name"
-                  dis={edit.disabled}
-                  req={edit.required}
-                  
-                ></CustomInput>
-              </Grid>
+                  defaultValue={name}
+                  InputProps={{ readOnly: true }}
+                />
+              </Box>
+            </Grid>
 
-              {/* ROW 1: LAST NAME */}
-              <Grid component="form" item xs={6}>
-                <CustomInput
+            <Grid component="form" item xs={6}>
+              <Box>
+                <label style={{ fontWeight: "bold" }} htmlFor="birth">
+                  Birth
+                </label>
+                <TextField
+                  fullWidth
+                  margin="dense"
+                  size="small"
                   id="birth"
                   name="birth"
-                  value={user.birth}
-                  onChange={changeField}
-                  title="Birth"
-                  dis={edit.disabled}
-                  req={edit.required}
-                ></CustomInput>
-              </Grid>
+                  defaultValue={birth}
+                  InputProps={{ readOnly: true }}
+                />
+              </Box>
+            </Grid>
 
-              {/* ROW 2: MIDDLE NAME */}
-              <Grid item xs={6}>
-                <CustomInput
+            <Grid item xs={6}>
+              <Box>
+                <label style={{ fontWeight: "bold" }} htmlFor="breed">
+                  Breed
+                </label>
+                <TextField
+                  fullWidth
+                  margin="dense"
+                  size="small"
                   id="breed"
                   name="breed"
-                  value={user.breed}
-                  onChange={changeField}
-                  title="Breed"
-                  dis={edit.disabled}
-                  req={edit.required}
-                ></CustomInput>
-              </Grid>
+                  defaultValue={breed}
+                  InputProps={{ readOnly: true }}
+                />
+              </Box>
+            </Grid>
 
-              {/* ROW 2: GENDER */}
-              <Grid item xs={6}>
-                <CustomInput
+            <Grid item xs={6}>
+              <Box>
+                <label style={{ fontWeight: "bold" }} htmlFor="gender">
+                  Gender
+                </label>
+                <TextField
                   select
+                  fullWidth
+                  margin="dense"
+                  size="small"
                   id="gender"
                   name="gender"
-                  value={user.gender}
-                  onChange={changeField}
-                  title="Gender"
-                  dis={edit.disabled}
-                  req={edit.required}
-                  //MAP THRU OPTIONS
-                  content={genderSelect.map((option) => (
-                    <MenuItem value={option.value}>{option.label}</MenuItem>
+                  defaultValue={gender}
+                  InputProps={{ readOnly: true }}
+                >
+                  {genderSelect.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
                   ))}
-                ></CustomInput>
-              </Grid>
-              {/* ROW 3: WEIGHT */}
-              <Grid component="form" item xs={6}>
-                <CustomInput
+                </TextField>
+              </Box>
+            </Grid>
+
+            <Grid component="form" item xs={6}>
+              <Box>
+                <label style={{ fontWeight: "bold" }} htmlFor="weight">
+                  Weight
+                </label>
+                <TextField
+                  fullWidth
+                  margin="dense"
+                  size="small"
                   id="weight"
                   name="weight"
-                  value={user.weight}
-                  onChange={changeField}
-                  title="Weight"
-                  dis={edit.disabled}
-                  req={edit.required}
-                ></CustomInput>
-              </Grid>
+                  defaultValue={weight}
+                  InputProps={{ readOnly: true }}
+                />
+              </Box>
+            </Grid>
 
-              {/* ROW 3: characteristics*/}
-              <Grid component="form" item xs={6}>
-                <CustomInput
+            <Grid component="form" item xs={6}>
+              <Box>
+                <label style={{ fontWeight: "bold" }} htmlFor="characteristics">
+                  Characteristics
+                </label>
+                <TextField
+                  fullWidth
+                  margin="dense"
+                  size="small"
                   id="characteristics"
                   name="characteristics"
-                  value={user.characteristics}
-                  onChange={changeField}
-                  title="Characteristics"
-                  dis={edit.disabled}
-                  req={edit.required}
-                ></CustomInput>
-              </Grid>
+                  defaultValue={characteristics}
+                  InputProps={{ readOnly: true }}
+                />
+              </Box>
+            </Grid>
 
-              {/* ROW 4: PHONE */}
-              <Grid item xs={6}>
-                <CustomInput
+            <Grid item xs={6}>
+              <Box>
+                <label style={{ fontWeight: "bold" }} htmlFor="phone">
+                  Phone Number
+                </label>
+                <TextField
+                  fullWidth
+                  margin="dense"
+                  size="small"
                   id="phone"
                   name="phone"
-                  value={user.phone}
-                  onChange={changeField}
-                  title="Phone Number"
-                  dis={edit.disabled}
-                  req={edit.required}
-                  //DIALING CODE
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">66+</InputAdornment>
-                    )
-                  }}
-                ></CustomInput>
-              </Grid>
+                  defaultValue={phone}
+                  InputProps={{ readOnly: true, startAdornment: (
+                    <InputAdornment position="start">66+</InputAdornment>
+                  ) }}
+                />
+              </Box>
+            </Grid>
 
-              {/* ROW 4: EMAIL */}
-              <Grid item xs={6}>
-                <CustomInput
+            <Grid item xs={6}>
+              <Box>
+                <label style={{ fontWeight: "bold" }} htmlFor="email">
+                  Email Address
+                </label>
+                <TextField
                   type="email"
+                  fullWidth
+                  margin="dense"
+                  size="small"
                   id="email"
                   name="email"
-                  value={user.email}
-                  onChange={changeField}
-                  title="Email Address"
-                  dis={edit.disabled}
-                  req={edit.required}
-                ></CustomInput>
-              </Grid>
-
-              
-              
+                  defaultValue={email}
+                  InputProps={{ readOnly: true }}
+                />
+              </Box>
             </Grid>
-          </FormControl>
-        </CardContent>
-      </form>
+          </Grid>
+        </FormControl>
+      </CardContent>
     </Card>
   );
 }

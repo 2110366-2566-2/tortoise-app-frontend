@@ -157,8 +157,6 @@ import Avatar from "@mui/material/Avatar";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import Badge from "@mui/material/Badge";
 import Button from "@mui/material/Button";
-import { blue, red } from "@mui/material/colors";
-import DogPic from '../../../../public/image/mockdog1.jpg';
 import { wrap } from "module";
 
 // STYLES
@@ -182,9 +180,7 @@ export default function ProfileCard(props: any) {
         container
         direction="column"
         justifyContent="center"
-        alignItems="center"
-        
-        
+        alignItems="center" 
       >
         {/* CARD HEADER START */}
         <Grid item sx={{ p: "1.5rem 0rem", textAlign: "center" }}>
@@ -216,11 +212,6 @@ export default function ProfileCard(props: any) {
           <Typography variant="h6">{props.name}</Typography>
           <Typography color="text.secondary">{props.sub}</Typography>
         </Grid>
-        {/* CARD HEADER END */}
-
-        
-
-        
       </Grid>
       
     </Card>
