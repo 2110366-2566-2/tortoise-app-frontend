@@ -8,26 +8,20 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import TopBar from '../../../../components/TopBar';
 import ProfileCard from '../../../../components/ProfileCard.tsx';
-import SettingsCard from '../../../../components/SettingsCard';
+import CatalogueBySeller from "../../../../components/CatalogueBySeller";
 
 // STYLE & THEME
 const theme = createTheme();
 
 // APP
-export default function PetProfile() {
+export default function SellerShopPage() {
+
   const [text, setText] = useState("");
 
   const mainUser = {
     // DEFAULT VALUES
-    title: "PetName",
-    name: "จุ้บเหมง",
-    birth: "27.07.2002",
-    breed: "Dog",
-    gender: "female",
-    weight: "30",
-    characteristics: "Lazy",
-    phone: "932-555-4247",
-    email: "janedoe@gmail.com",
+    title: "Seller",
+    name: "khunnnnn",
     
   };
 
@@ -56,19 +50,9 @@ export default function PetProfile() {
               ></ProfileCard>
             </Grid>
 
-            {/* SETTINGS CARD */}
+            {/* Catalogue */}
             <Grid item md={9}>
-              <SettingsCard
-                expose={(v: string) => setText(v)}
-                name={mainUser.name}
-                birth={mainUser.birth}
-                breed={mainUser.breed}
-                gender={mainUser.gender}
-                weight={mainUser.weight}
-                characteristics={mainUser.characteristics}
-                phone={mainUser.phone}
-                email={mainUser.email} 
-              ></SettingsCard>
+              <CatalogueBySeller/>
             </Grid>
           </Grid>
         </Grid>
