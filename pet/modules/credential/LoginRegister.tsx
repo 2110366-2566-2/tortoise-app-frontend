@@ -1,5 +1,5 @@
 'use client';
-import { Tabs, Tab, TextField, Typography, Box } from '@mui/material';
+import { Tabs, Tab, TextField, Typography, Box, styled } from '@mui/material';
 import { useState } from 'react';
 import LoginIcon from '@mui/icons-material/Login';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
@@ -7,6 +7,17 @@ import LoginLeftFrame from '../../public/image/login_hero.png';
 import Image from 'next/image';
 import LoginForm from '../login/LoginForm';
 import RegisterForm from '../register/RegisterForm';
+
+const CustomTabs = styled(Tabs) ({
+    '& .css-1he485v-MuiButtonBase-root-MuiTab-root.Mui-selected': {
+        color: '#BB4E0B',
+    },
+    '& .css-1aquho2-MuiTabs-indicator': {
+        backgroundColor: '#BB4E0B',
+        border: '1px solid #BB4E0B'
+    }
+})
+        
 
 export default function LoginRegisterPage() {
     const [value, setValue] = useState(0);
@@ -75,10 +86,10 @@ export default function LoginRegisterPage() {
                         display: 'block',
                     }}
                 >
-                    <Tabs value={value} onChange={handleTabChange} aria-label="icon label tabs example">
-                        <Tab icon={<LoginIcon />} label="LOGIN" sx={{ width: '50%' }} />
-                        <Tab icon={<PersonAddIcon />} label="REGISTER" sx={{ width: '50%' }} />
-                    </Tabs>
+                    <CustomTabs value={value} onChange={handleTabChange} aria-label="icon label tabs example">
+                        <Tab icon={<LoginIcon />} label="LOGIN" sx={{ width: '50%', fontFamily: '__Fira_Sans_Condensed_43412c' }} />
+                        <Tab icon={<PersonAddIcon />} label="REGISTER" sx={{ width: '50%', fontFamily: '__Fira_Sans_Condensed_43412c' }} />
+                    </CustomTabs>
                     <Box>{value === 0 ? <LoginForm /> : <RegisterForm />}</Box>
                 </Box>
             </Box>
