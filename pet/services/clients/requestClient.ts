@@ -24,7 +24,7 @@ RequestClient.interceptors.request.use(async (config) => {
 });
 
 RequestClient.interceptors.response.use(
-  (response) => response,
+  async (response) => await response.data,
   (error) => {
     if (axios.isCancel(error)) {
       console.log('Request canceled', error.message);
