@@ -1,10 +1,11 @@
 'use client';
+
 import * as React from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { SxProps, Theme } from '@mui/material';
+import { SxProps, Theme, styled } from '@mui/material';
 
 export interface SelectFieldChoice {
     label: string;
@@ -26,14 +27,16 @@ export default function SelectField(props: SelectFieldProps) {
     };
     return (
         <div>
-            <FormControl variant="filled" fullWidth sx={props.sx}>
+            <FormControl variant='outlined' fullWidth sx={props.sx}>
                 <InputLabel id="demo-simple-select-filled-label">{props.label}</InputLabel>
                 <Select
                     name={props.name}
                     labelId="demo-simple-select-filled-label"
                     id="demo-simple-select-filled"
                     value={choiceValue}
+
                     onChange={handleChange}
+                    sx={{boxShadow: '3px 3px #472F05', borderRadius: 0, fontFamily: '__Fira_Sans_Condensed_43412c'}}
                 >
                     {props.choices.map((eachChoice, index) => (
                         <MenuItem key={index} value={eachChoice.value}>
