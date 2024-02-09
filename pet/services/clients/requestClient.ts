@@ -5,13 +5,20 @@ import { getLocalStorageValue } from '../../core/utils';
 
 const RequestClient = axios.create({
   ...requestConfig,
-  baseURL: env('NEXT_PUBLIC_URL'),
 });
 
 RequestClient.interceptors.request.use(async (config) => {
   const sessionId = await getLocalStorageValue('session_id');
+  const token = sessionId ?? DEFAULT_DEV_TOKEN;
 
-  config.headers.Authorization = `Bearer ${sessionId ?? DEFAULT_DEV_TOKEN}`;
+  if (!token || token.trim() === '') {
+    const controller = new AbortController();
+    config.signal = controller.signal;
+    controller.abort('sessionId is null or empty.');
+  } else {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  config.headers['Access-Control-Allow-Origin'] = '*';
 
   return config;
 });
@@ -19,8 +26,13 @@ RequestClient.interceptors.request.use(async (config) => {
 RequestClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    throw error;
+    if (axios.isCancel(error)) {
+      console.log('Request canceled', error.message);
+    } else {
+      throw error;
+    }
   },
+
 );
 
 export { RequestClient as requestClient };

@@ -9,9 +9,10 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { StaticImageData } from 'next/image';
+import { useGetPets } from '../../services/api/v1/useGetPets';
 
 export interface PetCardProps {
-    petId: string
+    petId: string;
     petName: string;
     breed: string;
     seller: string;
@@ -30,22 +31,30 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function PetCatalogue() {
     const mockData: PetCardProps[] = [
         { petId: 'D001', petName: 'Mha1', breed: 'IDK', seller: 'Ruthless', price: 10000, imgSrc: Dog1 },
-        { petId: 'D002', petName: 'Mha2', breed: 'Pug', seller: 'Khunnnnn', price: 5000,  imgSrc: Dog2 },
+        { petId: 'D002', petName: 'Mha2', breed: 'Pug', seller: 'Khunnnnn', price: 5000, imgSrc: Dog2 },
         { petId: 'D001', petName: 'Mha1', breed: 'IDK', seller: 'Ruthless', price: 10000, imgSrc: Dog1 },
-        { petId: 'D002', petName: 'Mha2', breed: 'Pug', seller: 'Khunnnnn', price: 5000,  imgSrc: Dog2 },
+        { petId: 'D002', petName: 'Mha2', breed: 'Pug', seller: 'Khunnnnn', price: 5000, imgSrc: Dog2 },
         { petId: 'D001', petName: 'Mha1', breed: 'IDK', seller: 'Ruthless', price: 10000, imgSrc: Dog1 },
-        { petId: 'D002', petName: 'Mha2', breed: 'Pug', seller: 'Khunnnnn', price: 5000,  imgSrc: Dog2 },
+        { petId: 'D002', petName: 'Mha2', breed: 'Pug', seller: 'Khunnnnn', price: 5000, imgSrc: Dog2 },
         { petId: 'D001', petName: 'Mha1', breed: 'IDK', seller: 'Ruthless', price: 10000, imgSrc: Dog1 },
-        { petId: 'D002', petName: 'Mha2', breed: 'Pug', seller: 'Khunnnnn', price: 5000,  imgSrc: Dog2 },
+        { petId: 'D002', petName: 'Mha2', breed: 'Pug', seller: 'Khunnnnn', price: 5000, imgSrc: Dog2 },
     ];
+    const pets = useGetPets();
+    console.log(pets);
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} justifyContent='space-around'>
+            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} justifyContent="space-around">
                 {mockData.map((eachpetCard, index) => (
                     <Grid item xs={2} sm={4} md={4} key={index}>
-                        <PetCard petId={eachpetCard.petId} petName={eachpetCard.petName} breed={eachpetCard.breed} 
-                        seller={eachpetCard.seller} price={eachpetCard.price} imgSrc={eachpetCard.imgSrc} />
+                        <PetCard
+                            petId={eachpetCard.petId}
+                            petName={eachpetCard.petName}
+                            breed={eachpetCard.breed}
+                            seller={eachpetCard.seller}
+                            price={eachpetCard.price}
+                            imgSrc={eachpetCard.imgSrc}
+                        />
                     </Grid>
                 ))}
             </Grid>

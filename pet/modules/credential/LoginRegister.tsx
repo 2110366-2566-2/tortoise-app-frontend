@@ -5,8 +5,8 @@ import LoginIcon from '@mui/icons-material/Login';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import LoginLeftFrame from '../../public/image/login_hero.png';
 import Image from 'next/image';
-import LoginForm from '../login/LoginForm';
-import RegisterForm from '../register/RegisterForm';
+import LoginForm from '../Login/LoginForm';
+import RegisterForm from '../Register/RegisterForm';
 
 const CustomTabs = styled(Tabs) ({
     '& .css-1he485v-MuiButtonBase-root-MuiTab-root.Mui-selected': {
