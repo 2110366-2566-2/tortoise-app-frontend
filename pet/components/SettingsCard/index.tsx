@@ -458,7 +458,6 @@ export default function SettingsCard(props: any) {
 import React, { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
-import MenuItem from "@mui/material/MenuItem";
 import CardContent from "@mui/material/CardContent";
 import Box from "@mui/material/Box";
 import { Grid } from "@mui/material";
@@ -468,49 +467,51 @@ import Tab from "@mui/material/Tab";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 
-export default function SettingsCard(props: any) {
-  const [value, setValue] = useState("one");
+export default function SettingsCard(props: {
+  name: string;
+  birth: string;
+  breed: string;
+  gender: string;
+  weight: string;
+  characteristics: string;
+  phone: string;
+  email: string;
+}) {
+  const {
+    name: initialName,
+    birth: initialBirth,
+    breed: initialBreed,
+    gender: initialGender,
+    weight: initialWeight,
+    characteristics: initialCharacteristics,
+    phone: initialPhone,
+    email: initialEmail,
+  } = props;
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
-  };
-
-  const genderSelect = [
-    {
-      value: "male",
-      label: "Male"
-    },
-    {
-      value: "female",
-      label: "Female"
-    }
-  ];
-
-  const [name, setName] = useState("จุ้บเหมง");
-  const [birth, setBirth] = useState("27.07.2002");
-  const [breed, setBreed] = useState("Dog");
-  const [gender, setGender] = useState("female");
-  const [weight, setWeight] = useState("30");
-  const [characteristics, setCharacteristics] = useState("Lazy");
-  const [phone, setPhone] = useState("932-555-4247");
-  const [email, setEmail] = useState("janedoe@gmail.com");
+  const [name, setName] = useState(initialName);
+  const [birth, setBirth] = useState(initialBirth);
+  const [breed, setBreed] = useState(initialBreed);
+  const [gender, setGender] = useState(initialGender);
+  const [weight, setWeight] = useState(initialWeight);
+  const [characteristics, setCharacteristics] = useState(initialCharacteristics);
+  const [phone, setPhone] = useState(initialPhone);
+  const [email, setEmail] = useState(initialEmail);
 
   useEffect(() => {
-    setName("จุ้บเหมง");
-    setBirth("27.07.2002");
-    setBreed("Dog");
-    setGender("female");
-    setWeight("30");
-    setCharacteristics("Lazy");
-    setPhone("932-555-4247");
-    setEmail("janedoe@gmail.com");
-  }, []);
+    setName(initialName);
+    setBirth(initialBirth);
+    setBreed(initialBreed);
+    setGender(initialGender);
+    setWeight(initialWeight);
+    setCharacteristics(initialCharacteristics);
+    setPhone(initialPhone);
+    setEmail(initialEmail);
+  }, [initialName, initialBirth, initialBreed, initialGender, initialWeight, initialCharacteristics, initialPhone, initialEmail]);
 
   return (
     <Card variant="outlined" sx={{ height: "100%", width: "100%" }}>
       <Tabs
-        value={value}
-        onChange={handleChange}
+        value="one"
         textColor="secondary"
         indicatorColor="secondary"
         style={{ backgroundColor: '#F9C067' }}
@@ -589,7 +590,6 @@ export default function SettingsCard(props: any) {
                   Gender
                 </label>
                 <TextField
-                  select
                   fullWidth
                   margin="dense"
                   size="small"
@@ -598,9 +598,6 @@ export default function SettingsCard(props: any) {
                   defaultValue={gender}
                   InputProps={{ readOnly: true }}
                 >
-                  {genderSelect.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
-                  ))}
                 </TextField>
               </Box>
             </Grid>

@@ -156,9 +156,6 @@ import { Grid } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import Badge from "@mui/material/Badge";
-import Button from "@mui/material/Button";
-import { wrap } from "module";
-
 // STYLES
 const styles = {
   details: {
@@ -203,8 +200,7 @@ export default function ProfileCard(props: any) {
           >
             <Avatar
               sx={{ width: 200, height: 200, mb: 1.5 }}
-              src = ""
-              
+              src = {props.pfp}
             ></Avatar>
           </Badge>
 

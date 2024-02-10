@@ -16,12 +16,11 @@ const theme = createTheme();
 // APP
 export default function SellerShopPage() {
 
-  const [text, setText] = useState("");
-
   const mainUser = {
     // DEFAULT VALUES
-    title: "Seller",
-    name: "khunnnnn",
+    title: "Seller", // Don't Modify this title
+    pfp: "https://media.glamour.com/photos/5a425fd3b6bcee68da9f86f8/master/pass/best-face-oil.png",
+    name: "Khunnnnn",
     
   };
 
@@ -47,12 +46,13 @@ export default function SellerShopPage() {
               <ProfileCard
                 name={fullName}
                 sub={mainUser.title}
+                pfp={mainUser.pfp}
               ></ProfileCard>
             </Grid>
 
             {/* Catalogue */}
             <Grid item md={9}>
-              <CatalogueBySeller/>
+              <CatalogueBySeller sellerName={mainUser.name} />
             </Grid>
           </Grid>
         </Grid>

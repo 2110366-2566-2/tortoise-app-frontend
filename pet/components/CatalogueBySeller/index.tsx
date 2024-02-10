@@ -83,6 +83,10 @@ export interface PetCardProps {
     imgSrc: StaticImageData;
 }
 
+export interface PetCatalogueProps {
+    sellerName: string;
+}
+
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -91,7 +95,7 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-export default function CatalogueBySeller() {
+export default function CatalogueBySeller({ sellerName }: PetCatalogueProps) {
     const mockData: PetCardProps[] = [
         { petId: 'D001', petName: 'Mha1', breed: 'IDK', seller: 'Ruthless', price: 10000, imgSrc: Dog1 },
         { petId: 'D002', petName: 'Mha2', breed: 'Pug', seller: 'Khunnnnn', price: 5000,  imgSrc: Dog2 },
@@ -103,8 +107,8 @@ export default function CatalogueBySeller() {
         { petId: 'D002', petName: 'Mha2', breed: 'Pug', seller: 'Khunnnnn', price: 5000,  imgSrc: Dog2 },
     ];
 
-    // กรองข้อมูลที่ seller เป็น "Khunnnnn" เท่านั้น
-    const filteredData = mockData.filter((pet) => pet.seller === 'Khunnnnn');
+    // กรองข้อมูลที่ seller เป็น "...." เท่านั้น
+    const filteredData = mockData.filter((pet) => pet.seller === sellerName);
 
     return (
         <Box sx={{ flexGrow: 1 }}>
