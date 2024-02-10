@@ -1,32 +1,31 @@
 'use client';
+// IMPORTS
+
 import React, { useState } from 'react';
 import Grid from '@mui/material/Grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CatalogueBySeller from '../../components/CatalogueBySeller';
 import ProfileCard from '../../components/ProfileCard.tsx';
-import SettingsCard from '../../components/SettingsCard';
-import { Box } from '@mui/material';
 
+// STYLE & THEME
 const theme = createTheme();
 
-export default function PetProfile() {
+// APP
+export default function SellerShopPage() {
     const mainUser = {
-        title: 'PetName',
-        pfp: '',
-        name: 'จุ้บเหม',
-        birth: '27.07.2103',
-        breed: 'Dog',
-        gender: 'female',
-        weight: '30',
-        characteristics: 'Lazy',
-        phone: '932-555-4247',
-        email: 'janedoe@gmail.com',
+        // DEFAULT VALUES
+        title: 'Seller', // Don't Modify this title
+        pfp: 'https://media.glamour.com/photos/5a425fd3b6bcee68da9f86f8/master/pass/best-face-oil.png',
+        name: 'Khunnnnn',
     };
 
     const fullName = `${mainUser.name} `;
 
     return (
-        <Box>
+        <div>
+            {/* BACKGROUND */}
             <Grid container direction="column" sx={{ overflowX: 'hidden' }}>
+                {/* COMPONENTS */}
                 <Grid
                     container
                     direction={{ xs: 'column', md: 'row' }}
@@ -37,24 +36,17 @@ export default function PetProfile() {
                         px: { xs: 0, md: 7 },
                     }}
                 >
+                    {/* PROFILE CARD */}
                     <Grid item md={3}>
                         <ProfileCard name={fullName} sub={mainUser.title} pfp={mainUser.pfp}></ProfileCard>
                     </Grid>
 
+                    {/* Catalogue */}
                     <Grid item md={9}>
-                        <SettingsCard
-                            name={mainUser.name}
-                            birth={mainUser.birth}
-                            breed={mainUser.breed}
-                            gender={mainUser.gender}
-                            weight={mainUser.weight}
-                            characteristics={mainUser.characteristics}
-                            phone={mainUser.phone}
-                            email={mainUser.email}
-                        ></SettingsCard>
+                        <CatalogueBySeller sellerName={mainUser.name} />
                     </Grid>
                 </Grid>
             </Grid>
-        </Box>
+        </div>
     );
 }
