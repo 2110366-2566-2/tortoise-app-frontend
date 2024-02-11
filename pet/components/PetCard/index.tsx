@@ -1,12 +1,13 @@
+
 import { Box } from "@mui/material"
 import Image, { StaticImageData } from "next/image"
 import InteractionPetCard from "../InteractionPetCard"
 import { PetCardProps } from "../PetCatalogue";
 import { styled } from "@mui/material";
 
-export default function PetCard(props: PetCardProps) {
 
-    const { petId, petName, breed, seller, price, imgSrc } = props
+export default function PetCard(props: PetCardProps) {
+    const { petId, petName, breed, seller, price, imgSrc } = props;
 
     return(
         <InteractionPetCard>
@@ -28,21 +29,9 @@ export default function PetCard(props: PetCardProps) {
                 overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     <p style={{display: 'block', width: '55%',overflow: 'hidden', textOverflow: 'ellipsis'}}>Seller:  {seller}</p>
                     <p style={{display: 'block', width: '45%', textAlign: 'end'}}>Price:  ฿{price}</p>
+
                 </div>
             </div>
         </InteractionPetCard>
-        // </div>
-
-        // <Box sx={{margin: 4, height: '300px', boxShadow: 10, border: '2px solid grey'}}>
-        //     <Box sx={{height: '500px', width: '300px'}}>
-        //         <Image src={imgSrc}
-        //             alt="Pet Picture"
-        //             width={500}
-        //             height={300}
-        //             className="object-cover rounded-t-xl"
-        //             />
-        //     </Box>
-
-        // </Box>
-    )
+    );
 }
