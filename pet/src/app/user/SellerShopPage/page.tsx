@@ -15,16 +15,15 @@ const theme = createTheme();
 
 // APP
 export default function SellerShopPage() {
+  
 
   const mainUser = {
-    // DEFAULT VALUES
-    title: "Seller", // Don't Modify this title
-    pfp: "https://media.glamour.com/photos/5a425fd3b6bcee68da9f86f8/master/pass/best-face-oil.png",
+    
+    media: "https://media.glamour.com/photos/5a425fd3b6bcee68da9f86f8/master/pass/best-face-oil.png",
     name: "Khunnnnn",
+    seller_id: "65c7356900dfa761aed36122"
     
   };
-
-  const fullName = `${mainUser.name} `;
 
   return (
     <div><TopBar/>
@@ -44,9 +43,10 @@ export default function SellerShopPage() {
             {/* PROFILE CARD */}
             <Grid item md={3}>
               <ProfileCard
-                name={fullName}
-                sub={mainUser.title}
-                pfp={mainUser.pfp}
+                name={mainUser.name}
+                sub= {"Seller"}
+                seller_id = {"ID: " + mainUser.seller_id}
+                media={mainUser.media}
               ></ProfileCard>
             </Grid>
 

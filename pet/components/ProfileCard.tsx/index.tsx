@@ -52,13 +52,17 @@ export default function ProfileCard(props: any) {
           >
             <Avatar
               sx={{ width: 200, height: 200, mb: 1.5 }}
-              src = {props.pfp}
+              src = {props.media}
             ></Avatar>
           </Badge>
 
           {/* DESCRIPTION */}
-          <Typography variant="h6">{props.name}</Typography>
-          <Typography color="text.secondary">{props.sub}</Typography>
+          
+          <Typography variant="h5">{props.name}</Typography>
+          <Typography variant="h6">{props.sub}</Typography>
+          <Typography color="text.secondary">{props.pet_id}</Typography>
+          <Typography color="text.secondary">{props.seller_id}</Typography>
+          
         </Grid>
       </Grid>
       
