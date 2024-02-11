@@ -5,6 +5,9 @@ const nextConfig = {
         instrumentationHook: true,
     },
     basePath: '/petpal',
+    images: {
+        domains: ['drive.google.com', 'picsum.photos', 'cdn2.thedogapi.com']
+    },
     webpack: (config) => {
         config.resolve.alias.canvas = false;
         config.resolve.extensionAlias = {

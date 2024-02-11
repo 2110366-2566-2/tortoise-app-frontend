@@ -7,6 +7,9 @@ import Visibility from '@mui/icons-material/Visibility';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import SelectField from '../../components/SelectField';
+import { Fira_Sans_Condensed } from 'next/font/google';
+
+const fira_sans_condensed = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] });
 
 type FormValues = {
     role: string
@@ -30,13 +33,13 @@ const CustomTextField = styled(TextField)({
         color: '#472F05',
     },
     '& label': {
-        fontFamily: '__Fira_Sans_Condensed_43412c',
+        fontFamily: fira_sans_condensed.style.fontFamily
     },
     '& .MuiInput-underline:after': {
         borderBottomColor: '#B2BAC2',
     },
     '& .MuiInputBase-input': {
-        fontFamily: '__Fira_Sans_Condensed_43412c'
+        fontFamily: fira_sans_condensed.style.fontFamily
     },
     '& .MuiOutlinedInput-root': {
         '& fieldset': {
@@ -92,7 +95,7 @@ export default function RegisterForm() {
                     sx={ sxTextField }
                     >
                     {roles.map((option) => (
-                        <MenuItem key={option.value} value={option.value} sx={{fontFamily: '__Fira_Sans_Condensed_43412c', 
+                        <MenuItem key={option.value} value={option.value} sx={{fontFamily: fira_sans_condensed.style.fontFamily, 
                         '&:hover': {backgroundColor: '#F3DDD1'}, '&:focus': {backgroundColor: 'rgb(272, 174, 133) !important'} 
                         }}>
                             {option.label}
@@ -149,7 +152,7 @@ export default function RegisterForm() {
                 />
                 <Box sx={{backgroundColor: '#FAA943', display: 'flex', flexDirection: 'column', justifyContent: 'center'}} >
                     <ColorButton sx={{paddingY: 0.5, border: '2px solid #472F05', borderRadius: 0, 
-                    boxShadow: '3px 2px #472F05', fontFamily: '__Fira_Sans_Condensed_43412c', fontSize: 15}}
+                    boxShadow: '3px 2px #472F05', fontFamily: fira_sans_condensed.style.fontFamily, fontSize: 15}}
                     onClick={form.handleSubmit(onSubmit)}>
                         Register NOW!
                     </ColorButton>
