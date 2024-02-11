@@ -7,6 +7,9 @@ import Visibility from '@mui/icons-material/Visibility';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import SelectField from '../../components/SelectField';
+import { Fira_Sans_Condensed } from 'next/font/google';
+
+const fira_sans_condensed = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] });
 
 type FormValues = {
     role: string
@@ -30,7 +33,7 @@ const CustomTextField = styled(TextField)({
         color: '#472F05',
     },
     '& label': {
-        fontFamily: '__Fira_Sans_Condensed_43412c',
+        fontFamily: fira_sans_condensed.style.fontFamily,
     },
     '& .MuiInput-underline:after': {
         borderBottomColor: '#B2BAC2',

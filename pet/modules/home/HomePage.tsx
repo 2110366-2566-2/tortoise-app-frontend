@@ -33,7 +33,7 @@ export default function HomePage() {
                         <Box sx={{fontSize: 25, textAlign: 'center'}}>PetPal is the ultimate destination for pet bliss. Discover a treasure trove of tail-wagging wonders for your fur-ever friends!</Box>
                         <Box sx={{backgroundColor: '#FAA943'}} >
                             <ColorButton sx={{paddingX: 2, paddingY: 1, border: '3px solid #472F05', borderRadius: 0, 
-                            boxShadow: '3px 2px #472F05', fontFamily: '__Fira_Sans_Condensed_43412c', fontSize: 20}}
+                            boxShadow: '3px 2px #472F05', fontFamily: fira_sans_condensed.style.fontFamily, fontSize: 20}}
                             onClick={ () => {router.push('/user/login')}}>
                                 Register Now!
                             </ColorButton>
