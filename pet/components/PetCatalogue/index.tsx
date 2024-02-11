@@ -14,7 +14,7 @@ export interface PetCardProps {
     breed: string;
     seller: string;
     price: number;
-    imgSrc?: StaticImageData | string;
+    imgSrc: string;
 }
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -45,6 +45,7 @@ export default function PetCatalogue() {
     }
 
     const petListData = petList || [];
+    console.log(petList)
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -57,7 +58,7 @@ export default function PetCatalogue() {
                             breed={eachpetCard.type}
                             seller={`${eachpetCard.seller_name} ${eachpetCard.seller_surname}`}
                             price={eachpetCard.price}
-                            //imgSrc={}
+                            imgSrc={eachpetCard.media}
                         />
                     </Grid>
                 ))}
