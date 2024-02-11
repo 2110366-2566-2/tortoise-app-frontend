@@ -12,19 +12,32 @@ const theme = createTheme();
 
 export default function PetProfile() {
   const mainUser = {
-    title: "PetName",
-    pfp: "",
-    name: "จุ้บเหม",
-    birth: "27.07.2103",
-    breed: "Dog",
-    gender: "female",
-    weight: "30",
-    characteristics: "Lazy",
-    phone: "932-555-4247",
-    email: "janedoe@gmail.com",
-  };
-
-  const fullName = `${mainUser.name} `;
+    id: "6yhr57h55ij5",
+    name: "BBBB",
+    age: 27,
+    price: 5000867676,
+    is_sold: false,
+    description: "PKDNHX SHNNXMMCgggggggggg",
+    weight: 30,
+    sex: "F",
+    species: "Dog",
+    type: "Poodie",
+    behavior: "Trainning",
+    media: "",
+    medical_records: [
+        {
+            medical_id: "12508",
+            date: "18/7/2017",
+            description: "Maecenas leo odio"
+        },
+        {
+            medical_id: "12509",
+            date: "19/7/2017",
+            description: "Mas leo odio"
+        }
+    ],
+    seller_id: "65c7356900dfa761aed36122"
+};
 
   return (
     <div>
@@ -40,25 +53,37 @@ export default function PetProfile() {
             px: { xs: 0, md: 7 }
           }}
         >
+          
           <Grid item md={3}>
             <ProfileCard
-              name={fullName}
-              sub={mainUser.title}
-              pfp={mainUser.pfp}
+              pet_id={"PetID : "+mainUser.id}
+              name={mainUser.name}
+              sub = {"PetName"}
+              seller_id = {"SellerID: " + mainUser.seller_id}
+              media={mainUser.media}
             ></ProfileCard>
           </Grid>
+        
 
           <Grid item md={9}>
             <SettingsCard
-              name={mainUser.name}
-              birth={mainUser.birth}
-              breed={mainUser.breed}
-              gender={mainUser.gender}
-              weight={mainUser.weight}
-              characteristics={mainUser.characteristics}
-              phone={mainUser.phone}
-              email={mainUser.email} 
-            ></SettingsCard>
+                name={mainUser.name}
+                age={mainUser.age}
+                price={mainUser.price}
+                is_sold={mainUser.is_sold}
+                description={mainUser.description}
+                weight={mainUser.weight}
+                sex={mainUser.sex}
+                species={mainUser.species} 
+                type={mainUser.type}
+                behavior={mainUser.behavior}
+                medical_record={mainUser.medical_records.map(record => ({
+                  medical_id: record.medical_id,
+                  date: record.date,
+                  description: record.description
+                }))}
+              />
+
           </Grid>
         </Grid>
       </Grid>
