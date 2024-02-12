@@ -5,24 +5,19 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ProfileCard from '../../components/ProfileCard.tsx';
 import SettingsCard from '../../components/SettingsCard';
 import { Box } from '@mui/material';
-
-const theme = createTheme();
+import useGetPetByID from '../../services/api/v1/pets/useGetPetByID.js';
+import { useParams } from 'next/navigation.js';
+import { IPetQueryParams } from '../../services/api/v1/pets/type.js';
+import dayjs from 'dayjs';
 
 export default function PetProfile() {
-    const mainUser = {
-        title: 'PetName',
-        pfp: '',
-        name: 'จุ้บเหม',
-        birth: '27.07.2103',
-        breed: 'Dog',
-        gender: 'female',
-        weight: '30',
-        characteristics: 'Lazy',
-        phone: '932-555-4247',
-        email: 'janedoe@gmail.com',
+    const params = useParams();
+    const petParams: IPetQueryParams = {
+        petId: params?.petId as string,
     };
+    const { data: petFullDetail, isSuccess: petSuccess, isError: petError } = useGetPetByID(petParams);
 
-    const fullName = `${mainUser.name} `;
+    if (!petSuccess) return null;
 
     return (
         <Box>
@@ -38,20 +33,31 @@ export default function PetProfile() {
                     }}
                 >
                     <Grid item md={3}>
-                        <ProfileCard name={fullName} sub={mainUser.title} pfp={mainUser.pfp}></ProfileCard>
+                        <ProfileCard
+                            name={petFullDetail.name}
+                            sub={petFullDetail.description}
+                            pfp={petFullDetail.media}
+                        ></ProfileCard>
                     </Grid>
 
                     <Grid item md={9}>
                         <SettingsCard
-                            name={mainUser.name}
-                            birth={mainUser.birth}
-                            breed={mainUser.breed}
-                            gender={mainUser.gender}
-                            weight={mainUser.weight}
-                            characteristics={mainUser.characteristics}
-                            phone={mainUser.phone}
-                            email={mainUser.email}
-                        ></SettingsCard>
+                            id={petFullDetail.id}
+                            media={petFullDetail.media}
+                            seller_id={petFullDetail.seller_id}
+                            age={petFullDetail.age}
+                            behavior={petFullDetail.behavior}
+                            birth={dayjs().format('DD/MM/YYYY')}
+                            category={petFullDetail.category}
+                            description={petFullDetail.description}
+                            is_sold={petFullDetail.is_sold}
+                            medical_record={petFullDetail.medical_record}
+                            name={petFullDetail.name}
+                            price={petFullDetail.price}
+                            sex={petFullDetail.sex}
+                            species={petFullDetail.species}
+                            weight={petFullDetail.weight}
+                        />
                     </Grid>
                 </Grid>
             </Grid>

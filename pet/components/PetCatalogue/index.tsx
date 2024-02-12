@@ -45,7 +45,6 @@ export default function PetCatalogue() {
     }
 
     const petListData = petList || [];
-    console.log(petList)
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -53,9 +52,9 @@ export default function PetCatalogue() {
                 {petListData.map((eachpetCard, index) => (
                     <Grid item xs={2} sm={4} md={4} key={index}>
                         <PetCard
-                            petId={eachpetCard.pet_id}
+                            petId={eachpetCard.id}
                             petName={eachpetCard.name}
-                            breed={eachpetCard.type}
+                            breed={eachpetCard.category}
                             seller={`${eachpetCard.seller_name} ${eachpetCard.seller_surname}`}
                             price={eachpetCard.price}
                             imgSrc={eachpetCard.media}

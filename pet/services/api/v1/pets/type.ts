@@ -1,17 +1,39 @@
 export interface IPetProfile {
-    pet_id: string
+    id: string
     name: string
     price: number
-    type: string
+    category: string
     media: string
     seller_id: string
     seller_name: string
     seller_surname: string
 }
+
+export interface IPetDetail {
+    id: string
+    name: string
+    age: number
+    birth: string
+    price: number
+    is_sold: boolean
+    description: string
+    weight: number
+    sex: string
+    species: string
+    category: string
+    behavior: string
+    media: string
+    medical_record: MedicalRecord[]
+    seller_id: string
+}
+
+export interface IPetQueryParams{
+    petId: string
+}
   
 export interface MedicalRecord {
     medical_id: string
-    date: string
+    medical_date: string
     description: string
 }
 

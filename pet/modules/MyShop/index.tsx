@@ -6,6 +6,8 @@ import Grid from '@mui/material/Grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CatalogueBySeller from '../../components/CatalogueBySeller';
 import ProfileCard from '../../components/ProfileCard.tsx';
+import SellerShopBriefCard from '../../components/SellerShopBriefCard';
+import { Box } from '@mui/material';
 
 // STYLE & THEME
 const theme = createTheme();
@@ -22,31 +24,14 @@ export default function SellerShopPage() {
     const fullName = `${mainUser.name} `;
 
     return (
-        <div>
-            {/* BACKGROUND */}
+        <Box sx={{ py: '16px' }}>
             <Grid container direction="column" sx={{ overflowX: 'hidden' }}>
-                {/* COMPONENTS */}
-                <Grid
-                    container
-                    direction={{ xs: 'column', md: 'row' }}
-                    spacing={3}
-                    sx={{
-                        position: 'absolute',
-                        top: '20vh',
-                        px: { xs: 0, md: 7 },
-                    }}
-                >
-                    {/* PROFILE CARD */}
-                    <Grid item md={3}>
-                        <ProfileCard name={fullName} sub={mainUser.title} pfp={mainUser.pfp}></ProfileCard>
-                    </Grid>
+                <SellerShopBriefCard media={mainUser.pfp} />
 
-                    {/* Catalogue */}
-                    <Grid item md={9}>
-                        <CatalogueBySeller sellerName={mainUser.name} />
-                    </Grid>
-                </Grid>
+                <Box sx={{ p: '16px 10%' }}>
+                    <CatalogueBySeller sellerName={mainUser.name} />
+                </Box>
             </Grid>
-        </div>
+        </Box>
     );
 }
