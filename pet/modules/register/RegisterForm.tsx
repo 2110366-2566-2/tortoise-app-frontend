@@ -8,15 +8,15 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import SelectField from '../../components/SelectField';
 import { Fira_Sans_Condensed } from 'next/font/google';
+import useRegister from '../../core/auth/useRegister';
 
 const fira_sans_condensed = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] });
 
 type FormValues = {
-    role: string
+    role: number
     username: string;
     email: string;
     password: string;
-    confirmPassword: string
 };
 
 const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
@@ -52,6 +52,10 @@ const CustomTextField = styled(TextField)({
         '&.Mui-focused fieldset': {
             border: '2px solid #472F05',
         },
+        '&.Mui-error': {
+            color: 'red',
+            boxShadow: '3px 2px #B12000'
+        }
     },
 });
 
@@ -62,17 +66,48 @@ export default function RegisterForm() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+    const [usernameError, setUsernameError] = useState(false)
+    const [emailError, setEmailError] = useState(false)
+    const [passwordError, setPasswordError] = useState(false)
+    const [confirmPasswordError, setConfirmPasswordError] = useState(false)
+    const [confirmPassword, setConfirmPassword] = useState('')
+
     const roles = [
-        { label: 'Pet Seller', value: 'seller' },
-        { label: 'Pet Buyer', value: 'buyer' },
+        { label: 'Pet Seller', value: 1 },
+        { label: 'Pet Buyer', value: 2 },
     ]  
 
     const sxTextField = { boxShadow: '3px 3px #472F05', '&:hover': {
         backgroundColor: '#F3DDD1'
     } }
 
-    const onSubmit = (data: FormValues) => {
-        console.log(data);
+    const onSubmit = async (data: FormValues) => {
+
+        if(data.username === '') {
+            setUsernameError(true)
+            return alert("Username field is blank.")
+        }
+        if(data.email === '') {
+            setEmailError(true)
+            return alert("Email field is blank.")
+        }
+        if(data.password === '') {
+            setPasswordError(true)
+            return alert("Password field is blank.")
+        }
+        if(confirmPassword !== data.password) {
+            setConfirmPasswordError(true)
+            return alert("Confirmed Password is not consistent.")
+        }
+
+        const res = await useRegister(data).then(d => {return d})
+        if(!res.error){
+            alert(res.message)
+        }
+        else{
+            alert(res.error)
+        }
+        
     };
 
     return (
@@ -91,7 +126,7 @@ export default function RegisterForm() {
                     {...form.register('role')}
                     select
                     label="Role"
-                    defaultValue="buyer"
+                    defaultValue={2}
                     sx={ sxTextField }
                     >
                     {roles.map((option) => (
@@ -107,6 +142,8 @@ export default function RegisterForm() {
                     label="Username"
                     variant="outlined"
                     autoComplete="current-username"
+                    error={usernameError}
+                    onChange={() => {setUsernameError(false)}}
                     sx={ sxTextField }
                 />
                 <CustomTextField
@@ -114,6 +151,8 @@ export default function RegisterForm() {
                     label="Email"
                     variant="outlined"
                     autoComplete="current-email"
+                    error={emailError}
+                    onChange={() => {setEmailError(false)}}
                     sx={ sxTextField }
                 />
                 <CustomTextField
@@ -122,6 +161,8 @@ export default function RegisterForm() {
                     variant="outlined"
                     type={showPassword ? 'text' : 'password'}
                     autoComplete="current-password"
+                    error={passwordError}
+                    onChange={() => {setPasswordError(false)}}
                     sx={ sxTextField }
                     InputProps={{
                         endAdornment: (
@@ -134,12 +175,13 @@ export default function RegisterForm() {
                     }}
                 />
                 <CustomTextField
-                    {...form.register('confirmPassword')}
                     label="Confirm Password"
                     variant="outlined"
                     type={showConfirmPassword ? 'text' : 'password'}
                     autoComplete="current-password"
                     sx={ sxTextField }
+                    error={confirmPasswordError}
+                    onChange={(e) => {setConfirmPassword(e.target.value); setConfirmPasswordError(false)}}
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">
