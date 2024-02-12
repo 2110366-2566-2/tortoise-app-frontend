@@ -6,5 +6,6 @@ export default function UserLayout({
     children: React.ReactNode;
 }>) {
     const queryClient = new QueryClient();
+    queryClient.prefetchQuery;
     return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }
