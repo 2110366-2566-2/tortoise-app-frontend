@@ -48,7 +48,12 @@ export default function PetCatalogue() {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} justifyContent="space-around">
+            <Grid
+                container
+                spacing={{ xs: 2, md: 3 }}
+                columns={{ xs: 4, sm: 8, md: 12, lg: 16 }}
+                justifyContent="space-around stretch"
+            >
                 {petListData.map((eachpetCard, index) => (
                     <Grid item xs={2} sm={4} md={4} key={index}>
                         <PetCard

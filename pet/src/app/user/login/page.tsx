@@ -1,2 +1,2 @@
-import LoginRegisterPage from '../../../../modules/credential/LoginRegister';
+import LoginRegisterPage from '../../../../modules/Credential/LoginRegister';
 export default LoginRegisterPage;
