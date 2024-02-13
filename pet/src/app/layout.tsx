@@ -4,6 +4,7 @@ import { Fira_Sans_Condensed } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@mui/material/styles';
 import { THEME } from '../../core/theme/theme';
+import { SessionProvider } from 'next-auth/react';
 
 const inter = Inter({ subsets: ['latin'] });
 const fira_sans_condensed = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] });

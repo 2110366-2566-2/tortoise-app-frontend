@@ -4,3 +4,8 @@ export interface RegistrationInfo {
     email: string
     role: number
 }
+
+export interface LoginInfo {
+    username: string,
+    password: string
+}
