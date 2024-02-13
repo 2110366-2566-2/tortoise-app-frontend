@@ -27,16 +27,15 @@ export default function SelectField(props: SelectFieldProps) {
     };
     return (
         <div>
-            <FormControl variant='outlined' fullWidth sx={props.sx}>
+            <FormControl variant="outlined" fullWidth sx={props.sx}>
                 <InputLabel id="demo-simple-select-filled-label">{props.label}</InputLabel>
                 <Select
                     name={props.name}
                     labelId="demo-simple-select-filled-label"
                     id="demo-simple-select-filled"
                     value={choiceValue}
-
                     onChange={handleChange}
-                    sx={{boxShadow: '3px 3px #472F05', borderRadius: 0, fontFamily: '__Fira_Sans_Condensed_43412c'}}
+                    sx={{ boxShadow: '3px 3px #472F05', borderRadius: 0, fontFamily: '__Fira_Sans_Condensed_43412c' }}
                 >
                     {props.choices.map((eachChoice, index) => (
                         <MenuItem key={index} value={eachChoice.value}>

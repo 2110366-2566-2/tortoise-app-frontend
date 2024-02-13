@@ -22,23 +22,22 @@ const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
     color: theme.palette.getContrastText('#F9C067'),
     backgroundColor: '#FAA943',
     '&:hover': {
-      backgroundColor: '#F79762'
-    }
+        backgroundColor: '#F79762',
+    },
 }));
 
 const CustomTextField = styled(TextField)({
-        
     '& label.Mui-focused': {
         color: '#472F05',
     },
     '& label': {
-        fontFamily: fira_sans_condensed.style.fontFamily
+        fontFamily: fira_sans_condensed.style.fontFamily,
     },
     '& .MuiInput-underline:after': {
         borderBottomColor: '#B2BAC2',
     },
     '& .MuiInputBase-input': {
-        fontFamily: fira_sans_condensed.style.fontFamily
+        fontFamily: fira_sans_condensed.style.fontFamily,
     },
     '& .MuiOutlinedInput-root': {
         '& fieldset': {
@@ -53,46 +52,49 @@ const CustomTextField = styled(TextField)({
         },
         '&.Mui-error': {
             color: 'red',
-            boxShadow: '3px 2px #B12000'
-        }
+            boxShadow: '3px 2px #B12000',
+        },
     },
 });
 
 export default function LoginForm() {
-
-    const router = useRouter()
+    const router = useRouter();
     const form = useForm<FormValues>();
 
-    const [usernameError, setUsernameError] = useState(false)
-    const [passwordError, setPasswordError] = useState(false)
+    const [usernameError, setUsernameError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
 
     const [showPassword, setShowPassword] = useState(false);
 
     const onSubmit = async (data: FormValues) => {
-        if(data.username === '') {
-            setUsernameError(true)
-            return alert('Username field is blank.')
+        if (data.username === '') {
+            setUsernameError(true);
+            return alert('Username field is blank.');
         }
-        if(data.password === ''){
-            setPasswordError(true)
-            return alert('Password field is blank.')
+        if (data.password === '') {
+            setPasswordError(true);
+            return alert('Password field is blank.');
         }
 
-        const res = await useLogin(data).then(d => {return d})
+        const res = await useLogin(data).then((d) => {
+            return d;
+        });
         console.log(data);
-        console.log(res)
-        if(!res.error) {
-            alert('Login Success')
-            router.push('/user/marketplace')
-        }
-        else{
-            alert(res.error)
+        console.log(res);
+        if (!res.error) {
+            alert('Login Success');
+            router.push('/user/marketplace');
+        } else {
+            alert(res.error);
         }
     };
 
-    const sxTextField = { boxShadow: '3px 3px #472F05', '&:hover': {
-        backgroundColor: '#F3DDD1'
-    } }
+    const sxTextField = {
+        boxShadow: '3px 3px #472F05',
+        '&:hover': {
+            backgroundColor: '#F3DDD1',
+        },
+    };
 
     return (
         <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
@@ -104,8 +106,10 @@ export default function LoginForm() {
                     variant="outlined"
                     autoComplete="current-username"
                     error={usernameError}
-                    onChange={() => {setUsernameError(false)}}
-                    sx={ sxTextField }
+                    onChange={() => {
+                        setUsernameError(false);
+                    }}
+                    sx={sxTextField}
                 />
                 <CustomTextField
                     {...form.register('password')}
@@ -114,22 +118,43 @@ export default function LoginForm() {
                     type={showPassword ? 'text' : 'password'}
                     autoComplete="current-password"
                     error={passwordError}
-                    onChange={() => {setPasswordError(false)}}
-                    sx={ sxTextField }
+                    onChange={() => {
+                        setPasswordError(false);
+                    }}
+                    sx={sxTextField}
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">
-                                <IconButton onClick={() => {setShowPassword(!showPassword)}}>
+                                <IconButton
+                                    onClick={() => {
+                                        setShowPassword(!showPassword);
+                                    }}
+                                >
                                     {showPassword ? <Visibility /> : <VisibilityOff />}
                                 </IconButton>
                             </InputAdornment>
                         ),
                     }}
                 />
-                <Box sx={{backgroundColor: '#FAA943', display: 'flex', flexDirection: 'column', justifyContent: 'center'}} >
-                    <ColorButton sx={{paddingY: 0.5, border: '2px solid #472F05', borderRadius: 0, 
-                    boxShadow: '3px 2px #472F05', fontFamily: fira_sans_condensed.style.fontFamily, fontSize: 15}}
-                    onClick={form.handleSubmit(onSubmit)}>
+                <Box
+                    sx={{
+                        backgroundColor: '#FAA943',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <ColorButton
+                        sx={{
+                            paddingY: 0.5,
+                            border: '2px solid #472F05',
+                            borderRadius: 0,
+                            boxShadow: '3px 2px #472F05',
+                            fontFamily: fira_sans_condensed.style.fontFamily,
+                            fontSize: 15,
+                        }}
+                        onClick={form.handleSubmit(onSubmit)}
+                    >
                         LogIn
                     </ColorButton>
                 </Box>

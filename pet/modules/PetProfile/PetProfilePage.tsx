@@ -51,7 +51,7 @@ export default function PetProfile() {
                             category={petFullDetail.category}
                             description={petFullDetail.description}
                             is_sold={petFullDetail.is_sold}
-                            medical_record={petFullDetail.medical_record}
+                            medical_records={petFullDetail.medical_records}
                             name={petFullDetail.name}
                             price={petFullDetail.price}
                             sex={petFullDetail.sex}

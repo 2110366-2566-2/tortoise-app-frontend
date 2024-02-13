@@ -1,2 +1,2 @@
-import SellerShopPage from '../../../../../modules/MyShop';
-export default SellerShopPage;
+import MyShop from '../../../../../modules/MyShop/MyShop';
+export default MyShop;
