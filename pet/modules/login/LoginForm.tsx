@@ -1,13 +1,18 @@
 'use client';
+
 import { Typography, TextField, Box, IconButton, InputAdornment, Button, ButtonProps, styled } from '@mui/material';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';
 import { useState } from 'react';
 import { useForm, useFormContext } from 'react-hook-form';
 import { Fira_Sans_Condensed } from 'next/font/google';
+import { signIn } from 'next-auth/react';
+import useLogin from '../../core/auth/useLogin';
+import { authClient } from '../../services/clients';
+import { useRouter } from 'next/navigation';
 
 type FormValues = {
-    user: string;
+    username: string;
     password: string;
 };
 
@@ -27,7 +32,7 @@ const CustomTextField = styled(TextField)({
         color: '#472F05',
     },
     '& label': {
-        fontFamily: fira_sans_condensed.style.fontFamily,
+        fontFamily: fira_sans_condensed.style.fontFamily
     },
     '& .MuiInput-underline:after': {
         borderBottomColor: '#B2BAC2',
@@ -46,15 +51,43 @@ const CustomTextField = styled(TextField)({
         '&.Mui-focused fieldset': {
             border: '2px solid #472F05',
         },
-      },
+        '&.Mui-error': {
+            color: 'red',
+            boxShadow: '3px 2px #B12000'
+        }
+    },
 });
 
 export default function LoginForm() {
+
+    const router = useRouter()
     const form = useForm<FormValues>();
+
+    const [usernameError, setUsernameError] = useState(false)
+    const [passwordError, setPasswordError] = useState(false)
+
     const [showPassword, setShowPassword] = useState(false);
 
-    const onSubmit = (data: FormValues) => {
+    const onSubmit = async (data: FormValues) => {
+        if(data.username === '') {
+            setUsernameError(true)
+            return alert('Username field is blank.')
+        }
+        if(data.password === ''){
+            setPasswordError(true)
+            return alert('Password field is blank.')
+        }
+
+        const res = await useLogin(data).then(d => {return d})
         console.log(data);
+        console.log(res)
+        if(!res.error) {
+            alert('Login Success')
+            router.push('/user/marketplace')
+        }
+        else{
+            alert(res.error)
+        }
     };
 
     const sxTextField = { boxShadow: '3px 3px #472F05', '&:hover': {
@@ -65,20 +98,24 @@ export default function LoginForm() {
         <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', p: '8%', gap: '20px' }}>
                 <CustomTextField
+                    {...form.register('username')}
                     type="text"
-                    label="Username or Email"
+                    label="Username"
                     variant="outlined"
-                    autoComplete="current-usernameoremail"
+                    autoComplete="current-username"
+                    error={usernameError}
+                    onChange={() => {setUsernameError(false)}}
                     sx={ sxTextField }
-                    {...form.register('user')}
                 />
                 <CustomTextField
+                    {...form.register('password')}
                     label="Password"
                     variant="outlined"
                     type={showPassword ? 'text' : 'password'}
                     autoComplete="current-password"
+                    error={passwordError}
+                    onChange={() => {setPasswordError(false)}}
                     sx={ sxTextField }
-                    {...form.register('password')}
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">
