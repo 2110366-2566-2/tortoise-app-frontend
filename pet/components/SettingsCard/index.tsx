@@ -121,7 +121,7 @@ export default function SettingsCard(props: IPetDetail) {
                     </Typography>
                     {/* {props.medical_record ? ( */}
                     {false ? (
-                        props.medical_record.map((record, index) => (
+                        props.medical_records.map((record, index) => (
                             <Paper key={index} sx={{ p: 2, marginBottom: 2 }}>
                                 <Typography variant="body1" gutterBottom>
                                     Medical ID: {record.medical_id}

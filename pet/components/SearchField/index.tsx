@@ -21,7 +21,7 @@ export default function SearchField() {
                 // backgroundColor: '#EAEAEA !important',
                 backgroundColor: '#FFF',
                 border: '2px solid black',
-                borderRadius: 0
+                borderRadius: 0,
             }}
         >
             <IconButton sx={{ p: '10px' }} aria-label="menu">

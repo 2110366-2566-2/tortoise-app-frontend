@@ -23,7 +23,7 @@ export interface IPetDetail {
     category: string
     behavior: string
     media: string
-    medical_record: MedicalRecord[]
+    medical_records: MedicalRecord[]
     seller_id: string
 }
 
