@@ -5,7 +5,8 @@ import { Fira_Sans_Condensed } from 'next/font/google';
 import { IPetDetail } from '../../services/api/v1/pets/type';
 import { CustomTextField, ColorButton } from '../../components/CustomInput/type';
 import ImageDropbox from '../../components/ImageDropbox';
-
+//import { usePostPets } from './usePostPet'; // Import usePostPet function
+import { usePostPets } from '../../services/api/v1/pets/usePostPets';
 const fira_sans_condensed = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] });
 
 const SEX_CHOICES = [
@@ -23,8 +24,19 @@ export default function AddPetForm() {
         },
     };
 
+    /*
     const onSubmit = async (data: IPetDetail) => {
         console.log(data);
+    };
+    */
+
+    const onSubmit = async (data: IPetDetail) => {
+        try {
+            await usePostPets(data); // ใช้ฟังก์ชัน usePostPet เพื่อสร้าง pet
+            console.log('Pet created successfully!');
+        } catch (error : any) {
+            console.error('Error creating pet:', error.message);
+        }
     };
 
     return (
