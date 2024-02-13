@@ -16,6 +16,7 @@ export default function PetProfile() {
         petId: params?.petId as string,
     };
     const { data: petFullDetail, isSuccess: petSuccess, isError: petError } = useGetPetByID(petParams);
+    
 
     if (!petSuccess) return null;
 
@@ -28,19 +29,15 @@ export default function PetProfile() {
                     spacing={3}
                     sx={{
                         position: 'absolute',
-                        top: '20vh',
+                        top: '15vh',
                         px: { xs: 0, md: 7 },
                     }}
                 >
-                    <Grid item md={3}>
-                        <ProfileCard
-                            name={petFullDetail.name}
-                            sub={petFullDetail.description}
-                            pfp={petFullDetail.media}
-                        ></ProfileCard>
+                    <Grid item md={5}>
+                        <ProfileCard petImage={petFullDetail.media} />
                     </Grid>
 
-                    <Grid item md={9}>
+                    <Grid item md={7}>
                         <SettingsCard
                             id={petFullDetail.id}
                             media={petFullDetail.media}
