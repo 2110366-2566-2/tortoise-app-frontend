@@ -16,7 +16,6 @@ export default function PetProfile() {
         petId: params?.petId as string,
     };
     const { data: petFullDetail, isSuccess: petSuccess, isError: petError } = useGetPetByID(petParams);
-    
 
     if (!petSuccess) return null;
 
@@ -28,7 +27,6 @@ export default function PetProfile() {
                     direction={{ xs: 'column', md: 'row' }}
                     spacing={5}
                     sx={{
-<<<<<<< HEAD
                         display: 'flex',
                         flexWrap: 'nowrap',
                         // position: 'absolute',
@@ -37,14 +35,6 @@ export default function PetProfile() {
                     }}
                 >
                     <Grid item md={5} sx={{ alignSelf: 'center' }}>
-=======
-                        position: 'absolute',
-                        top: '15vh',
-                        px: { xs: 0, md: 7 },
-                    }}
-                >
-                    <Grid item md={5}>
->>>>>>> origin/fix/restyle-petprofile-page
                         <ProfileCard petImage={petFullDetail.media} />
                     </Grid>
 
