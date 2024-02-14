@@ -26,7 +26,7 @@ export default function PetAddCard() {
             style={
                 hover
                     ? {
-                          backgroundColor: '#DAF2FF',
+                          backgroundColor: '#F3DDD1',
                           cursor: 'pointer',
                       }
                     : {
@@ -39,11 +39,11 @@ export default function PetAddCard() {
             onMouseOut={(event) => onMouseAction(event)}
             onClick={(event) => handleClick(event)}
         >
-            <Box>
-                <IconButton>
-                    <AddCircleIcon sx={{ color: '#4BAE4F' }} />
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', padding: 3, height: '100%' }}>
+                <IconButton sx={{ width: 'auto', height: 'auto' }}>
+                    <AddCircleIcon sx={{ color: '#4BAE4F', width: '90%', height: '90%' }} />
                 </IconButton>
-                <Typography>Add Some Fucking Pet By RuthlessYeddo</Typography>
+                <Box sx={{textAlign: 'center', fontSize: 20}}>Create a new Pet</Box>
             </Box>
         </Box>
     );
