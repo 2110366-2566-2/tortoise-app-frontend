@@ -188,5 +188,29 @@ export default function SettingsCard(props: IPetDetail) {
         // </Card>
 
             
+        //         {/* Medical Records */}
+        //         <Typography variant="body1" gutterBottom style={{ marginTop: '20px', fontWeight: 'bold' }}>
+        //             Medical Records:
+        //         </Typography>
+        //         {/* {props.medical_record ? ( */}
+        //         {false ? (
+        //             props.medical_records.map((record, index) => (
+        //                 <Paper key={index} sx={{ p: 2, marginBottom: 2 }}>
+        //                     <Typography variant="body1" gutterBottom>
+        //                         Medical ID: {record.medical_id}
+        //                     </Typography>
+        //                     <Typography variant="body1" gutterBottom>
+        //                         Date: {record.medical_date}
+        //                     </Typography>
+        //                     <Typography variant="body1">Description: {record.description}</Typography>
+        //                 </Paper>
+        //             ))
+        //         ) : (
+        //             <Typography>No Medical Record</Typography>
+        //         )}
+        //     </CardContent>
+        // </Card>
+
+            
     );
 }

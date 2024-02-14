@@ -46,6 +46,7 @@ export default function ProfileCard({petImage}: {petImage: string}) {
                 />
                     {/* DESCRIPTION */}
 {/* 
+{/* 
                     <Typography variant="h5">{props.name}</Typography>
                     <Typography variant="h6">{props.sub}</Typography>
                     <Typography color="text.secondary">{props.pet_id}</Typography>
