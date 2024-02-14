@@ -5,8 +5,10 @@ import { Fira_Sans_Condensed } from 'next/font/google';
 import { IPetDetail } from '../../services/api/v1/pets/type';
 import { CustomTextField, ColorButton } from '../../components/CustomInput/type';
 import ImageDropbox from '../../components/ImageDropbox';
-//import { usePostPets } from './usePostPet'; // Import usePostPet function
-import { usePostPets } from '../../services/api/v1/pets/usePostPets';
+import { addPetToSeller } from '../../services/api/v1/pets/usePostPets';
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
+//import { useNavigate } from "react-router-dom";
 const fira_sans_condensed = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] });
 
 const SEX_CHOICES = [
@@ -23,21 +25,34 @@ export default function AddPetForm() {
             backgroundColor: '#F3DDD1',
         },
     };
-
     /*
     const onSubmit = async (data: IPetDetail) => {
         console.log(data);
     };
     */
 
+    
+
+
+    const router = useRouter(); // Initialize the useRouter hook
     const onSubmit = async (data: IPetDetail) => {
         try {
-            await usePostPets(data); // ใช้ฟังก์ชัน usePostPet เพื่อสร้าง pet
+            const sellerId = data.sellerId; // Assuming there's a field named sellerId in the form data
+            await addPetToSeller(sellerId, data); // Call the function with the retrieved sellerId and pet data
             console.log('Pet created successfully!');
-        } catch (error : any) {
+            router.push('http://localhost:3000/petpal/user/my-shop'); // Navigate to the my-shop page
+        } catch (error: any) {
             console.error('Error creating pet:', error.message);
         }
-    };
+    }
+    
+   /*
+    const navigate= useNavigate();
+    const [message, setMessage]= useState('');
+    const res= axios.post(`/api/v1/pets/seller/${sellerId}`, data)
+    .then(responce=>{ setMessage(responce.data);
+    });
+    */
 
     return (
         <Box sx={{ p: '5%' }}>
