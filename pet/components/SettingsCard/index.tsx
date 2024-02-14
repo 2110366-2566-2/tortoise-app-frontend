@@ -36,11 +36,13 @@ export default function SettingsCard(props: IPetDetail) {
     }));
 
     const rows: GridRowsProp = [
-        { id: 2, col1: 'Sex:', col2: props.sex },
+        { id: 1, col1: 'Sex:', col2: props.sex === 'F' ? 'Female' : 'Male' },
+        { id: 2, col1: 'Weight:',   col2: props.weight+' kg' },
         { id: 3, col1: 'BirthDate:', col2: props.birth },
         { id: 4, col1: 'Category:', col2: props.category },
         { id: 5, col1: 'Species:', col2: props.species },
         { id: 6, col1: 'Behavior:',   col2: props.behavior },
+        // { id: 7, col1: 'Meidcal Records:',   col2: props.medical_records },
     ];
       
     const columns: GridColDef[] = [
@@ -71,98 +73,6 @@ export default function SettingsCard(props: IPetDetail) {
                 </Box>
             </Box>
         </Box>
-        
-        // <Card variant="outlined" sx={{ height: 'auto', width: '100%', overflowY: 'scroll' }}>
-        //     <Tabs
-        //         value="one"
-        //         textColor="secondary"
-        //         indicatorColor="secondary"
-        //         style={{ backgroundColor: '#F9C067' }}
-        //     >
-        //         <Tab value="one" label="Pet Information" />
-        //     </Tabs>
-        //     <Divider />
-        //     <CardContent
-        //         sx={{
-        //             p: 3,
-        //             maxHeight: { md: '100vh' },
-        //             textAlign: { xs: 'center', md: 'start' },
-        //         }}
-        //     >
-        //         <FormControl fullWidth>
-        //             <Grid container direction={{ xs: 'column', md: 'row' }} columnSpacing={5} rowSpacing={3}>
-        //                 <Grid component="form" item xs={6}>
-        //                     <Box>
-        //                         <label htmlFor="name" style={{ fontSize: 'normal' }}>
-        //                             Name : {props.name}
-        //                         </label>
-        //                     </Box>
-        //                 </Grid>
-        //                 <Grid component="form" item xs={6}>
-        //                     <Box>
-        //                         <label htmlFor="age" style={{ fontSize: 'normal' }}>
-        //                             Age: {props.age}
-        //                         </label>
-        //                     </Box>
-        //                 </Grid>
-        //                 <Grid component="form" item xs={6}>
-        //                     <Box>
-        //                         <label htmlFor="price" style={{ fontSize: 'normal' }}>
-        //                             Price: {props.price}
-        //                         </label>
-        //                     </Box>
-        //                 </Grid>
-        //                 <Grid component="form" item xs={6}>
-        //                     <Box>
-        //                         <label htmlFor="is_sold" style={{ fontSize: 'normal' }}>
-        //                             Sold: {props.is_sold ? 'Yes' : 'No'}
-        //                         </label>
-        //                     </Box>
-        //                 </Grid>
-        //                 <Grid component="form" item xs={6}>
-        //                     <Box>
-        //                         <label htmlFor="description" style={{ fontSize: 'normal' }}>
-        //                             Description: {props.description}
-        //                         </label>
-        //                     </Box>
-        //                 </Grid>
-        //                 <Grid component="form" item xs={6}>
-        //                     <Box>
-        //                         <label htmlFor="weight" style={{ fontSize: 'normal' }}>
-        //                             Weight: {props.weight}
-        //                         </label>
-        //                     </Box>
-        //                 </Grid>
-        //                 <Grid component="form" item xs={6}>
-        //                     <Box>
-        //                         <label htmlFor="sex" style={{ fontSize: 'normal' }}>
-        //                             Sex: {props.sex}
-        //                         </label>
-        //                     </Box>
-        //                 </Grid>
-        //                 <Grid component="form" item xs={6}>
-        //                     <Box>
-        //                         <label htmlFor="species" style={{ fontSize: 'normal' }}>
-        //                             Species: {props.species}
-        //                         </label>
-        //                     </Box>
-        //                 </Grid>
-        //                 <Grid component="form" item xs={6}>
-        //                     <Box>
-        //                         <label htmlFor="type" style={{ fontSize: 'normal' }}>
-        //                             Type: {props.category}
-        //                         </label>
-        //                     </Box>
-        //                 </Grid>
-        //                 <Grid component="form" item xs={6}>
-        //                     <Box>
-        //                         <label htmlFor="behavior" style={{ fontSize: 'normal' }}>
-        //                             Behavior: {props.behavior}
-        //                         </label>
-        //                     </Box>
-        //                 </Grid>
-        //             </Grid>
-        //         </FormControl>
 
         //         {/* Medical Records */}
         //         <Typography variant="body1" gutterBottom style={{ marginTop: '20px', fontWeight: 'bold' }}>
@@ -186,31 +96,6 @@ export default function SettingsCard(props: IPetDetail) {
         //         )}
         //     </CardContent>
         // </Card>
-
-            
-        //         {/* Medical Records */}
-        //         <Typography variant="body1" gutterBottom style={{ marginTop: '20px', fontWeight: 'bold' }}>
-        //             Medical Records:
-        //         </Typography>
-        //         {/* {props.medical_record ? ( */}
-        //         {false ? (
-        //             props.medical_records.map((record, index) => (
-        //                 <Paper key={index} sx={{ p: 2, marginBottom: 2 }}>
-        //                     <Typography variant="body1" gutterBottom>
-        //                         Medical ID: {record.medical_id}
-        //                     </Typography>
-        //                     <Typography variant="body1" gutterBottom>
-        //                         Date: {record.medical_date}
-        //                     </Typography>
-        //                     <Typography variant="body1">Description: {record.description}</Typography>
-        //                 </Paper>
-        //             ))
-        //         ) : (
-        //             <Typography>No Medical Record</Typography>
-        //         )}
-        //     </CardContent>
-        // </Card>
-
             
     );
 }

@@ -40,14 +40,19 @@ class ImageDropbox extends Component<ImageUploadCardProps, ImageUploadCardState>
 
     renderInitialState() {
         return (
-            <Grid container direction="column" alignItems="center">
+            <Grid container direction="column" alignItems="center" sx={{cursor: 'pointer'}}>
                 <label htmlFor="contained-button-file">
-                    <Button variant="contained" component="span">
+                    <Button variant="contained" component="span" 
+                    sx={{backgroundColor: 'rgb(255,255,255)', color: '#472F05', border: '2px solid #472F05', borderRadius: 0, boxShadow: '2px 2px #472F05',
+                    '&:hover': {
+                        backgroundColor: '#E5CB9A', cursor: 'pointer', boxShadow: '2px 2px #472F05'
+                    }}}>
                         <input
                             accept="image/*"
                             id="contained-button-file"
                             type="file"
                             onChange={this.handleUploadClick}
+                            style={{cursor: 'pointer'}}
                         />
                     </Button>
                 </label>
@@ -67,7 +72,11 @@ class ImageDropbox extends Component<ImageUploadCardProps, ImageUploadCardState>
                     style={{ margin: 'auto', display: 'block', maxWidth: '100%', maxHeight: '100%' }}
                 />
                 <label htmlFor="contained-button-file">
-                    <Button variant="contained" component="span">
+                    <Button variant="contained" component="span"
+                    sx={{backgroundColor: 'rgb(255,255,255)', color: '#472F05', border: '2px solid #472F05', borderRadius: 0, boxShadow: '2px 2px #472F05',
+                    '&:hover': {
+                        backgroundColor: '#E5CB9A', cursor: 'pointer', boxShadow: '2px 2px #472F05'
+                    }}}>
                         <input
                             accept="image/*"
                             id="contained-button-file"
@@ -82,18 +91,11 @@ class ImageDropbox extends Component<ImageUploadCardProps, ImageUploadCardState>
 
     render() {
         return (
-            <Box
-                sx={{
-                    boxShadow: '3px 3px #472F05',
-                    '&:hover': {
-                        backgroundColor: '#F3DDD1',
-                    },
-                }}
-            >
-                <Card className={this.props.cardName}>
+            <Box className={this.props.cardName}>
+                {/* <Card className={this.props.cardName} > */}
                     {(this.state.mainState === 'initial' && this.renderInitialState()) ||
                         (this.state.mainState === 'uploaded' && this.renderUploadedState())}
-                </Card>
+                {/* </Card> */}
             </Box>
         );
     }
