@@ -1,11 +1,12 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 export default function InteractionPetCard({ children, petId }: { children: React.ReactNode; petId: string }) {
     const [hover, setHover] = useState(false);
     const router = useRouter();
+    const pathName = usePathname().split('/').length >= 2 ? usePathname().split('/')[2] : 'marketplace';
 
     function onMouseAction(event: React.SyntheticEvent) {
         if (event.type == 'mouseover') {
@@ -16,7 +17,7 @@ export default function InteractionPetCard({ children, petId }: { children: Reac
     }
 
     function handleClick(event: React.MouseEvent) {
-        router.push(`marketplace/${petId}`);
+        router.push(`${pathName}/${petId}`);
     }
 
     return (
