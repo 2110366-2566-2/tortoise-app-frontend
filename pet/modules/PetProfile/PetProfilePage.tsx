@@ -20,27 +20,25 @@ export default function PetProfile() {
     if (!petSuccess) return null;
 
     return (
-        <Box>
-            <Grid container direction="column" sx={{ overflowX: 'hidden' }}>
+        <Box sx={{ alignSelf: 'center', marginTop: 5 }}>
+            <Grid container direction="column" sx={{ overflowX: 'hidden', flexWrap: 'nowrap' }}>
                 <Grid
                     container
                     direction={{ xs: 'column', md: 'row' }}
-                    spacing={3}
+                    spacing={5}
                     sx={{
-                        position: 'absolute',
-                        top: '20vh',
-                        px: { xs: 0, md: 7 },
+                        display: 'flex',
+                        flexWrap: 'nowrap',
+                        // position: 'absolute',
+                        top: '15vh',
+                        px: { xs: 5, md: 8 },
                     }}
                 >
-                    <Grid item md={3}>
-                        <ProfileCard
-                            name={petFullDetail.name}
-                            sub={petFullDetail.description}
-                            pfp={petFullDetail.media}
-                        ></ProfileCard>
+                    <Grid item md={5} sx={{ alignSelf: 'center' }}>
+                        <ProfileCard petImage={petFullDetail.media} />
                     </Grid>
 
-                    <Grid item md={9}>
+                    <Grid item md={7}>
                         <SettingsCard
                             id={petFullDetail.id}
                             media={petFullDetail.media}
@@ -61,6 +59,17 @@ export default function PetProfile() {
                     </Grid>
                 </Grid>
             </Grid>
+            <Box sx={{ marginX: 10, marginTop: 3, marginBottom: 5 }}>
+                <Box sx={{ height: 'auto', width: 150, paddingX: 3, paddingY: 1, fontSize: 20, backgroundColor: '#472F05', 
+                color: 'whitesmoke', border: '2px solid black', borderBottom: 0, borderTopLeftRadius: 5, borderTopRightRadius: 5, 
+                boxShadow: '3px 3px black', textAlign: 'center' }}>
+                    Description:
+                </Box>
+                <Box sx={{ width: '100%', paddingX: 3, paddingY: 1, fontSize: 16, backgroundColor: 'whitesmoke', 
+                border: '2px solid #472F05', boxShadow: '3px 3px black'}}>
+                    {petFullDetail.description.split('\\n').join('\n')}
+                </Box>
+            </Box>
         </Box>
     );
 }

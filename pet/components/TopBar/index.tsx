@@ -14,9 +14,11 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { usePathname, useRouter } from 'next/navigation';
+import { Fira_Sans_Condensed } from 'next/font/google';
 
 const pages = ['My Shop', 'Marketplace', 'My Orders'];
 const settings = ['Account', 'Logout'];
+const fira_sans_600 = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] })
 
 function TopBar() {
     const path = usePathname();
@@ -54,7 +56,7 @@ function TopBar() {
                             sx={{
                                 mr: 2,
                                 display: { xs: 'none', md: 'flex' },
-                                fontWeight: 900,
+                                fontFamily: fira_sans_600.style.fontFamily,
                                 letterSpacing: '.2rem',
                                 color: 'inherit',
                                 textDecoration: 'none',
@@ -103,7 +105,7 @@ function TopBar() {
                                         router.push(`/user/${page.toLowerCase().replace(' ', '-')}`);
                                     }}
                                 >
-                                    <Typography textAlign="center">{page}</Typography>
+                                    <Typography textAlign="center" sx={{fontFamily: fira_sans_600.style.fontFamily}}>{page}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -120,7 +122,7 @@ function TopBar() {
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
                             flexGrow: 1,
-                            fontWeight: 900,
+                            fontFamily: fira_sans_600.style.fontFamily,
                             letterSpacing: '.2rem',
                             color: 'inherit',
                             textDecoration: 'none',
@@ -156,8 +158,8 @@ function TopBar() {
                                             : 'black',
                                         letterSpacing: '.1rem',
                                         display: 'block',
-                                        fontSize: '14px',
-                                        fontWeight: 800,
+                                        fontFamily: fira_sans_600.style.fontFamily,
+                                        fontSize: 16
                                     }}
                                 >
                                     {page}
