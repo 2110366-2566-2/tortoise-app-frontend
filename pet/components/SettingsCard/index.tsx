@@ -36,11 +36,13 @@ export default function SettingsCard(props: IPetDetail) {
     }));
 
     const rows: GridRowsProp = [
-        { id: 2, col1: 'Sex:', col2: props.sex },
+        { id: 1, col1: 'Sex:', col2: props.sex === 'F' ? 'Female' : 'Male' },
+        { id: 2, col1: 'Weight:',   col2: props.weight+' kg' },
         { id: 3, col1: 'BirthDate:', col2: props.birth },
         { id: 4, col1: 'Category:', col2: props.category },
         { id: 5, col1: 'Species:', col2: props.species },
         { id: 6, col1: 'Behavior:',   col2: props.behavior },
+        // { id: 7, col1: 'Meidcal Records:',   col2: props.medical_records },
     ];
       
     const columns: GridColDef[] = [

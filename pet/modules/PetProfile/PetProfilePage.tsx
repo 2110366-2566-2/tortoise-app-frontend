@@ -59,7 +59,7 @@ export default function PetProfile() {
                     </Grid>
                 </Grid>
             </Grid>
-            <Box sx={{ marginX: 10, marginTop: 5, marginBottom: 5 }}>
+            <Box sx={{ marginX: 10, marginTop: 3, marginBottom: 5 }}>
                 <Box sx={{ height: 'auto', width: 150, paddingX: 3, paddingY: 1, fontSize: 20, backgroundColor: '#472F05', 
                 color: 'whitesmoke', border: '2px solid black', borderBottom: 0, borderTopLeftRadius: 5, borderTopRightRadius: 5, 
                 boxShadow: '3px 3px black', textAlign: 'center' }}>
