@@ -5,16 +5,18 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SettingsCard from '../../components/SettingsCard';
 import { Box, Button, IconButton, Typography } from '@mui/material';
 import useGetPetByID from '../../services/api/v1/pets/useGetPetByID';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { IPetQueryParams } from '../../services/api/v1/pets/type';
 import dayjs from 'dayjs';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import ProfileCard from '../../components/ProfileCard.tsx';
+import useDeletePet from '../../services/api/v1/pets/useDeletePet';
 
 export default function EditPetForm() {
     const params = useParams();
+    const router = useRouter();
     const [editMode, setEditMode] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
     const petParams: IPetQueryParams = {
@@ -22,9 +24,11 @@ export default function EditPetForm() {
     };
     const { data: petFullDetail, isSuccess: petSuccess, isError: petError } = useGetPetByID(petParams);
 
-    if (!petSuccess) return null;
+    const handleDelete = async () => {
+        console.log('Delete');
+    };
 
-    const handleDelete = () => {};
+    if (!petSuccess) return null;
 
     return (
         <Box sx={{ alignSelf: 'center', marginTop: 5 }}>

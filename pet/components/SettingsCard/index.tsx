@@ -18,7 +18,7 @@ import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 import { Fira_Sans_Condensed } from 'next/font/google';
 import { ButtonProps, styled } from '@mui/material';
 
-const fira_sans_600 = Fira_Sans_Condensed({weight: ['600'], subsets: ['latin']})
+const fira_sans_600 = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] });
 
 const theme = createTheme({
     typography: {
@@ -27,7 +27,6 @@ const theme = createTheme({
 });
 
 export default function SettingsCard(props: IPetDetail) {
-
     const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
         color: theme.palette.getContrastText('#F9C067'),
         '&:hover': {
@@ -37,39 +36,71 @@ export default function SettingsCard(props: IPetDetail) {
 
     const rows: GridRowsProp = [
         { id: 1, col1: 'Sex:', col2: props.sex === 'F' ? 'Female' : 'Male' },
-        { id: 2, col1: 'Weight:',   col2: props.weight+' kg' },
-        { id: 3, col1: 'BirthDate:', col2: props.birth },
+        { id: 2, col1: 'Weight:', col2: props.weight + ' kg' },
+        { id: 3, col1: 'Age:', col2: `${props.age} year` },
         { id: 4, col1: 'Category:', col2: props.category },
         { id: 5, col1: 'Species:', col2: props.species },
-        { id: 6, col1: 'Behavior:',   col2: props.behavior },
+        { id: 6, col1: 'Behavior:', col2: props.behavior },
         // { id: 7, col1: 'Meidcal Records:',   col2: props.medical_records },
     ];
-      
+
     const columns: GridColDef[] = [
         { field: 'col1', headerName: 'Column 1', width: 150 },
         { field: 'col2', headerName: 'Column 2', width: 250 },
     ];
 
     return (
-
         <Box sx={{ height: 'auto', width: 'auto', margin: 1 }}>
-            <Box sx={{boxShadow: '6px 6px #472F05'}}>
-                <Box sx={{ height: 'auto', paddingLeft: 3, paddingY: 1, fontSize: 30, backgroundColor: '#F9C067', 
-                border: '2px solid #472F05'}}>
+            <Box sx={{ boxShadow: '6px 6px #472F05' }}>
+                <Box
+                    sx={{
+                        height: 'auto',
+                        paddingLeft: 3,
+                        paddingY: 1,
+                        fontSize: 30,
+                        backgroundColor: '#F9C067',
+                        border: '2px solid #472F05',
+                    }}
+                >
                     {props.name}
                 </Box>
-                <DataGrid rows={rows} columns={columns} hideFooter={true} columnHeaderHeight={0} rowHeight={45}
-                sx={{border: '2px solid #472F05', borderRadius: 0, fontFamily: fira_sans_600.style.fontFamily, fontSize: 18, 
-                '& .MuiDataGrid-cell': {
-                    paddingLeft: 3,
-                }}} />
+                <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    hideFooter={true}
+                    columnHeaderHeight={0}
+                    rowHeight={45}
+                    sx={{
+                        border: '2px solid #472F05',
+                        borderRadius: 0,
+                        fontFamily: fira_sans_600.style.fontFamily,
+                        fontSize: 18,
+                        '& .MuiDataGrid-cell': {
+                            paddingLeft: 3,
+                        },
+                    }}
+                />
             </Box>
-            <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', marginTop: 4, fontSize: 25}}>
-                <Box sx={{paddingRight: 3, paddingTop: 1, marginLeft: 3, position: 'initial', left: 0}}>Price: ฿{props.price}</Box>
-                <Box sx={{width: 'auto', height: 'auto', backgroundColor: '#FAA943',
-                boxShadow: '2px 2px #472F05' }}>
-                    <ColorButton sx={{paddingX: 2, paddingTop: 1, fontFamily: fira_sans_600.style.fontFamily, fontSize: 18, 
-                    borderRadius: 0, border: '2px solid #472F05', ':&hover': {border: '3px solid #472F05'}}}>Buy Now!</ColorButton>
+            <Box
+                sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', marginTop: 4, fontSize: 25 }}
+            >
+                <Box sx={{ paddingRight: 3, paddingTop: 1, marginLeft: 3, position: 'initial', left: 0 }}>
+                    Price: ฿{props.price}
+                </Box>
+                <Box sx={{ width: 'auto', height: 'auto', backgroundColor: '#FAA943', boxShadow: '2px 2px #472F05' }}>
+                    <ColorButton
+                        sx={{
+                            paddingX: 2,
+                            paddingTop: 1,
+                            fontFamily: fira_sans_600.style.fontFamily,
+                            fontSize: 18,
+                            borderRadius: 0,
+                            border: '2px solid #472F05',
+                            ':&hover': { border: '3px solid #472F05' },
+                        }}
+                    >
+                        Buy Now!
+                    </ColorButton>
                 </Box>
             </Box>
         </Box>
@@ -96,6 +127,5 @@ export default function SettingsCard(props: IPetDetail) {
         //         )}
         //     </CardContent>
         // </Card>
-            
     );
 }
