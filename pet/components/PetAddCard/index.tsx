@@ -39,11 +39,19 @@ export default function PetAddCard() {
             onMouseOut={(event) => onMouseAction(event)}
             onClick={(event) => handleClick(event)}
         >
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', padding: 3, height: '100%' }}>
-                <IconButton sx={{ width: 'auto', height: 'auto' }}>
-                    <AddCircleIcon sx={{ color: '#4BAE4F', width: '90%', height: '90%' }} />
-                </IconButton>
-                <Box sx={{textAlign: 'center', fontSize: 20}}>Create a new Pet</Box>
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: 3,
+                    height: '100%',
+                }}
+            >
+                <AddCircleIcon sx={{ color: '#4BAE4F', width: '75%', height: '75%' }} />
+
+                <Box sx={{ textAlign: 'center', fontSize: 20 }}>Create a new Pet</Box>
             </Box>
         </Box>
     );
