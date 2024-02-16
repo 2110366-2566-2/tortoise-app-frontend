@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import React from 'react';
 
-export default function OrderButton() {
+export default function DeleteButton() {
   const handleClick = () => {
     console.log('Button clicked!');
   };
