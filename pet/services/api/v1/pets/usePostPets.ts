@@ -15,11 +15,11 @@ export const usePostPets = async (petData: any) => {
 */
 
 
-export async function addPetToSeller(sellerId: string, petData: IPetDetail) {
+export async function addPetToSeller('65c7356900dfa761aed36125' :string, petData: IPetDetail) {
     try {
       
       //const response = await axios.post(`{{url}}/api/v1/pets/seller/65c7356900dfa761aed36120`, petData);
-        const response = await axios.post(`/api/v1/pets/seller/${sellerId}`, petData);
+        const response = await axios.post(`/api/v1/pets/seller/65c7356900dfa761aed36125`, petData);
         return response.data; // หรือจะ return response ตรงๆ ขึ้นอยู่กับการจัดการข้อมูลต่อไป
     } catch (error:any) {
         throw new Error('Failed to add pet: ' + error.message);

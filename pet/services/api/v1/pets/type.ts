@@ -10,6 +10,7 @@ export interface IPetProfile {
 }
 
 export interface IPetDetail {
+    sellerId: any
     id: string
     name: string
     age: number
