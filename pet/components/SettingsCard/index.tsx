@@ -17,6 +17,7 @@ import { IPetDetail } from '../../services/api/v1/pets/type';
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 import { Fira_Sans_Condensed } from 'next/font/google';
 import { ButtonProps, styled } from '@mui/material';
+import { useRouter } from 'next/navigation';
 
 const fira_sans_600 = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] });
 
@@ -33,6 +34,8 @@ export default function SettingsCard(props: IPetDetail) {
             backgroundColor: '#F79762',
         },
     }));
+
+    const router = useRouter();
 
     const rows: GridRowsProp = [
         { id: 1, col1: 'Sex:', col2: props.sex === 'F' ? 'Female' : 'Male' },
@@ -89,6 +92,9 @@ export default function SettingsCard(props: IPetDetail) {
                 </Box>
                 <Box sx={{ width: 'auto', height: 'auto', backgroundColor: '#FAA943', boxShadow: '2px 2px #472F05' }}>
                     <ColorButton
+                        onClick={() => {
+                            router.push(`${props.id}/checkout`);
+                        }}
                         sx={{
                             paddingX: 2,
                             paddingTop: 1,

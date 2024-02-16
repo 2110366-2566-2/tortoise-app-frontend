@@ -18,7 +18,7 @@ import { Fira_Sans_Condensed } from 'next/font/google';
 
 const pages = ['My Shop', 'Marketplace', 'My Orders'];
 const settings = ['Account', 'Logout'];
-const fira_sans_600 = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] })
+const fira_sans_600 = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] });
 
 function TopBar() {
     const path = usePathname();
@@ -41,6 +41,10 @@ function TopBar() {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    if (path.includes('checkout')) {
+        return null;
+    }
 
     return (
         <AppBar id="topbar" position="static" sx={{ backgroundColor: '#F3DDD1', boxShadow: 'none', height: 'auto' }}>
@@ -105,7 +109,9 @@ function TopBar() {
                                         router.push(`/user/${page.toLowerCase().replace(' ', '-')}`);
                                     }}
                                 >
-                                    <Typography textAlign="center" sx={{fontFamily: fira_sans_600.style.fontFamily}}>{page}</Typography>
+                                    <Typography textAlign="center" sx={{ fontFamily: fira_sans_600.style.fontFamily }}>
+                                        {page}
+                                    </Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -159,7 +165,7 @@ function TopBar() {
                                         letterSpacing: '.1rem',
                                         display: 'block',
                                         fontFamily: fira_sans_600.style.fontFamily,
-                                        fontSize: 16
+                                        fontSize: 16,
                                     }}
                                 >
                                     {page}
