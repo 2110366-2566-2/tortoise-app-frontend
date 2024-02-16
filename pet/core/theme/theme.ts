@@ -6,4 +6,17 @@ export const THEME = createTheme({
         fontFamily: ['Fira Sans Condensed', 'Roboto Condensed', 'sans-serif'].join(','),
         fontSize: 14,
     },
+    components: {
+        MuiTypography: {
+            variants: [
+                {
+                    props: { variant: 'h2' },
+                    style: {
+                        fontFamily: ['Fira Sans Condensed', 'Roboto Condensed', 'sans-serif'].join(','),
+                        fontSize: 14,
+                    }
+                }
+            ]
+        }
+    }
 });
