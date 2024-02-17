@@ -4,7 +4,8 @@ import { useForm } from 'react-hook-form';
 import { Fira_Sans_Condensed } from 'next/font/google';
 import { IPetDetail } from '../../services/api/v1/pets/type';
 import { CustomTextField, ColorButton } from '../../components/CustomInput/type';
-import ImageDropbox from '../../components/ImageDropbox';
+import ImageUploader from '../../components/ImageDropbox';
+import { useState } from 'react';
 
 const fira_sans_condensed = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] });
 
@@ -23,10 +24,11 @@ const SPECIES_CHOICES = [
     { label: 'Pug', value: 'Pug' },
     { label: 'Puddle', value: 'Puddle' },
     { label: 'Samoi', value: 'Samoi' },
-]
+];
 
 export default function AddPetForm() {
     const form = useForm<IPetDetail>();
+    const [images, setImages] = useState<File[]>([]);
 
     const sxTextField = {
         width: '100%',
@@ -34,7 +36,7 @@ export default function AddPetForm() {
         backgroundColor: 'rgb(255, 255, 255)',
         '&:hover': {
             backgroundColor: '#E5CB9A',
-            transition: 'ease-in-out'
+            transition: 'ease-in-out',
         },
     };
 
@@ -43,14 +45,35 @@ export default function AddPetForm() {
     };
 
     return (
-        <Box sx={{my: '5%', mx: '15%'}}>
-            <Box sx={{ height: 'auto', width: 300, paddingX: 3, paddingY: 1, fontSize: 22, backgroundColor: '#472F05', 
-                color: 'whitesmoke', border: '2px solid black', borderBottom: 0, borderTopLeftRadius: 5, borderTopRightRadius: 5, 
-                boxShadow: '3px 3px black', textAlign: 'center' }}>
-                    Create your new pet HERE!
+        <Box sx={{ my: '5%', mx: '15%' }}>
+            <Box
+                sx={{
+                    height: 'auto',
+                    width: 300,
+                    paddingX: 3,
+                    paddingY: 1,
+                    fontSize: 22,
+                    backgroundColor: '#472F05',
+                    color: 'whitesmoke',
+                    border: '2px solid black',
+                    borderBottom: 0,
+                    borderTopLeftRadius: 5,
+                    borderTopRightRadius: 5,
+                    boxShadow: '3px 3px black',
+                    textAlign: 'center',
+                }}
+            >
+                Create your new pet HERE!
             </Box>
-            <Box sx={{ py: 5, px: 10, border: '2px solid black', boxShadow: '7px 7px #472F05',
-            backgroundColor: '#FDF6F2'}}>
+            <Box
+                sx={{
+                    py: 5,
+                    px: 10,
+                    border: '2px solid black',
+                    boxShadow: '7px 7px #472F05',
+                    backgroundColor: '#FDF6F2',
+                }}
+            >
                 <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
                     <Box
                         sx={{
@@ -68,7 +91,14 @@ export default function AddPetForm() {
                             autoComplete="pet-name"
                             sx={sxTextField}
                         />
-                        <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                            }}
+                        >
                             <CustomTextField
                                 {...form.register('age')}
                                 label="Age"
@@ -82,9 +112,13 @@ export default function AddPetForm() {
                                 variant="outlined"
                                 autoComplete="pet-price"
                                 InputProps={{
-                                    startAdornment: <InputAdornment position="start">
-                                        <Typography sx={{fontFamily: fira_sans_condensed.style.fontFamily}}>฿</Typography>
-                                    </InputAdornment>,
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <Typography sx={{ fontFamily: fira_sans_condensed.style.fontFamily }}>
+                                                ฿
+                                            </Typography>
+                                        </InputAdornment>
+                                    ),
                                 }}
                                 sx={sxTextField}
                             />
@@ -95,14 +129,18 @@ export default function AddPetForm() {
                                 type={'text'}
                                 autoComplete="pet-weight"
                                 InputProps={{
-                                    startAdornment: <InputAdornment position="start">
-                                        <Typography sx={{fontFamily: fira_sans_condensed.style.fontFamily}}>kg</Typography>
-                                    </InputAdornment>,
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <Typography sx={{ fontFamily: fira_sans_condensed.style.fontFamily }}>
+                                                kg
+                                            </Typography>
+                                        </InputAdornment>
+                                    ),
                                 }}
                                 sx={sxTextField}
                             />
                         </Box>
-                        
+
                         <CustomTextField
                             {...form.register('description')}
                             label="Description"
@@ -113,7 +151,14 @@ export default function AddPetForm() {
                             maxRows={3}
                             sx={{ ...sxTextField }}
                         />
-                        <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                            }}
+                        >
                             <CustomTextField {...form.register('sex')} select label="Sex" sx={sxTextField}>
                                 {SEX_CHOICES.map((option) => (
                                     <MenuItem
@@ -175,12 +220,20 @@ export default function AddPetForm() {
                             autoComplete="pet-medical_records"
                             sx={sxTextField}
                         />
-                        <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                            <Box sx={{fontFamily: fira_sans_condensed.style.fontFamily, paddingLeft: 1, paddingRight: 3, fontSize: 20}}>
-                                Upload Pet Image Here:</Box>
-                            <ImageDropbox cardName="Image"/>
+                        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                            <Box
+                                sx={{
+                                    fontFamily: fira_sans_condensed.style.fontFamily,
+                                    paddingLeft: 1,
+                                    paddingRight: 3,
+                                    fontSize: 20,
+                                }}
+                            >
+                                Upload Pet Image Here:
+                            </Box>
+                            <ImageUploader images={images} setImages={setImages} {...form.register('media')} />
                         </Box>
-                        
+
                         <Box
                             sx={{
                                 marginTop: 2,
