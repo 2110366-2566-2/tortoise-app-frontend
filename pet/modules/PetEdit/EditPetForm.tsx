@@ -13,6 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import ProfileCard from '../../components/ProfileCard.tsx';
 import useDeletePet from '../../services/api/v1/pets/useDeletePet';
+import { request } from 'http';
 
 export default function EditPetForm() {
     const params = useParams();
@@ -24,8 +25,14 @@ export default function EditPetForm() {
     };
     const { data: petFullDetail, isSuccess: petSuccess, isError: petError } = useGetPetByID(petParams);
 
-    const handleDelete = async () => {
-        console.log('Delete');
+    const deletePet = useDeletePet({
+        onSuccess: () => {
+            router.push('/user/my-shop');
+        },
+    });
+
+    const handleDelete = () => {
+        deletePet.mutate(petParams);
     };
 
     if (!petSuccess) return null;
