@@ -16,6 +16,8 @@ export default function PetCard(props: PetCardProps) {
                     src={imgSrc}
                     alt="Pet Picture"
                     fill={true}
+                    priority
+                    sizes="100% 100%"
                     style={{
                         maxWidth: '-webkit-fill-available',
                         maxHeight: 'fit-content',

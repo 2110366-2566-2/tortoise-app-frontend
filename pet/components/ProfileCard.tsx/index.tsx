@@ -10,7 +10,7 @@ import useGetPetByID from '../../services/api/v1/pets/useGetPetByID';
 import { Fira_Sans_Condensed } from 'next/font/google';
 
 // STYLES
-const fira_sans_600 = Fira_Sans_Condensed({weight: ['600'], subsets: ['latin']})
+const fira_sans_600 = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] });
 
 const styles = {
     details: {
@@ -25,19 +25,29 @@ const styles = {
 };
 
 //APP
-export default function ProfileCard({petImage}: {petImage: string}) {
-
+export default function ProfileCard({ petImage }: { petImage: string }) {
     return (
-        <Card variant="outlined" style={{ height: 400, width: 450, margin: 10, boxShadow: '8px 8px #472F05', backgroundColor: '#F3DDD1',  
-        borderRadius: 0, border: '2px solid #472F05', position: 'relative'}}>
-                <Image
-                    src={petImage}
-                    alt="Pet Picture"
-                    fill={true}
-                    style={{
-                        objectFit: 'cover',
-                    }}
-                />
+        <Card
+            variant="outlined"
+            style={{
+                height: 300,
+                width: 350,
+                margin: 10,
+                boxShadow: '8px 8px #472F05',
+                backgroundColor: '#F3DDD1',
+                borderRadius: 0,
+                border: '2px solid #472F05',
+                position: 'relative',
+            }}
+        >
+            <Image
+                src={petImage}
+                alt="Pet Picture"
+                fill={true}
+                style={{
+                    objectFit: 'cover',
+                }}
+            />
         </Card>
     );
 }

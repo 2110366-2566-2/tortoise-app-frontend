@@ -13,7 +13,6 @@ export interface IPetDetail {
     id: string
     name: string
     age: number
-    birth: string
     price: number
     is_sold: boolean
     description: string
@@ -29,6 +28,11 @@ export interface IPetDetail {
 
 export interface IPetQueryParams{
     petId: string
+}
+
+export interface IPetUpdateParams{
+    petId: string,
+    payload: IPetDetail,
 }
   
 export interface MedicalRecord {
