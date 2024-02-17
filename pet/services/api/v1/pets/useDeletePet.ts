@@ -1,24 +1,28 @@
-import { UseQueryResult, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { requestClient } from '../../../clients/requestClient';
-import { IPetQueryParams, IPetDetail } from './type';
+import { IPetQueryParams } from './type';
+import { IAxiosResponse, IMutationHook, IResponseData } from '../../models';
+import { AxiosError } from 'axios';
 
-export default function useDeletePet(
-    queryParams: IPetQueryParams,
-  queryOptions?: any,
-): UseQueryResult<IPetDetail> {
-  return useQuery({
-    queryKey: ['pets', queryParams],
-    queryFn: async () => {
-    const petId = queryParams?.petId
-    try {
-        const response = await requestClient.delete(`api/v1/pets/${petId}`);
-        const data = await response.data;
-        return data as IPetDetail;
-    } catch (error) {
-        throw error;
-    }
+export default function useDeletePet({
+  onSuccess,
+  onError,
+  options
+}: IMutationHook<IResponseData<IPetQueryParams>, IPetQueryParams>) {
+  return useMutation({
+    mutationKey: ['deletePet'],
+    mutationFn: async (request: IPetQueryParams) => {
+      try {
+        const {petId} = request
+        const response: IAxiosResponse = await requestClient.delete(`/api/v1/pets/${petId}`);
+        const responseData = response.data;
+        return responseData as IResponseData<IPetQueryParams>;
+      } catch (err) {
+        throw err as AxiosError;
+      }
     },
-    refetchOnMount: true,
-    ...queryOptions,
+    onSuccess: onSuccess,
+    onError: onError,
+    ...options,
   });
 }
