@@ -5,7 +5,7 @@ import { Fira_Sans_Condensed } from 'next/font/google';
 import { IPetDetail } from '../../services/api/v1/pets/type';
 import { CustomTextField, ColorButton } from '../../components/CustomInput/type';
 import ImageDropbox from '../../components/ImageDropbox';
-import { addPetToSeller } from '../../services/api/v1/pets/usePostPets';
+//import { addPetToSeller } from '../../services/api/v1/pets/usePostPets';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 //import { useNavigate } from "react-router-dom";
@@ -40,35 +40,11 @@ export default function AddPetForm() {
             transition: 'ease-in-out'
         },
     };
-    /*
+    
     const onSubmit = async (data: IPetDetail) => {
         console.log(data);
     };
-    */
-
     
-
-
-    const router = useRouter(); // Initialize the useRouter hook
-    const onSubmit = async (data: IPetDetail) => {
-        try {
-            const sellerId = '65c7356900dfa761aed36125' //data.sellerId; // Assuming there's a field named sellerId in the form data
-            await addPetToSeller('65c7356900dfa761aed36125', data); //await addPetToSeller(sellerId, data); // Call the function with the retrieved sellerId and pet data
-            console.log('Pet created successfully!');
-            router.push('http://localhost:3000/petpal/user/my-shop'); // Navigate to the my-shop page
-        } catch (error: any) {
-            console.error('Error creating pet:', error.message);
-        }
-    }
-    
-   /*
-    const navigate= useNavigate();
-    const [message, setMessage]= useState('');
-    const res= axios.post(`/api/v1/pets/seller/${sellerId}`, data)
-    .then(responce=>{ setMessage(responce.data);
-    });
-    */
-
     return (
         <Box sx={{my: '5%', mx: '15%'}}>
             <Box sx={{ height: 'auto', width: 300, paddingX: 3, paddingY: 1, fontSize: 22, backgroundColor: '#472F05', 
