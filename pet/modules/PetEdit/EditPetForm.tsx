@@ -6,7 +6,7 @@ import SettingsCard from '../../components/SettingsCard';
 import { Box, Button, IconButton, Typography } from '@mui/material';
 import useGetPetByID from '../../services/api/v1/pets/useGetPetByID';
 import { useParams, useRouter } from 'next/navigation';
-import { IPetDetail, IPetQueryParams, IPetUpdateParams } from '../../services/api/v1/pets/type';
+import { IPetDetail, IPetQueryParams, IPetUpdateParams, IPetUpdatePayload } from '../../services/api/v1/pets/type';
 import dayjs from 'dayjs';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -23,7 +23,7 @@ export default function EditPetForm() {
     const router = useRouter();
     const [editMode, setEditMode] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
-    const form = useForm<IPetDetail>();
+    const form = useForm<IPetUpdatePayload>();
     const petParams: IPetQueryParams = {
         petId: params?.petId as string,
     };
@@ -51,9 +51,22 @@ export default function EditPetForm() {
         },
     });
 
-    const handleSubmitEdit = async (data: IPetDetail) => {
-        const updateData = {
-            ...petFullDetail,
+    const handleSubmitEdit = async (data: IPetUpdatePayload) => {
+        const updateData: IPetUpdatePayload = {
+            ...({
+                name: petFullDetail?.name,
+                age: petFullDetail?.age,
+                price: petFullDetail?.price,
+                is_sold: petFullDetail?.is_sold,
+                description: petFullDetail?.description,
+                weight: petFullDetail?.weight,
+                sex: petFullDetail?.sex,
+                species: petFullDetail?.species,
+                category: petFullDetail?.category,
+                behavior: petFullDetail?.behavior,
+                media: petFullDetail?.media,
+                medical_records: petFullDetail?.medical_records,
+            } as IPetUpdatePayload),
             ...data,
         };
         try {
