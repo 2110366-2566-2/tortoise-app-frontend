@@ -26,13 +26,28 @@ export interface IPetDetail {
     seller_id: string
 }
 
+export interface IPetUpdatePayload {
+    name: string
+    age: number
+    price: number
+    is_sold: boolean
+    description: string
+    weight: number
+    sex: string
+    species: string
+    category: string
+    behavior: string
+    media: string
+    medical_records: MedicalRecord[]
+}
+
 export interface IPetQueryParams{
     petId: string
 }
 
 export interface IPetUpdateParams{
     petId: string,
-    payload: IPetDetail,
+    payload: IPetUpdatePayload,
 }
   
 export interface MedicalRecord {
