@@ -1,11 +1,35 @@
 'use client';
-import { Box, MenuItem, InputAdornment, Typography } from '@mui/material';
+import { Box, MenuItem, InputAdornment, Typography, Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { Fira_Sans_Condensed } from 'next/font/google';
-import { IPetDetail } from '../../services/api/v1/pets/type';
+import { IPetDetail, MedicalRecord } from '../../services/api/v1/pets/type';
 import { CustomTextField, ColorButton } from '../../components/CustomInput/type';
 import ImageUploader from '../../components/ImageDropbox';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import MedicalRecordForm from '../../components/MedicalRecordForm';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Close';
+
+import {
+    GridRowsProp,
+    GridRowModesModel,
+    GridRowModes,
+    DataGrid,
+    GridColDef,
+    GridToolbarContainer,
+    GridActionsCellItem,
+    GridEventListener,
+    GridRowId,
+    GridRowModel,
+    GridRowEditStopReasons,
+  } from '@mui/x-data-grid';
+  import { randomId } from '@mui/x-data-grid-generator';
+import useCreatePet from '../../services/api/v1/pets/useCreatePet';
+
 
 const fira_sans_condensed = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] });
 
@@ -26,9 +50,137 @@ const SPECIES_CHOICES = [
     { label: 'Samoi', value: 'Samoi' },
 ];
 
+const initialRows:GridRowsProp = [ { id:randomId(),  medical_id: 'med1', medical_date: 'date1', description: 'desc1'} ];
+  
+interface EditToolbarProps {
+  setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
+  setRowModesModel: (
+    newModel: (oldModel: GridRowModesModel) => GridRowModesModel,
+  ) => void;
+}
+
+function EditToolbar(props: EditToolbarProps) {
+  const { setRows, setRowModesModel } = props;
+
+  const handleClick = () => {
+    const id = randomId();
+    setRows((oldRows) => [...oldRows, { id, medical_id: '', medical_date: '',description: '', isNew: true }]);
+    setRowModesModel((oldModel) => ({
+      ...oldModel,
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'medical_id' },
+    }));
+  };
+
+  return (
+    <GridToolbarContainer>
+      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
+        Add record
+      </Button>
+    </GridToolbarContainer>
+  );
+}
+
 export default function AddPetForm() {
+
+    const router = useRouter()
     const form = useForm<IPetDetail>();
+
     const [images, setImages] = useState<File[]>([]);
+    const [rows, setRows] = useState(initialRows);
+    const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
+
+    const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
+        if (params.reason === GridRowEditStopReasons.rowFocusOut) {
+          event.defaultMuiPrevented = true;
+        }
+      };
+    
+      const handleEditClick = (id: GridRowId) => () => {
+        setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+      };
+    
+      const handleSaveClick = (id: GridRowId) => () => {
+        setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+      };
+    
+      const handleDeleteClick = (id: GridRowId) => () => {
+        setRows(rows.filter((row) => row.id !== id));
+      };
+    
+      const handleCancelClick = (id: GridRowId) => () => {
+        setRowModesModel({
+          ...rowModesModel,
+          [id]: { mode: GridRowModes.View, ignoreModifications: true },
+        });
+    
+        const editedRow = rows.find((row) => row.id === id);
+        if (editedRow!.isNew) {
+          setRows(rows.filter((row) => row.id !== id));
+        }
+      };
+    
+      const processRowUpdate = (newRow: GridRowModel) => {
+        const updatedRow = { ...newRow, isNew: false };
+        setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+        return updatedRow;
+      };
+    
+      const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
+        setRowModesModel(newRowModesModel);
+      };
+    
+      const columns: GridColDef[] = [
+        { field: 'medical_id', headerName: 'Medical ID', flex: 3, editable: true },
+        { field: 'medical_date', headerName: 'Medical Date', flex: 4, editable: true },
+        { field: 'description', headerName: 'Description', flex: 7, editable: true },
+        {
+          field: 'actions',
+          type: 'actions',
+          headerName: 'Options',
+          width: 80,
+          cellClassName: 'actions',
+          getActions: ({ id }) => {
+            const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+    
+            if (isInEditMode) {
+              return [
+                <GridActionsCellItem
+                  icon={<SaveIcon />}
+                  label="Save"
+                  sx={{
+                    color: 'primary.main',
+                  }}
+                  onClick={handleSaveClick(id)}
+                />,
+                <GridActionsCellItem
+                  icon={<CancelIcon />}
+                  label="Cancel"
+                  className="textPrimary"
+                  onClick={handleCancelClick(id)}
+                  color="inherit"
+                />,
+              ];
+            }
+    
+            return [
+              <GridActionsCellItem
+                icon={<EditIcon />}
+                label="Edit"
+                className="textPrimary"
+                onClick={handleEditClick(id)}
+                color="inherit"
+              />,
+              <GridActionsCellItem
+                icon={<DeleteIcon />}
+                label="Delete"
+                onClick={handleDeleteClick(id)}
+                color="inherit"
+              />,
+            ];
+          },
+        },
+      ];
+    
 
     const sxTextField = {
         width: '100%',
@@ -41,7 +193,22 @@ export default function AddPetForm() {
     };
 
     const onSubmit = async (data: IPetDetail) => {
-        console.log(data);
+        data.seller_id = '65c7356900dfa761aed36122'
+        data.is_sold = false
+        data.age = Number(data.age)
+        data.price = Number(data.price)
+        data.weight = Number(data.weight)
+        const medic = new Array<MedicalRecord> ()
+        rows.map((d) => medic.push({medical_id: d.medical_id, medical_date: d.medical_date, description: d.description}))
+        data.medical_records = medic
+        const response = await useCreatePet(data)
+        if(!response.error) {
+            alert('Create Pet Successfully')
+            router.push('/user/my-shop')
+        }
+        else {
+            alert('error to create the pet')
+        }
     };
 
     return (
@@ -213,17 +380,40 @@ export default function AddPetForm() {
                             autoComplete="pet-behavior"
                             sx={sxTextField}
                         />
-                        <CustomTextField
-                            {...form.register('medical_records')}
-                            label="Medical Records"
-                            variant="outlined"
-                            autoComplete="pet-medical_records"
-                            sx={sxTextField}
-                        />
+                        <Box
+                            sx={{
+                                fontFamily: fira_sans_condensed.style.fontFamily,
+                                width: 400,
+                                paddingLeft: 1,
+                                paddingRight: 3,
+                                fontSize: 20,
+                            }}
+                        >
+                            Medical Records:
+                        </Box>
+                        <Box sx={{ height: 300, width: '100%' }}>
+                            <DataGrid
+                                rows={rows}
+                                columns={columns}
+                                editMode="row"
+                                rowModesModel={rowModesModel}
+                                onRowModesModelChange={handleRowModesModelChange}
+                                onRowEditStop={handleRowEditStop}
+                                processRowUpdate={processRowUpdate}
+                                slots={{
+                                toolbar: EditToolbar,
+                                }}
+                                slotProps={{
+                                toolbar: { setRows, setRowModesModel },
+                                }}
+                                hideFooter={true}
+                            />
+                        </Box>
                         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                             <Box
                                 sx={{
                                     fontFamily: fira_sans_condensed.style.fontFamily,
+                                    width: 400,
                                     paddingLeft: 1,
                                     paddingRight: 3,
                                     fontSize: 20,
