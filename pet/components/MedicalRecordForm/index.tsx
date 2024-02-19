@@ -98,7 +98,6 @@ export default function MedicalRecordForm() {
   };
 
   const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
-    console.log(rows)
     setRowModesModel(newRowModesModel);
   };
 

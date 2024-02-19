@@ -126,7 +126,6 @@ export default function AddPetForm() {
       };
     
       const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
-        console.log(rows)
         setRowModesModel(newRowModesModel);
       };
     
