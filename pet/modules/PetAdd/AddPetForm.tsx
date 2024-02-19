@@ -1,11 +1,33 @@
 'use client';
-import { Box, MenuItem, InputAdornment, Typography } from '@mui/material';
+import { Box, MenuItem, InputAdornment, Typography, Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { Fira_Sans_Condensed } from 'next/font/google';
 import { IPetDetail } from '../../services/api/v1/pets/type';
 import { CustomTextField, ColorButton } from '../../components/CustomInput/type';
 import ImageUploader from '../../components/ImageDropbox';
+import { fira_sans_600 } from '../../core/theme/theme';
+import MedicalRecordForm from '../../components/MedicalRecordsForm';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
+import {
+  GridRowsProp,
+  GridRowModesModel,
+  GridRowModes,
+  DataGrid,
+  GridColDef,
+  GridToolbarContainer,
+  GridActionsCellItem,
+  GridEventListener,
+  GridRowId,
+  GridRowModel,
+  GridRowEditStopReasons,
+} from '@mui/x-data-grid';
+import { randomId } from '@mui/x-data-grid-generator';
+
 
 const fira_sans_condensed = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] });
 
@@ -26,9 +48,54 @@ const SPECIES_CHOICES = [
     { label: 'Samoi', value: 'Samoi' },
 ];
 
+// const initialRows = [
+//     // { id: 1, medical_id: 'med1', medical_date: 'date1', description: 'desc1', isNew: false},
+//     // { id: 2, medical_id: 'med2', medical_date: 'date2', description: 'desc2', isNew: false},
+//     // { id: 3, medical_id: 'med3', medical_date: 'date3', description: 'desc3', isNew: false},
+// ]
+
+const columns: GridColDef[] = [
+    { field: 'medical_id', headerName: 'Medical ID', width: 180, editable: true },
+    { field: 'medical_date', headerName: 'Medical Date', width: 180, editable: true },
+    { field: 'description', headerName: 'Description', width: 180, editable: true },
+]
+
+const initialRows: GridRowsProp = [ { id:randomId(),  medical_id: 'med1', medical_date: 'date1', description: 'desc1'} ];
+
+interface EditToolbarProps {
+    setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
+    setRowModesModel: (
+      newModel: (oldModel: GridRowModesModel) => GridRowModesModel,
+    ) => void;
+  }
+  
+  function EditToolbar(props: EditToolbarProps) {
+    const { setRows, setRowModesModel } = props;
+  
+    const handleClick = () => {
+      const id = randomId();
+      setRows((oldRows) => [...oldRows, { id, medical_id: '', medical_date: '',description: '', isNew: true }]);
+      setRowModesModel((oldModel) => ({
+        ...oldModel,
+        [id]: { mode: GridRowModes.Edit, fieldToFocus: 'medical_id' },
+      }));
+    };
+  
+    return (
+      <GridToolbarContainer>
+        <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
+          Add record
+        </Button>
+      </GridToolbarContainer>
+    );
+  }
+  
+
 export default function AddPetForm() {
     const form = useForm<IPetDetail>();
+
     const [images, setImages] = useState<File[]>([]);
+    const [rows, setRows] = useState(initialRows);
 
     const sxTextField = {
         width: '100%',
@@ -41,8 +108,103 @@ export default function AddPetForm() {
     };
 
     const onSubmit = async (data: IPetDetail) => {
+        console.log(rows)
         console.log(data);
     };
+
+    
+    const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
+
+    const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
+        if (params.reason === GridRowEditStopReasons.rowFocusOut) {
+            event.defaultMuiPrevented = true;
+        }
+    };
+
+    const handleEditClick = (id: GridRowId) => () => {
+        setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+    };
+
+    const handleSaveClick = (id: GridRowId) => () => {
+        setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+    };
+
+    const handleDeleteClick = (id: GridRowId) => () => {
+        setRows(rows.filter((row) => row.id !== id));
+    };
+
+    const handleCancelClick = (id: GridRowId) => () => {
+        setRowModesModel( {...rowModesModel, [id]: { mode: GridRowModes.View, ignoreModifications: true } });
+
+        const editedRow = rows.find((row) => row.id === id);
+        if (editedRow!.isNew) {
+            setRows(rows.filter((row) => row.id !== id));
+        }
+    };
+
+    const processRowUpdate = (newRow: GridRowModel) => {
+        const updatedRow = { ...newRow, isNew: false };
+        setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+        return updatedRow;
+    };
+
+    const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
+        console.log(rows)
+        setRowModesModel(newRowModesModel);
+    };
+
+    const columns: GridColDef[] = [
+        { field: 'medical_id', headerName: 'Medical ID', flex: 3, editable: true },
+        { field: 'medical_date', headerName: 'Medical Date', flex: 4, editable: true },
+        { field: 'description', headerName: 'Description', flex: 7, editable: true },
+        {
+        field: 'actions',
+        type: 'actions',
+        headerName: 'Options',
+        width: 80,
+        cellClassName: 'actions',
+        getActions: ({ id }) => {
+            const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+
+            if (isInEditMode) {
+            return [
+                <GridActionsCellItem
+                icon={<SaveIcon />}
+                label="Save"
+                sx={{
+                    color: 'primary.main',
+                }}
+                onClick={handleSaveClick(id)}
+                />,
+                <GridActionsCellItem
+                icon={<CancelIcon />}
+                label="Cancel"
+                className="textPrimary"
+                onClick={handleCancelClick(id)}
+                color="inherit"
+                />,
+            ];
+            }
+
+            return [
+            <GridActionsCellItem
+                icon={<EditIcon />}
+                label="Edit"
+                className="textPrimary"
+                onClick={handleEditClick(id)}
+                color="inherit"
+            />,
+            <GridActionsCellItem
+                icon={<DeleteIcon />}
+                label="Delete"
+                onClick={handleDeleteClick(id)}
+                color="inherit"
+            />,
+            ];
+        },
+        },
+    ];
+
 
     return (
         <Box sx={{ my: '5%', mx: '15%' }}>
@@ -220,6 +382,51 @@ export default function AddPetForm() {
                             autoComplete="pet-medical_records"
                             sx={sxTextField}
                         />
+                        <Box sx={{ height: 300, width: '100%' }}>
+                            <DataGrid
+                                rows={rows}
+                                columns={columns}
+                                editMode="row"
+                                rowModesModel={rowModesModel}
+                                onRowModesModelChange={handleRowModesModelChange}
+                                onRowEditStop={handleRowEditStop}
+                                processRowUpdate={processRowUpdate}
+                                slots={{
+                                toolbar: EditToolbar,
+                                }}
+                                slotProps={{
+                                toolbar: { setRows, setRowModesModel },
+                                }}
+                                hideFooter={true}
+                            />
+                        </Box>
+                        {/* <Box sx={{ height: 300, width: '100%',
+                            '& .actions': {
+                            color: 'text.secondary',
+                            },
+                            '& .textPrimary': {
+                            color: 'text.primary',
+                            },
+                        }}
+                        >
+                        <DataGrid
+                            rows={rows}
+                            columns={columns}
+                            editMode="row"
+                            hideFooter={true}
+                            sx={{fontFamily: fira_sans_600.style.fontFamily, textAlign: 'center'}}
+                            // rowModesModel={rowModesModel}
+                            // onRowModesModelChange={handleRowModesModelChange}
+                            // onRowEditStop={handleRowEditStop}
+                            // processRowUpdate={processRowUpdate}
+                            // slots={{
+                            // toolbar: EditToolbar,
+                            // }}
+                            // slotProps={{
+                            // toolbar: { setRows, setRowModesModel },
+                            // }}
+                        />
+                        </Box> */}
                         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                             <Box
                                 sx={{
