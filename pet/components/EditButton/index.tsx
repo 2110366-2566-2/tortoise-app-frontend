@@ -1,16 +1,10 @@
-'use client'
+
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import React from 'react';
 
 export default function EditButton() {
-    //const router = useRouter();
-  const handleClick = () => {
-    // Navigate back to the homepage
-    //router.push('/');
-    //onClick();
-    console.log('Button clicked!');
-  };
+  
   const [hover, setHover] = useState(false);
   function onMouseAction(event: React.SyntheticEvent) {
         if (event.type == 'mouseover') {
@@ -21,7 +15,7 @@ export default function EditButton() {
     }
 
   return (
-    <button className="button" onClick={handleClick} 
+    <button className="editbutton"  
     style={
                 hover
                     ? {

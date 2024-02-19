@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React, { useState } from 'react';
 import UserProfileCard from '../../../../components/zUserProfileCard';
 import UserSettingsCard, { IUserDetail } from '../../../../components/zUserSetting';
 import Box from '@mui/material/Box';
@@ -10,7 +10,17 @@ import EditButton from '../../../../components/EditButton';
 import { useRouter } from 'next/navigation';
 
 export default function UserProfilePage() {
-    //const router = useRouter();
+    const router = useRouter();
+    const [hover, setHover] = useState(false);
+    function onMouseAction(event: React.SyntheticEvent) {
+        if (event.type == 'mouseover') {
+            setHover(true);
+        } else {
+            setHover(false);
+        }
+    }
+
+    
 
     const mockUserDetail: IUserDetail = {
     _id: "123456789", // example ID
@@ -51,14 +61,33 @@ export default function UserProfilePage() {
                         <UserProfileCard 
                             image = {mockUserDetail.image} 
                         />
-                        <EditButton 
-                        //onClick={() => {
-                         //       router.push('/user/login');
-                            //}}
-                        />
+                        <button className="button"  
+                        style={
+                                    hover
+                                        ? {
+                                            border: '2px solid black',
+                                            boxShadow: '5px 4px #472F05',
+                                            backgroundColor: '#F79762',
+                                            cursor: 'pointer',
+                                        }
+                                        : {
+                                            border: '2px solid black',
+                                            boxShadow: '5px 4px #472F05',
+                                            backgroundColor: '#F3DDD1',
+                                            cursor: 'default',
+                                        }
+                                }
+                                onMouseOver={(event) => onMouseAction(event)}
+                                onMouseOut={(event) => onMouseAction(event)}
+                                onClick={() => router.push('/UpdateProfilePage')}
+                        >
+                        <p>🖊️EditProfile</p>
+                        </button>
+  
                     </Grid>
 
                     <Grid item md={7}>
+                        
                         <UserSettingsCard
                             first_name={mockUserDetail.first_name}
                             last_name={mockUserDetail.last_name}
@@ -67,6 +96,7 @@ export default function UserProfilePage() {
                             address={mockUserDetail.address}
                             
                         />
+                        
                     </Grid>
 
                 </Grid>
