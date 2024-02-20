@@ -199,7 +199,12 @@ function TopBar() {
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                                <MenuItem
+                                    key={setting}
+                                    onClick={() => {
+                                        router.push(`${setting.toLowerCase()}`);
+                                    }}
+                                >
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}
