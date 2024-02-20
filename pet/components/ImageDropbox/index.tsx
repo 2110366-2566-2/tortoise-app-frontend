@@ -2,7 +2,9 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
+import { ColorButton } from '../CustomInput/type';
+import { fira_sans_600 } from '../../core/theme/theme';
 
 type Props = {
     images: File[];
@@ -51,10 +53,10 @@ const FileUploader = (props: Props) => {
                         <IconButton
                             aria-label="delete image"
                             style={{
-                                position: 'absolute',
-                                top: 10,
+                                position: 'revert',
+                                top: 0,
                                 right: 0,
-                                color: '#aaa',
+                                color: '#AAA',
                             }}
                             onClick={() => handleOnRemoveImage(i)}
                         >
@@ -74,14 +76,21 @@ const FileUploader = (props: Props) => {
                 ))}
             </Grid>
             <label htmlFor={inputId}>
-                <Button
+                <ColorButton 
+                    disabled={props.images.length >= maxImagesUpload}
+                    component="span"
+                    sx={{ my: 4, width: 130, border: '2px solid #472F05', borderRadius: 0, boxShadow: '2px 2px #472F05' }}
+                >
+                    <Typography sx={{fontFamily: fira_sans_600.style.fontFamily, color: '#472F05'}}>Upload Files</Typography>
+                </ColorButton>
+                {/* <Button
                     variant="contained"
                     disabled={props.images.length >= maxImagesUpload}
                     component="span"
-                    sx={{ mt: 4 }}
+                    sx={{ my: 4, width: 140, }}
                 >
                     Upload Files
-                </Button>
+                </Button> */}
                 <input
                     id={inputId}
                     type="file"
