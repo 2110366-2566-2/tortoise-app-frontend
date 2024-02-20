@@ -1,12 +1,13 @@
 'use client';
 import PetCard from '../PetCard';
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { StaticImageData } from 'next/image';
 import useGetPets from '../../services/api/v1/pets/useGetPets';
+import useToastUI from '../../core/hooks/useToastUI';
 
 export interface PetCardProps {
     petId: string;
@@ -26,10 +27,12 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function PetCatalogue() {
+    const { toastError } = useToastUI();
     const {
         data: [petList, pagination] = [],
         refetch,
         isSuccess: petListSuccess,
+        isError,
     } = useGetPets(
         {
             search: '',
@@ -39,6 +42,12 @@ export default function PetCatalogue() {
             enabled: true,
         },
     );
+
+    useEffect(() => {
+        if (!petListSuccess) {
+            toastError('Failed loading pet lists');
+        }
+    }, [petListSuccess]);
 
     if (!petListSuccess) {
         return null;
