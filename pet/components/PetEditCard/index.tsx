@@ -2,7 +2,7 @@ import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { IPetDetail, IPetUpdatePayload } from '../../services/api/v1/pets/type';
 import { Box, TextField } from '@mui/material';
 import { fira_sans_600 } from '../../core/theme/theme';
-import CustomInput from '../CustomInput';
+import { CustomTextField } from '../CustomInput/type';
 import SelectField from '../SelectField';
 import { UseFormReturn } from 'react-hook-form';
 import { useEffect } from 'react';
@@ -29,7 +29,7 @@ export default function PetEditCard(props: PetEditCardProps) {
                 return (
                     <>
                         {(params.row?.type === 'text' || params.row?.type === 'number') && (
-                            <TextField
+                            <CustomTextField
                                 {...form.register(params.row?.name)}
                                 fullWidth
                                 type={params.row?.type}
@@ -37,6 +37,14 @@ export default function PetEditCard(props: PetEditCardProps) {
                                 defaultValue={params.value}
                                 disabled={!props.editMode}
                                 multiline
+                                sx={{ 
+                                    my: 0.5, mx: 1,
+                                    border: '1.5px solid #472F05',
+                                    boxShadow: '3px 3px #472F05',
+                                    '&:hover': {
+                                        backgroundColor: '#E5CB9A'
+                                    }
+                                }}
                             />
                         )}
                         {params?.row?.type === 'select' && (
@@ -94,12 +102,21 @@ export default function PetEditCard(props: PetEditCardProps) {
                 hideFooterPagination
                 hideFooterSelectedRowCount
                 sx={{
-                    border: '2px solid #472F05',
+                    border: '3px solid #472F05',
                     borderRadius: 0,
                     fontFamily: fira_sans_600.style.fontFamily,
                     fontSize: 18,
                     '& .MuiDataGrid-cell': {
                         padding: '8px !important',
+                    },
+                    '& .MuiDataGrid-row:hover': {
+                        backgroundColor: '#FFF8E8',
+                    },
+                    '& .MuiDataGrid-columnHeaders': {
+                        fontSize: 22,
+                        color: 'whitesmoke',
+                        backgroundColor: '#472F05',
+                        borderRadius: 0,
                     },
                     '& .MuiDataGrid-cell:focus': {
                         outline: 'none',

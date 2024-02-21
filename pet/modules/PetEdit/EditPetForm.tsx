@@ -17,6 +17,7 @@ import PetEditCard from '../../components/PetEditCard';
 import SaveIcon from '@mui/icons-material/Save';
 import { useForm } from 'react-hook-form';
 import { useUpdatePet } from '../../services/api/v1/pets/useUpdatePet';
+import { fira_sans_600 } from '../../core/theme/theme';
 
 export default function EditPetForm() {
     const params = useParams();
@@ -81,7 +82,10 @@ export default function EditPetForm() {
 
     return (
         <form onSubmit={form.handleSubmit(handleSubmitEdit)} noValidate>
-            <Box sx={{ alignSelf: 'center', marginTop: 5 }}>
+            <Typography sx={{mt: 4, fontFamily: fira_sans_600.style.fontFamily, textAlign: 'center', fontSize: 30}}>
+                Edit your Pet Information Here
+            </Typography>
+            <Box sx={{ alignSelf: 'center', marginTop: 1 }}>
                 <ConfirmDialog
                     open={openDialog}
                     setOpen={setOpenDialog}
@@ -90,57 +94,88 @@ export default function EditPetForm() {
                     confirmText="Delete"
                     handleConfirm={handleDelete}
                 />
-                <Box sx={{ px: '5%', textAlign: 'end', float: 'inline-end' }}>
+                <Box sx={{ px: 7, textAlign: 'end', float: 'inline-end', display: 'flex', flexDirection: 'row'}}>
                     <Button
-                        sx={{ display: editMode ? 'none' : 'flex', backgroundColor: 'whitesmoke', color: 'black' }}
+                        sx={{ 
+                            display: editMode ? 'none' : 'flex', 
+                            // backgroundColor: 'whitesmoke', 
+                            '&.MuiButton-root': {
+                                border: '2px solid #472F05',
+                                boxShadow: '3px 3px #472F05',
+                                color: '#472F05',
+                                borderRadius: 0,
+                                backgroundColor: '#FAA943',
+                                px: 2
+                            },
+                            '&:hover': {
+                                backgroundColor: '#F79762'
+                            }
+                        }}
                         onClick={() => {
                             setEditMode(true);
                         }}
                     >
                         {<EditIcon />}
-                        <Typography>{`Edit`}</Typography>
+                        <Typography sx={{fontFamily: fira_sans_600.style.fontFamily, fontSize: 18}}>{`Edit`}</Typography>
                     </Button>
                     <Button
                         type="submit"
                         sx={{
                             display: editMode ? 'flex' : 'none',
-                            backgroundColor: 'whitesmoke',
-                            color: 'black',
+                            '&.MuiButton-root': {
+                                border: '2px solid #472F05',
+                                boxShadow: '3px 3px #472F05',
+                                color: '#472F05',
+                                borderRadius: 0,
+                                backgroundColor: '#FAA943',
+                                px: 2
+                            },
+                            '&:hover': {
+                                backgroundColor: '#F79762'
+                            }
                         }}
                         onClick={() => {
                             setEditMode(false);
                         }}
                     >
                         {<SaveIcon />}
-                        <Typography>{`Save`}</Typography>
+                        <Typography sx={{fontFamily: fira_sans_600.style.fontFamily}}>{`Save`}</Typography>
                     </Button>
                     <Button
                         onClick={() => {
                             setOpenDialog(true);
                         }}
                         sx={{
-                            backgroundColor: 'whitesmoke',
-                            color: 'black',
+                            '&.MuiButton-root': {
+                                border: '2px solid #472F05',
+                                boxShadow: '3px 3px #472F05',
+                                color: '#472F05',
+                                borderRadius: 0,
+                                backgroundColor: '#E18A7A',
+                                px: 2, mx: 2
+                            },
+                            '&:hover': {
+                                backgroundColor: '#E2725B'
+                            }
                         }}
                     >
                         <DeleteIcon />
-                        <Typography>{`Delete`}</Typography>
+                        <Typography sx={{fontFamily: fira_sans_600.style.fontFamily, fontSize: 18}}>{`Delete`}</Typography>
                     </Button>
                 </Box>
-                <Grid container direction="column" sx={{ overflowX: 'hidden', flexWrap: 'nowrap' }}>
+                <Grid container direction="column" sx={{ overflowX: 'hidden', flexWrap: 'nowrap', mb: 3 }}>
                     <Grid
                         container
                         direction={{ xs: 'column', md: 'row' }}
-                        spacing={5}
+                        spacing={7}
                         sx={{
                             display: 'flex',
                             flexWrap: 'nowrap',
-                            // position: 'absolute',
                             top: '15vh',
-                            px: { xs: 5, md: 8 },
+                            px: { xs: 5, md: 7 },
                         }}
                     >
-                        <Grid item md={5} sx={{ alignSelf: 'center' }}>
+                        <Grid item md={5} sx={{ alignSelf: { xs: 'center', md: 'normal' }, justifySelf: 'center', mt: 3}}>
                             <ProfileCard petImage={petFullDetail.media} />
                         </Grid>
 
