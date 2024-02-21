@@ -11,7 +11,7 @@ export default function UserLayout({
     queryClient.prefetchQuery;
     return (
         <QueryClientProvider client={queryClient}>
-            <ToastContainer />
+            <ToastContainer limit={1} stacked={false}  />
             {children}
         </QueryClientProvider>
     );
