@@ -4,25 +4,29 @@ const useToastUI = () => {
     const options: ToastOptions = {
         position: "top-center",
         autoClose: 5000,
-        hideProgressBar: true,
+        hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
     }
 
     const toastSuccess = (message: string) => {
-        toast.success(message, options)
+        toast.clearWaitingQueue();
+        toast.success(message, {...options, toastId:'success'})
     }
 
     const toastError = (message: string) => {
-        toast.error(message, options)
+        toast.clearWaitingQueue();
+        toast.error(message, {...options, toastId:'error'})
     }
 
     const toastWarning = (message: string) => {
-        toast.warning(message, options)
+        toast.clearWaitingQueue();
+        toast.warning(message, {...options, toastId:'warning'})
     }
 
     const toastInfo = (message: string) => {
-        toast.info(message, options)
+        toast.clearWaitingQueue();
+        toast.info(message, {...options, toastId:'info'})
     }
 
     return { toastSuccess, toastError, toastWarning, toastInfo }
