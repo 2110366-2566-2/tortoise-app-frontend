@@ -30,8 +30,8 @@ export default function ProfileCard({ petImage }: { petImage: string }) {
         <Card
             variant="outlined"
             style={{
-                height: 300,
-                width: 350,
+                height: 350,
+                width: 400,
                 margin: 10,
                 boxShadow: '8px 8px #472F05',
                 backgroundColor: '#F3DDD1',

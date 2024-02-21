@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { Box, SxProps, Theme, styled } from '@mui/material';
+import { fira_sans_600 } from '../../core/theme/theme';
 
 export interface SelectFieldChoice {
     label: string;
@@ -20,6 +21,7 @@ interface SelectFieldProps {
     disabled?: boolean;
     defaultValue?: string;
 }
+
 
 export default function SelectField(props: SelectFieldProps) {
     const [choiceValue, setChoiceValue] = React.useState(props.defaultValue || '');
@@ -39,10 +41,31 @@ export default function SelectField(props: SelectFieldProps) {
                 value={choiceValue}
                 onChange={handleChange}
                 disabled={props.disabled}
-                sx={{ boxShadow: '3px 3px #472F05', borderRadius: 0, fontFamily: '__Fira_Sans_Condensed_43412c' }}
+                sx={{ 
+                    mx: 1,
+                    width: '97%',
+                    boxShadow: '3px 3px #472F05', 
+                    border: '2px solid #472F05',
+                    borderRadius: 0, 
+                    fontFamily: fira_sans_600.style.fontFamily,
+                    '&:hover': {
+                        backgroundColor: '#E5CB9A'
+                    },
+                }}
             >
                 {props.choices.map((eachChoice, index) => (
-                    <MenuItem id={eachChoice.value} key={index} value={eachChoice.value}>
+                    <MenuItem id={eachChoice.value} key={index} value={eachChoice.value}
+                    sx={{
+                        m: 0,
+                        borderRadius: 0,
+                        fontFamily: fira_sans_600.style.fontFamily,
+                        '&:hover': {
+                            backgroundColor: "#FFF8E8"
+                        },
+                        '&.Mui-selected': {
+                            backgroundColor: '#E5CB9A !important'
+                        }
+                    }}>
                         {eachChoice.label}
                     </MenuItem>
                 ))}
