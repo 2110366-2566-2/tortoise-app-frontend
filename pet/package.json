@@ -19,6 +19,7 @@
     "axios": "^1.6.5",
     "dayjs": "^1.11.10",
     "material-react-toastify": "^2.0.1",
+    "mui-one-time-password-input": "^2.0.2",
     "next": "^14.1.0",
     "next-auth": "^4.24.5",
     "next-runtime-env": "^3.2.0",
