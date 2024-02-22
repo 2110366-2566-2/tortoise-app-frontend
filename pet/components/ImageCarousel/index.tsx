@@ -16,14 +16,21 @@ export default function ImageCarousel(props: ImageCarouselProps) {
                 width: '100%',
                 height: '100%',
                 boxShadow: 3,
+                position: 'relative',
             }}
-            IndicatorIcon
             indicators
             swipe
         >
             {itemLists.map((item, idx) => (
                 <Paper key={idx}>
-                    <Image src={item} alt={item} fill={true} objectFit="cover" priority />
+                    <Image
+                        src={item}
+                        alt={item}
+                        fill
+                        sizes="100% 100%"
+                        priority
+                        style={{ objectFit: 'cover', objectPosition: 'center' }}
+                    />
                 </Paper>
             ))}
         </Carousel>

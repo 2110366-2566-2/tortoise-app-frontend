@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { requestConfig, DEFAULT_DEV_TOKEN } from './config';
-import { env } from 'next-runtime-env';
 import { getLocalStorageValue } from '../../core/utils';
 
 const RequestClient = axios.create({
@@ -15,7 +14,7 @@ RequestClient.interceptors.request.use(async (config) => {
   if (!token || token.trim() === '') {
     const controller = new AbortController();
     config.signal = controller.signal;
-    controller.abort('sessionId is null or empty.');
+    controller.abort('session_id is null or empty.');
   } else {
     config.headers.Authorization = `Bearer ${token}`;
   }

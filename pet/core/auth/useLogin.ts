@@ -1,18 +1,18 @@
+import { authClient } from "../../services/clients"
 import { LoginInfo } from "./type"
 
-export default async function useLogin(data: LoginInfo) {
+export default async function useLogin({username, password}: LoginInfo) {
     
-    const response = await fetch("http://localhost:8080/api/v1/user/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            username: data.username,
-            password: data.password
+    try{
+        const response = await authClient.post('/api/v1/user/login', {
+            username,
+            password,
         })
-    })     
-    
-    return await response.json()
-
+        if (response.data.error || !response.data.token) throw new Error(response.data.error);
+        const sessionId = response?.data?.token
+        localStorage.setItem('session_id', sessionId)
+        return Promise.resolve()
+    } catch(err){
+        return err
+    }
 }

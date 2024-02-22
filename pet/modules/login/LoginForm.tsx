@@ -20,6 +20,7 @@ import { signIn } from 'next-auth/react';
 import useLogin from '../../core/auth/useLogin';
 import { authClient } from '../../services/clients';
 import { useRouter } from 'next/navigation';
+import useToastUI from '../../core/hooks/useToastUI';
 
 type FormValues = {
     username: string;
@@ -70,6 +71,7 @@ const CustomTextField = styled(TextField)({
 export default function LoginForm() {
     const router = useRouter();
     const form = useForm<FormValues>();
+    const toastUI = useToastUI();
 
     const [usernameError, setUsernameError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
@@ -79,23 +81,22 @@ export default function LoginForm() {
     const onSubmit = async (data: FormValues) => {
         if (data.username === '') {
             setUsernameError(true);
-            return alert('Username field is blank.');
+            return toastUI.toastError('Please enter a username.');
         }
         if (data.password === '') {
             setPasswordError(true);
-            return alert('Password field is blank.');
+            return toastUI.toastError('Please enter a password.');
         }
 
         const res = await useLogin(data).then((d) => {
             return d;
         });
-        console.log(data);
         console.log(res);
-        if (!res.error) {
-            alert('Login Success');
+        if (!res) {
+            toastUI.toastSuccess('Logged in successfully!');
             router.push('/user/marketplace');
         } else {
-            alert(res.error);
+            toastUI.toastError('Wrong username or password.');
         }
     };
 
@@ -154,6 +155,7 @@ export default function LoginForm() {
                     }}
                 >
                     <Link
+                        rel="preload"
                         href="recover"
                         underline="always"
                         sx={{
