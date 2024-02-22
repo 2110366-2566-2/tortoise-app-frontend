@@ -21,7 +21,7 @@ function Copyright() {
     return (
         <Typography variant="body2" color="text.secondary" align="center">
             {'Copyright © '}
-            <Link color="inherit" href="https://www.fexcel.services/">
+            <Link color="inherit" href="https://www.fexcel.services/" rel="preload">
                 Your Website
             </Link>{' '}
             {new Date().getFullYear()}

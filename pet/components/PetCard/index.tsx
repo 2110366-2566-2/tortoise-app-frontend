@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 import InteractionPetCard from '../InteractionPetCard';
 import { PetCardProps } from '../PetCatalogue';
 import { styled } from '@mui/material';
@@ -9,13 +9,11 @@ export default function PetCard(props: PetCardProps) {
 
     return (
         <InteractionPetCard petId={petId}>
-            {/* <div style={{border: '2px solid black', boxShadow: '5px 4px #472F05', backgroundColor: '#F3DDD1' }}> */}
-            {/* <div className="m-8 w-1/5 h-[300px] shadow-xl border border-dashed border-black"> */}
-            <div style={{ display: 'block', height: 250, position: 'relative' }}>
+            <Box sx={{ display: 'block', height: 250, position: 'relative' }}>
                 <Image
-                    src={imgSrc}
+                    src={imgSrc || '/petpicture'}
                     alt="Pet Picture"
-                    fill={true}
+                    fill
                     priority
                     sizes="100% 100%"
                     style={{
@@ -26,7 +24,7 @@ export default function PetCard(props: PetCardProps) {
                         boxShadow: '0 4px 4px -2px #472F05',
                     }}
                 />
-            </div>
+            </Box>
             <div style={{ display: 'block', height: 100, padding: 10, overflowWrap: '-moz-initial' }}>
                 <div style={{ textAlign: 'center', fontSize: 23 }}>{petName}</div>
                 <div>Breed: {breed}</div>

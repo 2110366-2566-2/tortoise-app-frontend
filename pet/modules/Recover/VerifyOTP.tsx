@@ -83,7 +83,7 @@ export default function VerifyOTP() {
                                     rowGap: '4px',
                                 }}
                             >
-                                <Link onClick={handleResend} sx={{ textAlign: 'end' }}>
+                                <Link onClick={handleResend} rel="preload" sx={{ textAlign: 'end' }}>
                                     Resend OTP?
                                 </Link>
                                 <ColorButton

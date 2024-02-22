@@ -1,11 +1,10 @@
 import axios from 'axios';
 
-import { requestConfig } from './config';
-import { env } from 'next-runtime-env';
+import { DEFAULT_DEV_TOKEN, requestConfig } from './config';
+import { getLocalStorageValue } from '../../core/utils/localStorage';
 
 const authClient = axios.create({
   ...requestConfig,
-  baseURL: env('NEXT_PUBLIC_AUTH_URL'),
   validateStatus: () => true,
 });
 
