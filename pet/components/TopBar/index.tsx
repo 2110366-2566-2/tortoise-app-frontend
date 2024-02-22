@@ -202,7 +202,7 @@ function TopBar() {
                                 <MenuItem
                                     key={setting}
                                     onClick={() => {
-                                        router.push(`${setting.toLowerCase()}`);
+                                        router.push(`/user/${setting.toLowerCase()}`);
                                     }}
                                 >
                                     <Typography textAlign="center">{setting}</Typography>
