@@ -1,6 +1,16 @@
 'use client';
 
-import { Typography, TextField, Box, IconButton, InputAdornment, Button, ButtonProps, styled } from '@mui/material';
+import {
+    Typography,
+    TextField,
+    Box,
+    IconButton,
+    InputAdornment,
+    Button,
+    ButtonProps,
+    styled,
+    Link,
+} from '@mui/material';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';
 import { useState } from 'react';
@@ -138,14 +148,28 @@ export default function LoginForm() {
                 />
                 <Box
                     sx={{
-                        backgroundColor: '#FAA943',
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'center',
                     }}
                 >
+                    <Link
+                        href="recover"
+                        underline="always"
+                        sx={{
+                            py: '4px',
+                            textAlign: 'end',
+                            fontSize: '14px',
+                        }}
+                    >
+                        Forgot Password?
+                    </Link>
                     <ColorButton
                         sx={{
+                            backgroundColor: '#FAA943 !important',
+                            ':hover': {
+                                backgroundColor: '#F79762 !important',
+                            },
                             paddingY: 0.5,
                             border: '2px solid #472F05',
                             borderRadius: 0,
@@ -158,10 +182,6 @@ export default function LoginForm() {
                         LogIn
                     </ColorButton>
                 </Box>
-
-                {/* <Button variant="outlined" onClick={form.handleSubmit(onSubmit)}>
-                    Login
-                </Button> */}
             </Box>
         </form>
     );
