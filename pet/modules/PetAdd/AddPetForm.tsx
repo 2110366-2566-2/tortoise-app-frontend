@@ -1,8 +1,8 @@
 'use client';
 import { Box, MenuItem, InputAdornment, Typography, Button } from '@mui/material';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { Fira_Sans_Condensed } from 'next/font/google';
-import { IPetDetail, MedicalRecord } from '../../services/api/v1/pets/type';
+import { IPetCreateParams, IPetDetail, IPetUpdatePayload, MedicalRecord } from '../../services/api/v1/pets/type';
 import { CustomTextField, ColorButton } from '../../components/CustomInput/type';
 import ImageUploader from '../../components/ImageDropbox';
 import { useEffect, useState } from 'react';
@@ -13,6 +13,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
+import useGetPetCategory, { IPetCategoryMasterData } from '../../services/api/master/useGetPetCategory';
 
 import {
     GridRowsProp,
@@ -26,11 +27,12 @@ import {
     GridRowId,
     GridRowModel,
     GridRowEditStopReasons,
-  } from '@mui/x-data-grid';
-  import { randomId } from '@mui/x-data-grid-generator';
-import useCreatePet from '../../services/api/v1/pets/useCreatePet';
+} from '@mui/x-data-grid';
+import { randomId } from '@mui/x-data-grid-generator';
 import { fira_sans_600 } from '../../core/theme/theme';
-
+import SelectField, { SelectFieldChoice } from '../../components/SelectField';
+import { useCreatePet } from '../../services/api/v1/pets/useCreatePet';
+import useToastUI from '../../core/hooks/useToastUI';
 
 const fira_sans_condensed = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] });
 
@@ -39,25 +41,17 @@ const SEX_CHOICES = [
     { label: 'Female', value: 'Female' },
 ];
 
-const CATEGORY_CHOICES = [
-    { label: 'Dog', value: 'dog' },
-    { label: 'Cat', value: 'cat' },
-    { label: 'Bird', value: 'bird' },
-];
-
 const SPECIES_CHOICES = [
     { label: 'Pug', value: 'Pug' },
     { label: 'Puddle', value: 'Puddle' },
     { label: 'Samoi', value: 'Samoi' },
 ];
 
-const initialRows:GridRowsProp = [ { id:randomId(),  medical_id: 'med1', medical_date: 'date1', description: 'desc1'} ];
-  
+const initialRows: GridRowsProp = [{ id: randomId(), medical_id: 'med1', medical_date: 'date1', description: 'desc1' }];
+
 interface EditToolbarProps {
-  setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
-  setRowModesModel: (
-    newModel: (oldModel: GridRowModesModel) => GridRowModesModel,
-  ) => void;
+    setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
+    setRowModesModel: (newModel: (oldModel: GridRowModesModel) => GridRowModesModel) => void;
 }
 
 function EditToolbar(props: EditToolbarProps) {
@@ -65,37 +59,50 @@ function EditToolbar(props: EditToolbarProps) {
 
     const handleClick = () => {
         const id = randomId();
-        setRows((oldRows) => [...oldRows, { id, medical_id: '', medical_date: '',description: '', isNew: true }]);
+        setRows((oldRows) => [...oldRows, { id, medical_id: '', medical_date: '', description: '', isNew: true }]);
         setRowModesModel((oldModel) => ({
-        ...oldModel,
-        [id]: { mode: GridRowModes.Edit, fieldToFocus: 'medical_id' },
+            ...oldModel,
+            [id]: { mode: GridRowModes.Edit, fieldToFocus: 'medical_id' },
         }));
     };
 
     return (
-        <GridToolbarContainer sx={{width: '100%', p: 0, backgroundColor: '#F9C067'}}>
-        <Button color="primary" startIcon={<AddIcon sx={{color: '#472F05'}}/>} onClick={handleClick}
-            sx={{ p: 1, borderRadius: 0, fontSize: 18,
-                '&:hover': {
-                    backgroundColor: '#F5A800'
-                }}}>
-            <Typography 
+        <GridToolbarContainer sx={{ width: '100%', p: 0, backgroundColor: '#F9C067' }}>
+            <Button
+                color="primary"
+                startIcon={<AddIcon sx={{ color: '#472F05' }} />}
+                onClick={handleClick}
                 sx={{
-                    fontFamily: fira_sans_600.style.fontFamily, 
-                    color: '#472F05',
-                    fontSize: 15,
-                }}>
-                Add Record
-            </Typography>
-        </Button>
+                    p: 1,
+                    borderRadius: 0,
+                    fontSize: 18,
+                    '&:hover': {
+                        backgroundColor: '#F5A800',
+                    },
+                }}
+            >
+                <Typography
+                    sx={{
+                        fontFamily: fira_sans_600.style.fontFamily,
+                        color: '#472F05',
+                        fontSize: 15,
+                    }}
+                >
+                    Add Record
+                </Typography>
+            </Button>
         </GridToolbarContainer>
     );
 }
 
 export default function AddPetForm() {
-
-    const router = useRouter()
+    const router = useRouter();
     const form = useForm<IPetDetail>();
+    const watcher = useWatch({ name: 'category', control: form.control });
+    const toastUI = useToastUI();
+
+    const { data: petCategory, isSuccess: petCategorySuccess } = useGetPetCategory();
+    const petCategoryList = (petCategory || []) as IPetCategoryMasterData[];
 
     const [images, setImages] = useState<File[]>([]);
     const [rows, setRows] = useState(initialRows);
@@ -107,44 +114,44 @@ export default function AddPetForm() {
 
     const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
         if (params.reason === GridRowEditStopReasons.rowFocusOut) {
-          event.defaultMuiPrevented = true;
+            event.defaultMuiPrevented = true;
         }
-      };
-    
+    };
+
     const handleEditClick = (id: GridRowId) => () => {
         setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
     };
-    
+
     const handleSaveClick = (id: GridRowId) => () => {
         setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
     };
-    
+
     const handleDeleteClick = (id: GridRowId) => () => {
         setRows(rows.filter((row) => row.id !== id));
     };
-    
+
     const handleCancelClick = (id: GridRowId) => () => {
         setRowModesModel({
-        ...rowModesModel,
-        [id]: { mode: GridRowModes.View, ignoreModifications: true },
+            ...rowModesModel,
+            [id]: { mode: GridRowModes.View, ignoreModifications: true },
         });
-    
+
         const editedRow = rows.find((row) => row.id === id);
         if (editedRow!.isNew) {
-        setRows(rows.filter((row) => row.id !== id));
+            setRows(rows.filter((row) => row.id !== id));
         }
     };
-    
+
     const processRowUpdate = (newRow: GridRowModel) => {
         const updatedRow = { ...newRow, isNew: false };
         setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
         return updatedRow;
     };
-    
+
     const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
         setRowModesModel(newRowModesModel);
     };
-    
+
     const columns: GridColDef[] = [
         { field: 'medical_id', headerName: 'Medical ID', flex: 3, editable: true },
         { field: 'medical_date', headerName: 'Medical Date', flex: 4, editable: true },
@@ -157,27 +164,27 @@ export default function AddPetForm() {
             cellClassName: 'actions',
             getActions: ({ id }) => {
                 const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
-        
+
                 if (isInEditMode) {
-                return [
-                    <GridActionsCellItem
-                    icon={<SaveIcon />}
-                    label="Save"
-                    sx={{
-                        color: '#EEA83E',
-                    }}
-                    onClick={handleSaveClick(id)}
-                    />,
-                    <GridActionsCellItem
-                    icon={<CancelIcon />}
-                    label="Cancel"
-                    className="textPrimary"
-                    onClick={handleCancelClick(id)}
-                    color="inherit"
-                    />,
-                ];
+                    return [
+                        <GridActionsCellItem
+                            icon={<SaveIcon />}
+                            label="Save"
+                            sx={{
+                                color: '#EEA83E',
+                            }}
+                            onClick={handleSaveClick(id)}
+                        />,
+                        <GridActionsCellItem
+                            icon={<CancelIcon />}
+                            label="Cancel"
+                            className="textPrimary"
+                            onClick={handleCancelClick(id)}
+                            color="inherit"
+                        />,
+                    ];
                 }
-        
+
                 return [
                     <GridActionsCellItem
                         icon={<EditIcon />}
@@ -196,7 +203,6 @@ export default function AddPetForm() {
             },
         },
     ];
-    
 
     const sxTextField = {
         width: '100%',
@@ -208,25 +214,47 @@ export default function AddPetForm() {
         },
     };
 
-    const onSubmit = async (data: IPetDetail) => {
-        data.seller_id = '65c7356900dfa761aed36122'
-        data.is_sold = false
-        data.age = Number(data.age)
-        data.price = Number(data.price)
-        data.weight = Number(data.weight)
-        const medic = new Array<MedicalRecord> ()
-        rows.map((d) => medic.push({medical_id: d.medical_id, medical_date: d.medical_date, description: d.description}))
-        data.medical_records = medic
-        // console.log(data)
-        const response = await useCreatePet(data)
-        if(!response.error) {
-            alert('Create Pet Successfully')
-            router.push('/user/my-shop')
-        }
-        else {
-            alert('error to create the pet')
+    const { mutateAsync: mutateCreatePet } = useCreatePet({
+        onSuccess: () => {
+            toastUI.toastSuccess('Pet created successfully');
+            router.push('/user/my-shop');
+        },
+        onError: () => {
+            toastUI.toastError('Pet creation failed');
+        },
+    });
+
+    const onSubmit = async (data: IPetUpdatePayload) => {
+        const sellerId = '65c7356900dfa761aed36120';
+        data.is_sold = false;
+        data.age = Number(data.age);
+        data.price = Number(data.price);
+        data.weight = Number(data.weight);
+        data.media = '';
+        const medic = new Array<MedicalRecord>();
+        rows.map((d) =>
+            medic.push({ medical_id: d.medical_id, medical_date: d.medical_date, description: d.description }),
+        );
+        data.medical_records = medic;
+        try {
+            await mutateCreatePet({ sellerId: sellerId, payload: data } as IPetCreateParams);
+        } catch (err) {
+            throw err;
         }
     };
+
+    if (!petCategorySuccess) {
+        return null;
+    }
+
+    const CATEGORY_CHOICES = (petCategoryList || []).map((category) => ({
+        label: category.category.replace(/^\w/, (first) => first.toUpperCase()),
+        value: category.category,
+    })) as SelectFieldChoice[];
+
+    const SPECIES_CHOICES = (
+        petCategoryList.find((eachCategory) => eachCategory.category === watcher)?.species || []
+    ).map((eachSpecies) => ({ label: eachSpecies, value: eachSpecies })) as SelectFieldChoice[];
 
     return (
         <Box sx={{ my: '5%', mx: '15%' }}>
@@ -263,7 +291,8 @@ export default function AddPetForm() {
                         sx={{
                             fontFamily: fira_sans_condensed.style.fontFamily,
                             width: '100%',
-                            pl: 1, pb: 3,
+                            pl: 1,
+                            pb: 3,
                             fontSize: 20,
                         }}
                     >
@@ -368,36 +397,29 @@ export default function AddPetForm() {
                                     </MenuItem>
                                 ))}
                             </CustomTextField>
-                            <CustomTextField {...form.register('category')} select label="Category" sx={sxTextField}>
-                                {CATEGORY_CHOICES.map((option) => (
-                                    <MenuItem
-                                        key={option.value}
-                                        value={option.value}
-                                        sx={{
-                                            fontFamily: fira_sans_condensed.style.fontFamily,
-                                            '&:hover': { backgroundColor: '#F3DDD1' },
-                                            '&:focus': { backgroundColor: 'rgb(272, 174, 133) !important' },
-                                        }}
-                                    >
-                                        {option.label}
-                                    </MenuItem>
-                                ))}
-                            </CustomTextField>
-                            <CustomTextField {...form.register('species')} select label="Species" sx={sxTextField}>
-                                {SPECIES_CHOICES.map((option) => (
-                                    <MenuItem
-                                        key={option.value}
-                                        value={option.value}
-                                        sx={{
-                                            fontFamily: fira_sans_condensed.style.fontFamily,
-                                            '&:hover': { backgroundColor: '#F3DDD1' },
-                                            '&:focus': { backgroundColor: 'rgb(272, 174, 133) !important' },
-                                        }}
-                                    >
-                                        {option.label}
-                                    </MenuItem>
-                                ))}
-                            </CustomTextField>
+
+                            <SelectField
+                                {...form.register('category')}
+                                name="category"
+                                label="Category"
+                                sx={sxTextField}
+                                choices={CATEGORY_CHOICES}
+                                setFormValue={(value) => {
+                                    form.setValue('category', value);
+                                    form.clearErrors();
+                                }}
+                            />
+                            <SelectField
+                                {...form.register('species')}
+                                name="species"
+                                label="Species"
+                                sx={sxTextField}
+                                choices={SPECIES_CHOICES}
+                                disabled={!watcher}
+                                setFormValue={(value) => {
+                                    form.setValue('species', value);
+                                }}
+                            />
                         </Box>
                         <CustomTextField
                             {...form.register('behavior')}
@@ -411,7 +433,8 @@ export default function AddPetForm() {
                             sx={{
                                 fontFamily: fira_sans_condensed.style.fontFamily,
                                 width: '100%',
-                                pl: 1, pt: 4,
+                                pl: 1,
+                                pt: 4,
                                 fontSize: 20,
                             }}
                         >
@@ -427,14 +450,15 @@ export default function AddPetForm() {
                                 onRowEditStop={handleRowEditStop}
                                 processRowUpdate={processRowUpdate}
                                 slots={{
-                                toolbar: EditToolbar,
+                                    toolbar: EditToolbar,
                                 }}
                                 slotProps={{
-                                toolbar: { setRows, setRowModesModel },
+                                    toolbar: { setRows, setRowModesModel },
                                 }}
                                 hideFooter={true}
-                                sx={{fontFamily: fira_sans_600.style.fontFamily, 
-                                    border: '1px solid black', 
+                                sx={{
+                                    fontFamily: fira_sans_600.style.fontFamily,
+                                    border: '1px solid black',
                                     boxShadow: '3px 3px #472F05',
                                     backgroundColor: 'white',
                                     borderRadius: 0,
@@ -453,13 +477,25 @@ export default function AddPetForm() {
                                         '& .css-m2gt03-MuiInputBase-root-MuiDataGrid-editInputCell': {
                                             height: '100%',
                                             fontFamily: fira_sans_600.style.fontFamily,
-                                            color: 'gray'
-                                        }
-                                    }}}
+                                            color: 'gray',
+                                        },
+                                    },
+                                }}
                             />
                         </Box>
-                        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', px: 3, mt: 4, mb: 2,
-                            border: '2px solid #472F05', borderRadius: 0, boxShadow: '3px 3px #472F05'}}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                px: 3,
+                                mt: 4,
+                                mb: 2,
+                                border: '2px solid #472F05',
+                                borderRadius: 0,
+                                boxShadow: '3px 3px #472F05',
+                            }}
+                        >
                             <Box
                                 sx={{
                                     fontFamily: fira_sans_condensed.style.fontFamily,

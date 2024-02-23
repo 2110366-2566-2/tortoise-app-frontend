@@ -49,6 +49,11 @@ export interface IPetUpdateParams{
     petId: string,
     payload: IPetUpdatePayload,
 }
+
+export interface IPetCreateParams{
+    sellerId: string,
+    payload: IPetUpdatePayload,
+}
   
 export interface MedicalRecord {
     medical_id: string
