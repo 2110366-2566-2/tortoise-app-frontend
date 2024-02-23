@@ -7,15 +7,9 @@ import Checkbox from '@mui/material/Checkbox';
 import { Box, styled } from '@mui/material'
 import { fira_sans_600, fira_sans_800 } from '../../core/theme/theme';
 import { CustomTextField } from '../../components/CustomInput/type';
+import { sxTextField } from '../../core/theme/theme';
 
 export default function AddressForm() {
-
-    const sxTextField = {
-        boxShadow: '3px 3px #472F05',
-        '&:hover': {
-            backgroundColor: '#E5CB9A',
-        },
-    };
 
     return (
         <React.Fragment>

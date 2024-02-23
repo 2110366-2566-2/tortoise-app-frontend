@@ -65,8 +65,6 @@ export default function CheckoutPage() {
         setActiveStep(activeStep - 1);
     };
 
-    const sxText = {border: '3px solid #472F05', boxShadow: '6px 6px #472F05'}
-
     return (
         <React.Fragment>
             <CssBaseline />
