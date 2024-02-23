@@ -1,9 +1,27 @@
-import { IPetDetail } from "./type";
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { IPetCreateParams } from './type';
+import { requestClient } from '../../../clients/requestClient';
+import { IMutationHook, IResponseData, IAxiosResponse } from '../../models';
 
-export default async function useCreatePet(data: IPetDetail) {
-    const response = await fetch(`http://localhost:8080/api/v1/pets/seller/${data.seller_id}`, {
-        method: 'POST',
-        body: JSON.stringify(data)
-    })
-    return response.json()
-}
+export const useCreatePet = ({
+  onSuccess,
+  onError,
+  options,
+}: IMutationHook<IResponseData<unknown>, IPetCreateParams>) => {
+  return useMutation({
+    mutationKey: ['useCreatePet'],
+    mutationFn: async (params: IPetCreateParams) => {
+        const {sellerId, payload} = params
+      try {
+        const response: IAxiosResponse = await requestClient.post(`api/v1/pets/seller/${sellerId}`, payload);
+        return response.data;
+      } catch (err) {
+        throw err as AxiosError;
+      }
+    },
+    onSuccess: onSuccess,
+    onError: onError,
+    ...options,
+  });
+};

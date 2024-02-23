@@ -37,13 +37,14 @@ export default function PetEditCard(props: PetEditCardProps) {
                                 defaultValue={params.value}
                                 disabled={!props.editMode}
                                 multiline
-                                sx={{ 
-                                    my: 0.5, mx: 1,
+                                sx={{
+                                    my: 0.5,
+                                    mx: 1,
                                     border: '1.5px solid #472F05',
                                     boxShadow: '3px 3px #472F05',
                                     '&:hover': {
-                                        backgroundColor: '#E5CB9A'
-                                    }
+                                        backgroundColor: '#E5CB9A',
+                                    },
                                 }}
                             />
                         )}
@@ -54,6 +55,9 @@ export default function PetEditCard(props: PetEditCardProps) {
                                 defaultValue={params.value}
                                 choices={DEMO_CHOICES}
                                 disabled={!props.editMode}
+                                setFormValue={(value) => {
+                                    form.setValue(params.row?.name, value);
+                                }}
                             ></SelectField>
                         )}
                     </>

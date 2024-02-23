@@ -16,7 +16,6 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import SelectField from '../../components/SelectField';
 import { Fira_Sans_Condensed } from 'next/font/google';
 import useRegister from '../../core/auth/useRegister';
 
