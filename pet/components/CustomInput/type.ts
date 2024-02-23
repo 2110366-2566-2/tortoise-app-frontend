@@ -25,10 +25,14 @@ export const CustomTextField = styled(TextField)({
     '& .MuiInputBase-input': {
         fontFamily: fira_sans_condensed.style.fontFamily
     },
+    '& .MuiInputBase-input:hover': {
+        backgroundColor: '#E5CB9A'
+    },
     '& .MuiOutlinedInput-root': {
         '& fieldset': {
             borderRadius: 0,
             border: '1px solid #472F05',
+            boxShadow: '3px 3px #472F05',
         },
         '&:hover fieldset': {
             border: '2px solid #472F05',
