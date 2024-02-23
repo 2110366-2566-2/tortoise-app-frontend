@@ -15,6 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { usePathname, useRouter } from 'next/navigation';
 import { Fira_Sans_Condensed } from 'next/font/google';
+import useLogout from '../../core/auth/useLogout';
 
 const pages = ['My Shop', 'Marketplace', 'My Orders'];
 const settings = ['Account', 'Logout'];
@@ -202,7 +203,11 @@ function TopBar() {
                                 <MenuItem
                                     key={setting}
                                     onClick={() => {
-                                        router.push(`${setting.toLowerCase()}`);
+                                        if (setting.toLowerCase() === 'logout') {
+                                            useLogout();
+                                            return router.push('login');
+                                        }
+                                        return router.push(`${setting.toLowerCase()}`);
                                     }}
                                 >
                                     <Typography textAlign="center">{setting}</Typography>
