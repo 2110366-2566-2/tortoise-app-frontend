@@ -205,9 +205,9 @@ function TopBar() {
                                     onClick={() => {
                                         if (setting.toLowerCase() === 'logout') {
                                             useLogout();
-                                            return router.push('login');
+                                            return router.push('/user/login');
                                         }
-                                        return router.push(`${setting.toLowerCase()}`);
+                                        return router.push(`/user/${setting.toLowerCase()}`);
                                     }}
                                 >
                                     <Typography textAlign="center">{setting}</Typography>
