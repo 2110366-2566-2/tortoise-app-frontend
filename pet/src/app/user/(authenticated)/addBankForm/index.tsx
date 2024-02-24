@@ -1,10 +1,10 @@
 'use client';
 import { Box, Button, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { ColorButton, CustomTextField } from '../../components/CustomInput/type';
+import { ColorButton, CustomTextField } from '../../../../../components/CustomInput/type';
 import { SubmitHandler } from 'react-hook-form';
 
-export default function AddBankForm() {
+export default function addBankForm() {
     const form = useForm<AddBankFormData>();
 
     interface AddBankFormData {
