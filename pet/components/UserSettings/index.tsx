@@ -3,8 +3,10 @@
 import { Box, Typography, Stack, Card, Divider, FormLabel, FormControl, Avatar } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 import { fira_sans_800, fira_sans_600 } from '../../core/theme/theme';
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
+
 
 const theme = createTheme({
     typography: {
@@ -33,7 +35,6 @@ export interface Address {
     postalCode: string,
 }
 
-
 export default function UserSettingsCard(props: IUserDetail) {
     
     const sxFormLabel = {fontFamily: fira_sans_800.style.fontFamily, fontSize: 20, color: '#472F05', py: 0.5}
@@ -54,6 +55,7 @@ export default function UserSettingsCard(props: IUserDetail) {
         { field: 'col2', headerName: 'Column 2', width: 300 },
     ];
 
+
     return (
         <Box
             sx={{
@@ -64,6 +66,7 @@ export default function UserSettingsCard(props: IUserDetail) {
             }}
         >
             <Card
+
                 sx={{ 
                     border: '2px solid black', 
                     borderRadius: 1, 
@@ -181,7 +184,7 @@ export default function UserSettingsCard(props: IUserDetail) {
                             </Stack>
                         </Box>
                        
-                        
+                       
                     </Stack>
                 </Stack>
             </Card>

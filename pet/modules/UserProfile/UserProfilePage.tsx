@@ -15,6 +15,7 @@ export default function UserProfilePage() {
         username: 'ruthlessYeddo',
         first_name: 'Rutthee',
         last_name: 'SudtreenloeyPree',
+
         gender: 'Male',
         phoneNumber: '123-456-7890',
         image: 'https://drive.google.com/uc?id=1xI9x6kY2nBrd16MQhqLX9mG1e1XIDOLt',
