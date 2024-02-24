@@ -22,6 +22,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
 import Image from 'next/image';
+import AccountOptionList from '../../components/AccountOptionList';
 
 export default function UserProfilePage() {
     const router = useRouter();
@@ -33,7 +34,7 @@ export default function UserProfilePage() {
 
     const mockUserDetail: IUserDetail = {
         _id: '123456789', // example ID
-        username: 'johndoehiaraini',
+        username: 'ruthlessYeddo',
         first_name: 'John',
         last_name: 'Doe',
         gender: 'Male',
@@ -53,8 +54,8 @@ export default function UserProfilePage() {
     };
 
     return (
-        <Box sx={{ alignSelf: 'center' }}>
-            <Box sx={{mb: 1.5, mt: 20, display: 'flex', flexDirection: 'row', position: 'absolute', 
+        <Box sx={{ alignSelf: 'center', mt: 5 }}>
+            {/* <Box sx={{mb: 1.5, mt: 20, display: 'flex', flexDirection: 'row', position: 'absolute', 
                 alignItems: 'end', height: 200}}>
                 <Avatar sx={{ width: 180 , height: 180, ml: {xs: 10, md: 20}, mr: {xs: 3, md: 7}, border: '4px solid #472F05', boxShadow: 10 }} />
                 <Box sx={{display: 'block'}}>
@@ -71,12 +72,12 @@ export default function UserProfilePage() {
                     objectFit='cover'
                 />
             </Box>
-            <Box sx={{height: 140, backgroundColor: '#E5CB9A'}}> </Box>
+            <Box sx={{height: 140, backgroundColor: '#E5CB9A'}}> </Box> */}
 
             <Grid container direction="column" sx={{ overflowX: 'hidden', flexWrap: 'nowrap' }}>
                 <Grid
                     container
-                    direction={'row' }
+                    direction={ { xs: 'column', md: 'row' } }
                     spacing={10}
                     sx={{
                         display: 'flex',
@@ -85,59 +86,33 @@ export default function UserProfilePage() {
                         px: { xs: 7, md: 12 },
                     }}
                 >
-                    <Grid item md={4} sx={{ alignSelf: 'normal', justifySelf: 'center', mt: 3}}>
-                        <List
-                            sx={{ width: 250, border: '2px solid #472F05', boxShadow: '4px 4px #472F05'}}
-                            component="nav"
-                            aria-labelledby="nested-list-subheader"
-                            subheader={
-                                <ListSubheader component="div" id="nested-list-subheader" sx={{ pt: 1 }}>
-                                    <Typography sx={{fontFamily: fira_sans_600.style.fontFamily, pb: 1}}>Account & Profile Settings</Typography>
-                                </ListSubheader>
-                            }
-                        >
-                        <ListItemButton sx={{'&:hover': {backgroundColor: '#E5CB9A'}}}>
-                            <ListItemIcon>
-                            <AccountCircleIcon sx={{color: '#472F05'}} />
-                            </ListItemIcon>
-                            <ListItemText primary={
-                                <Typography sx={{fontFamily: fira_sans_600.style.fontFamily, color: '#472F05'}}>Edit Profile</Typography>
-                            }/>
-                        </ListItemButton>
-                        <ListItemButton sx={{'&:hover': {backgroundColor: '#E5CB9A'}}}>
-                            <ListItemIcon>
-                            <PasswordIcon sx={{color: '#472F05'}} />
-                            </ListItemIcon>
-                            <ListItemText primary={
-                                <Typography sx={{fontFamily: fira_sans_600.style.fontFamily, color: '#472F05'}}>Change Password</Typography>
-                            }/>
-                        </ListItemButton>
-                        <ListItemButton sx={{'&:hover': {backgroundColor: '#E18A7A'}}}>
-                            <ListItemIcon>
-                            <DeleteIcon sx={{color: 'red'}} />
-                            </ListItemIcon>
-                            <ListItemText primary={
-                                <Typography sx={{fontFamily: fira_sans_600.style.fontFamily, color: 'red'}}>Delete Account</Typography>
-                            }/>
-                        </ListItemButton>
-                        {/* <ListItemButton onClick={handleClick}>
-                            <ListItemIcon>
-                            <InboxIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Inbox" />
-                            {open ? <ExpandLess /> : <ExpandMore />}
-                        </ListItemButton>
-                        <Collapse in={open} timeout="auto" unmountOnExit>
-                            <List component="div" disablePadding>
-                            <ListItemButton sx={{ pl: 4 }}>
-                                <ListItemIcon>
-                                <StarBorder />
-                                </ListItemIcon>
-                                <ListItemText primary="Starred" />
-                            </ListItemButton>
-                            </List>
-                        </Collapse> */}
-                        </List>
+                    <Grid item md={4} sx={{ alignSelf: 'normal', justifySelf: 'center', mt: 0}}>
+                        <Box display={'flex'} flexDirection={'column'} alignItems={'center'} pb={3} >
+                            <Box 
+                                display={'flex'} 
+                                flexDirection={'column'} 
+                                alignItems={'center'} 
+                                py={3}
+                                px={4}
+                                boxShadow={'3px 3px #472F05'}
+                                border={'2px solid #472F05'}
+                                borderRadius={1}>
+                                <Avatar 
+                                    sx={{ 
+                                        width: 180 , height: 180,  
+                                        border: '4px solid #472F05', 
+                                        boxShadow: 10,
+                                         
+                                    }} 
+                                />
+                                <Typography variant='h5' fontFamily={fira_sans_600.style.fontFamily} color={'#472F05'} pt={5}>
+                                    {mockUserDetail.username}
+                                </Typography>
+                            </Box>
+                            
+                            <AccountOptionList />
+
+                        </Box>
                     </Grid>
 
                     <Grid item md={8} sx={{ width: '100%', alignSelf: 'normal', right: 0}}>
