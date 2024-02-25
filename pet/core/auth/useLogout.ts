@@ -1,12 +1,9 @@
 const clearLocalStorage = () => {
     localStorage.removeItem('session_id');
-    localStorage.removeItem('email');
-    localStorage.removeItem('full_name');
-    localStorage.removeItem('identity');
-    localStorage.removeItem('user_permissions');
-    localStorage.removeItem('is_aim_login');
+    localStorage.removeItem('role');
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('username');
   };
-  
 
 export default function useLogout(){
     clearLocalStorage();

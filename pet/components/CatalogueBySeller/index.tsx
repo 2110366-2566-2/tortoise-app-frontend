@@ -8,39 +8,22 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import useGetPets from '../../services/api/v1/pets/useGetPets';
 import PetAddCard from '../PetAddCard';
+import useGetSession from '../../core/auth/useGetSession';
+import useGetPetsBySeller from '../../services/api/v1/pets/useGetPetsBySeller';
 
-export interface PetCatalogueProps {
-    sellerName: string;
-}
-
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
-
-export default function CatalogueBySeller({ sellerName }: PetCatalogueProps) {
+export default function CatalogueBySeller() {
+    const session = useGetSession();
     const {
-        data: [petList, pagination] = [],
+        data: [sellerPetList, pagination] = [],
         refetch,
         isSuccess: petListSuccess,
-    } = useGetPets(
-        {
-            search: '',
-            filter: '',
-        },
-        {
-            enabled: true,
-        },
-    );
+    } = useGetPetsBySeller(session.userID || '');
 
     if (!petListSuccess) {
         return null;
     }
 
-    const petListData = petList || [];
+    const petListData = sellerPetList || [];
 
     return (
         <Box sx={{ flexGrow: 1 }}>

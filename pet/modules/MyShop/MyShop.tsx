@@ -9,7 +9,7 @@ export default function MyShop() {
                 <SellerShopBriefCard media="" />
             </Box>
             <Box sx={{ p: '16px 10%' }}>
-                <CatalogueBySeller sellerName="test" />
+                <CatalogueBySeller />
             </Box>
         </>
     );
