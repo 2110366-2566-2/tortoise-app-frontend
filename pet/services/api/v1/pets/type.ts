@@ -65,7 +65,6 @@ export interface PetSearchParams{
     search: string
     filter: string
 }
-
 export interface Pagination {
     total: number;
     limit: number;
