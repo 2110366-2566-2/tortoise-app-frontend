@@ -5,8 +5,10 @@ import { useEffect, useState } from 'react';
 import CenterLoader from '@components/CenterLoader';
 import TransactionFilter from '@components/TransactionFilter';
 import Transaction from '@components/Transaction/index';
-import { Typography, Grid, createTheme, ThemeProvider } from '@mui/material';
+import { Typography, Grid, createTheme, ThemeProvider, Box } from '@mui/material';
 import useGetTransactionHistory from '@services/api/v1/user/useGetTransactionHistory';
+import Image from 'next/image';
+import dogSleep from '@public/image/dogSleep.png';
 import { set } from 'react-hook-form';
 
 import { Fira_Sans_Condensed } from 'next/font/google';
@@ -65,17 +67,28 @@ function TransactionHistoryPage() {
             <style>
                 {`
                 body {
-                    min-width: 1200px;
-                    min-height: 600px;
+                    min-width: 1400px;
                 }
                 `}
             </style>
-            <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 800, p: '32px 10% 15px' }}>
-                Transaction History
-            </Typography>
-            <Typography variant="subtitle1" sx={{ textAlign: 'center', fontWeight: 500, p: '8px 10% 70px', color: '#808080'}}>
-                From fluff to funds: Tracking your pet-ty transactions! 🐾💰
-            </Typography>
+            <Box display="flex" alignItems="center" justifyContent="space-between" width={1650}>
+                <Box width={1000}>
+                    <Typography variant="h4" sx={{ textAlign: 'left', fontWeight: 800, p: '32px 10% 15px', paddingLeft: '230px', paddingTop: '90px'}}>
+                        Transaction History
+                    </Typography>
+                    <Typography variant="subtitle1" sx={{ textAlign: 'left', fontWeight: 500, p: '8px 10% 70px', color: '#808080', paddingLeft: '230px'}}>
+                        From fluff to funds: Tracking your pet-ty transactions! 🐾💰
+                    </Typography>
+                </Box>
+                <Box>
+                    <Image width={220} height={220}
+                        src={dogSleep}
+                        alt="Pet Picture"
+                        style={{ objectFit: 'cover', height: '100%', maxHeight: 'fit-content' }}
+                    />
+                </Box>
+            </Box>
+            <TransactionFilter />
             <Grid
                 container
                 justifyContent='center'
@@ -83,28 +96,27 @@ function TransactionHistoryPage() {
                 columns={{xs: 12}}
                 spacing={{xs: 1}}
             >
-                <TransactionFilter />
-                <Grid item xs={2.3}>
+                <Grid item xs={2.12}>
                     <Typography variant='subtitle1' sx={{fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa'}}>
                         DATE & TIME
                     </Typography>
                 </Grid>
-                <Grid item xs={2.35}>
+                <Grid item xs={2.23}>
                     <Typography variant='subtitle1' sx={{fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa'}}>
                         TYPE
                     </Typography>
                 </Grid>
-                <Grid item xs={1.6}>
+                <Grid item xs={1.38}>
                     <Typography variant='subtitle1' sx={{fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa'}}>
                         STATUS
                     </Typography>
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={2.12}>
                     <Typography variant='subtitle1' sx={{fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa'}}>
                         AMOUNT
                     </Typography>
                 </Grid>
-                <Grid item xs={1.9}>
+                <Grid item xs={1.18}>
                 </Grid>
                 {data.map((transaction, index) => (
                     <Grid item xs={9} key={index}>
