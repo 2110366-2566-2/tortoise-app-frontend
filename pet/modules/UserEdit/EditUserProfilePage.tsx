@@ -168,10 +168,10 @@ export default function EditUserProfilePage () {
                         <Grid item xs={12} md={6}>
                             <CustomTextField
                                 {...form.register('address.subdistrict')}
-                                name={'phoneNumber'}
-                                label="Tel"
+                                name={'address.subdistrict'}
+                                label="Sub-District"
                                 variant="outlined"
-                                defaultValue={userProfile.phoneNumber}
+                                defaultValue={userProfile.address.subdistrict}
                                 type={'text'}
                                 fullWidth
                                 // disabled={}
@@ -180,10 +180,10 @@ export default function EditUserProfilePage () {
                         <Grid item xs={12} md={6}>
                             <CustomTextField
                                 {...form.register('address.district')}
-                                name={'phoneNumber'}
-                                label="Tel"
+                                name={'address.district'}
+                                label="District"
                                 variant="outlined"
-                                defaultValue={userProfile.phoneNumber}
+                                defaultValue={userProfile.address.district}
                                 type={'text'}
                                 fullWidth
                                 // disabled={}
@@ -191,11 +191,23 @@ export default function EditUserProfilePage () {
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <CustomTextField
-                                {...form.register('address.subdistrict')}
-                                name={'phoneNumber'}
-                                label="Tel"
+                                {...form.register('address.province')}
+                                name={'address.province'}
+                                label="Province"
                                 variant="outlined"
-                                defaultValue={userProfile.phoneNumber}
+                                defaultValue={userProfile.address.province}
+                                type={'text'}
+                                fullWidth
+                                // disabled={}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                            <CustomTextField
+                                {...form.register('address.postalCode')}
+                                name={'address.postalCode'}
+                                label="Postal Code"
+                                variant="outlined"
+                                defaultValue={userProfile.address.postalCode}
                                 type={'text'}
                                 fullWidth
                                 // disabled={}
