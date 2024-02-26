@@ -45,9 +45,11 @@ function TransactionFilter() {
     return (
         <Grid
             container
+            justifyContent="center"
+            alignItems="center"
             spacing={5}
-            columns={{xs: 9}}
-            padding={{xs: 9}}
+            columns={{xs: 12}}
+            paddingBottom={6}
         >
             <Grid item xs={3.6}>
                 <LocalizationProvider dateAdapter={AdapterDayjs} >

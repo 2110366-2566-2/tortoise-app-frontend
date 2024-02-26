@@ -1,5 +1,5 @@
 import React from 'react'
-import { Paper, Grid, Slide } from '@mui/material';
+import { Paper, Grid, Slide, Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -39,6 +39,7 @@ function Transaction( { role, transaction }: { role: number, transaction: any } 
     const [hovered, setHovered] = React.useState(false);
     const [showContent, setShowContent] = React.useState(false);
     const classes = useStyles();
+    const containerRef = React.useRef<HTMLElement>(null);
 
     const statusTxt = () => {
         if (transaction.status === 'paid') {
@@ -72,7 +73,7 @@ function Transaction( { role, transaction }: { role: number, transaction: any } 
     }
 
     return (
-        <>
+        <Box>
             <Paper
                 component='div'
                 sx={{
@@ -83,41 +84,35 @@ function Transaction( { role, transaction }: { role: number, transaction: any } 
                     backgroundColor: hovered ? '#F9C067': '#FFFF',
                     border: '2px solid black',
                     borderRadius: 0,
+                    position: 'relative'
                 }}
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
                 onClick={() => setShowContent(!showContent)}
             >
-                <Grid
-                    container
-                    alignItems='center'
-                    columns={{xs: 12}}
-                    spacing={{xs: 11}}
-                >
-                    <Grid item xs={3} className={classes.gridItem}>
-                        <span className={classes.date}>{transaction.timestamp.date}</span>
-                        <br />
-                        <span className={classes.timestamp}>{transaction.timestamp.time}</span>
-                    </Grid>
-                    <Grid item xs={3} className={classes.gridItem}>
-                        <span className={classes.paymentMethod}>{transaction.payment_method}</span>
-                    </Grid>
-                    <Grid item xs={2} className={classes.gridItem}>
-                        <span className={classes.status} style={{color: statusColor()}}>{statusTxt()}</span>
-                    </Grid>
-                    <Grid item xs={3} className={classes.gridItem}>
-                        <span className={classes.price} style={{color: priceColor()}}>{transaction.price}</span>
-                    </Grid>
-                    <Grid item xs={0.5} alignItems='center' justifyContent='center'>
-                        {showContent ? <ExpandLessIcon className={classes.expandIcon} /> : <ExpandMoreIcon className={classes.expandIcon} />}
-                    </Grid>
+                <Grid item xs={3} className={classes.gridItem}>
+                    <span className={classes.date}>{transaction.timestamp.date}</span>
+                    <br />
+                    <span className={classes.timestamp}>{transaction.timestamp.time}</span>
+                </Grid>
+                <Grid item xs={3} className={classes.gridItem}>
+                    <span className={classes.paymentMethod}>{transaction.payment_method}</span>
+                </Grid>
+                <Grid item xs={2} className={classes.gridItem}>
+                    <span className={classes.status} style={{color: statusColor()}}>{statusTxt()}</span>
+                </Grid>
+                <Grid item xs={3} className={classes.gridItem}>
+                    <span className={classes.price} style={{color: priceColor()}}>{transaction.price}</span>
+                </Grid>
+                <Grid item xs={0.5} alignItems='center' justifyContent='center'>
+                    {showContent ? <ExpandLessIcon className={classes.expandIcon} /> : <ExpandMoreIcon className={classes.expandIcon} />}
                 </Grid>
             </Paper>
             <Slide direction='down' in={showContent} mountOnEnter unmountOnExit>
                 {/* Doing in next feature */}
                 <h1>Do in next feature</h1>
             </Slide>
-        </>
+        </Box>
     )
 }
 
