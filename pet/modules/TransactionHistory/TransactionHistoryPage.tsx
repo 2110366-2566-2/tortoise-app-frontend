@@ -3,10 +3,21 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
 import CenterLoader from '@components/CenterLoader';
+import TransactionFilter from '@components/TransactionFilter';
 import Transaction from '@components/Transaction/index';
-import { Typography, Grid } from '@mui/material';
+import { Typography, Grid, createTheme, ThemeProvider } from '@mui/material';
 import useGetTransactionHistory from '@services/api/v1/user/useGetTransactionHistory';
 import { set } from 'react-hook-form';
+
+import { Fira_Sans_Condensed } from 'next/font/google';
+
+const fira_sans_condensed = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] });
+
+const theme = createTheme({
+    typography: {
+        fontFamily: fira_sans_condensed.style.fontFamily,
+    },
+});
 
 function TransactionHistoryPage() {
     const [data, setData] = useState([]);
@@ -50,7 +61,16 @@ function TransactionHistoryPage() {
 
     return (
         <>
-            <Typography variant="h5" sx={{ textAlign: 'center', fontWeight: 800, p: '32px 10% 15px' }}>
+            <ThemeProvider theme={theme}>
+            <style>
+                {`
+                body {
+                    min-width: 1200px;
+                    min-height: 600px;
+                }
+                `}
+            </style>
+            <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 800, p: '32px 10% 15px' }}>
                 Transaction History
             </Typography>
             <Typography variant="subtitle1" sx={{ textAlign: 'center', fontWeight: 500, p: '8px 10% 70px', color: '#808080'}}>
@@ -60,37 +80,39 @@ function TransactionHistoryPage() {
                 container
                 justifyContent='center'
                 alignItems='center'
-                columns={{xs: 13}}
+                columns={{xs: 12}}
                 spacing={{xs: 1}}
             >
-                <Grid item xs={3}>
+                <TransactionFilter />
+                <Grid item xs={2.3}>
                     <Typography variant='subtitle1' sx={{fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa'}}>
                         DATE & TIME
                     </Typography>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={2.35}>
                     <Typography variant='subtitle1' sx={{fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa'}}>
                         TYPE
                     </Typography>
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={1.6}>
                     <Typography variant='subtitle1' sx={{fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa'}}>
                         STATUS
                     </Typography>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={1}>
                     <Typography variant='subtitle1' sx={{fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa'}}>
                         AMOUNT
                     </Typography>
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={1.9}>
                 </Grid>
                 {data.map((transaction, index) => (
-                    <Grid item xs={12} key={index}>
+                    <Grid item xs={9} key={index}>
                         <Transaction role={role} transaction={transaction} />
                     </Grid>
                 ))}
             </Grid>
+            </ThemeProvider>
         </>
     )
 }

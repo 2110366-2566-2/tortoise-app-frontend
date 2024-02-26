@@ -1,14 +1,14 @@
 import React from 'react'
 import { Paper, Grid, Slide } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-
-
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import HorizontalRuleOutlinedIcon from '@mui/icons-material/HorizontalRuleOutlined';
+import { ClassSharp } from '@mui/icons-material';
 
 const useStyles = makeStyles({
     gridItem: {
-        borderRight: '1px solid #808080'
+        // borderRight: '1px solid #808080'
     },
     date: {
         fontWeight: 800,
@@ -25,6 +25,13 @@ const useStyles = makeStyles({
     },
     price: {
         fontSize: '1.2em'
+    },
+    status: {
+        fontSize: '1.2em'
+    },
+    expandIcon: {
+        fontSize: '2em',
+        color: '#8b94aa'
     }
 });
 
@@ -32,6 +39,22 @@ function Transaction( { role, transaction }: { role: number, transaction: any } 
     const [hovered, setHovered] = React.useState(false);
     const [showContent, setShowContent] = React.useState(false);
     const classes = useStyles();
+
+    const statusTxt = () => {
+        if (transaction.status === 'paid') {
+            return 'Paid';
+        } else if (transaction.status === 'pending') {
+            return 'Pending';
+        }
+    }
+
+    const statusColor = () => {
+        if (transaction.status === 'paid') {
+            return '#20c46b';
+        } else if (transaction.status === 'pending') {
+            return '#f99867';
+        }
+    }
 
     const priceColor = () => {
         if (transaction.status === 'paid') {
@@ -44,7 +67,7 @@ function Transaction( { role, transaction }: { role: number, transaction: any } 
             }
         } else if (transaction.status === 'pending') {
             // Yellow for pending
-            return '#f9c067';
+            return '#f99867';
         }
     }
 
@@ -69,23 +92,24 @@ function Transaction( { role, transaction }: { role: number, transaction: any } 
                     container
                     alignItems='center'
                     columns={{xs: 12}}
-                    spacing={{xs: 1}}
+                    spacing={{xs: 11}}
                 >
                     <Grid item xs={3} className={classes.gridItem}>
                         <span className={classes.date}>{transaction.timestamp.date}</span>
+                        <br />
                         <span className={classes.timestamp}>{transaction.timestamp.time}</span>
                     </Grid>
                     <Grid item xs={3} className={classes.gridItem}>
                         <span className={classes.paymentMethod}>{transaction.payment_method}</span>
                     </Grid>
                     <Grid item xs={2} className={classes.gridItem}>
-                        <span>{transaction.status}</span>
+                        <span className={classes.status} style={{color: statusColor()}}>{statusTxt()}</span>
                     </Grid>
                     <Grid item xs={3} className={classes.gridItem}>
                         <span className={classes.price} style={{color: priceColor()}}>{transaction.price}</span>
                     </Grid>
-                    <Grid item xs={1} alignItems='center' justifyContent='center'>
-                        {showContent ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+                    <Grid item xs={0.5} alignItems='center' justifyContent='center'>
+                        {showContent ? <ExpandLessIcon className={classes.expandIcon} /> : <ExpandMoreIcon className={classes.expandIcon} />}
                     </Grid>
                 </Grid>
             </Paper>
