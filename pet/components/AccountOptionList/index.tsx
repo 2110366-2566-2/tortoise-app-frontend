@@ -33,7 +33,9 @@ export default function AccountOptionList() {
                     </ListSubheader>
                 }
             >
-                <ListItemButton sx={{'&:hover': {backgroundColor: '#E5CB9A'}}}>
+                <ListItemButton sx={{'&:hover': {backgroundColor: '#E5CB9A'}}} 
+                    onClick={() => router.push('account/edit-profile')}    
+                >
                     <ListItemIcon>
                         <AccountCircleIcon sx={{color: '#472F05'}} />
                     </ListItemIcon>
