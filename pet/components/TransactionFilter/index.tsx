@@ -24,7 +24,7 @@ const theme = createTheme({
 
 const ColorButton = styled(Button)<ButtonProps>({
     color: '#472F05',
-    backgroundColor: '#F9C067', //'#FAA943',
+    backgroundColor: '#F9C067',
     '&:hover': {
         backgroundColor: '#FAA943',
     },
@@ -39,7 +39,7 @@ function TransactionFilter() {
 
     // Handle sumbit
     const handleSubmit = () => {
-        console.log('Submit');
+        alert('Next sprint la karn');
     }
 
     return (
@@ -100,6 +100,7 @@ function TransactionFilter() {
                         borderRadius: 1.25,
                         fontSize: 19,
                     }}
+                    onClick={handleSubmit}
                 >
                     Apply
                 </ColorButton>

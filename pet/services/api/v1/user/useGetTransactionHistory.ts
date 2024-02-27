@@ -87,6 +87,28 @@ function useGetTransactionHistory(): Promise<TransactionResponse> {
                 },
                 status: 'paid',
                 payment_method: 'creditcard'
+            },
+            {
+                seller_name: 'John Doe',
+                price: 1000,
+                pet_name: 'Fluffy',
+                timestamp: {
+                    date: '2021-10-16',
+                    time: '16:00'
+                },
+                status: 'paid',
+                payment_method: 'paypal'
+            },
+            {
+                seller_name: 'Jane Doe',
+                price: 500,
+                pet_name: 'Fido',
+                timestamp: {
+                    date: '2021-10-17',
+                    time: '17:00'
+                },
+                status: 'paid',
+                payment_method: 'creditcard'
             }
         ],
     };

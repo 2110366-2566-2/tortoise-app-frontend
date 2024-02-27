@@ -71,20 +71,20 @@ function TransactionHistoryPage() {
                 }
                 `}
             </style>
-            <Box display="flex" alignItems="center" justifyContent="space-between" width={1650}>
-                <Box width={1000}>
-                    <Typography variant="h4" sx={{ textAlign: 'left', fontWeight: 800, p: '32px 10% 15px', paddingLeft: '230px', paddingTop: '90px'}}>
+            <Box display="flex" alignItems="center" justifyContent="space-between" width="100%">
+                <Box flex="1">
+                    <Typography variant="h4" sx={{ textAlign: 'left', fontWeight: 800, p: '32px 10% 15px', paddingLeft: '25%', paddingTop: '10vh'}}>
                         Transaction History
                     </Typography>
-                    <Typography variant="subtitle1" sx={{ textAlign: 'left', fontWeight: 500, p: '8px 10% 70px', color: '#808080', paddingLeft: '230px'}}>
+                    <Typography variant="subtitle1" sx={{ textAlign: 'left', fontWeight: 500, p: '8px 10% 70px', color: '#808080', paddingLeft: '25%'}}>
                         From fluff to funds: Tracking your pet-ty transactions! 🐾💰
                     </Typography>
                 </Box>
-                <Box>
-                    <Image width={220} height={220}
+                <Box flex="1" display="flex" justifyContent="center">
+                    <Image width={300} height={300}
                         src={dogSleep}
                         alt="Pet Picture"
-                        style={{ objectFit: 'cover', height: '100%', maxHeight: 'fit-content' }}
+                        style={{ objectFit: 'cover', height: '100%', maxHeight: 'fit-content', marginLeft: '20%', marginTop: '-5vh' }}
                     />
                 </Box>
             </Box>
