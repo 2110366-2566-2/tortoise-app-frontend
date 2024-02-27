@@ -1,4 +1,5 @@
-import { Box, Divider, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import ChangePasswordDialog from '../ChangePasswordDialog';
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -7,15 +8,29 @@ import ListItemText from '@mui/material/ListItemText';
 import PasswordIcon from '@mui/icons-material/Password';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useState } from 'react';
 import { fira_sans_600 } from '../../core/theme/theme';
 import { useRouter } from 'next/navigation';
 
 export default function AccountOptionList() {
 
+    const [openChangePasswordDialog, setOpenChangePasswordDialog] = useState(false);
     const router = useRouter();
+
+    const handleChangePasswordConfirm = async() => {
+        console.log('confirm change password')
+    }
 
     return (
         <Box sx={{mt: 2}}>
+            <ChangePasswordDialog
+                open={openChangePasswordDialog}
+                setOpen={setOpenChangePasswordDialog}
+                header={'Change Password'}
+                cancelText="Cancel"
+                confirmText="Confirm"
+                handleConfirm={handleChangePasswordConfirm}
+            />
             <List
                 sx={{ width: 300, border: '2px solid #472F05', boxShadow: '4px 4px #472F05', borderRadius: 1, my: 2}}
                 component="nav"
@@ -44,7 +59,9 @@ export default function AccountOptionList() {
                     }/>
                 </ListItemButton>
 
-                <ListItemButton sx={{'&:hover': {backgroundColor: '#E5CB9A'}}}>
+                <ListItemButton sx={{'&:hover': {backgroundColor: '#E5CB9A'}}}
+                    onClick={() => setOpenChangePasswordDialog(true)}
+                >
                     <ListItemIcon>
                     <PasswordIcon sx={{color: '#472F05'}} />
                     </ListItemIcon>
