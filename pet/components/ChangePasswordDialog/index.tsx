@@ -9,11 +9,12 @@ import { fira_sans_600, fira_sans_800 } from '../../core/theme/theme';
 import { Grid, Zoom, InputAdornment, IconButton } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { IChangePassword } from '../../services/api/v1/user/type';
-import { CustomPinkTextField } from '../CustomInput/type';
+import { CustomPinkTextField } from '../../core/theme/theme';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';
 import { useState } from 'react';
 import useToastUI from '../../core/hooks/useToastUI';
+import { CustomDialogProps } from '../CustomDialog/type';
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
@@ -24,18 +25,7 @@ const Transition = React.forwardRef(function Transition(
     return <Zoom ref={ref} {...props} />;
 });
 
-type ConfirmDialogProps = {
-    open: boolean;
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    header: string;
-    description?: string;
-    cancelText?: string;
-    confirmText: string;
-    handleConfirm: React.MouseEventHandler<HTMLButtonElement>;
-};
-
-
-export default function ChangePasswordDialog(props: ConfirmDialogProps) {
+export default function ChangePasswordDialog(props: CustomDialogProps) {
 
     const { open, setOpen, header, description, cancelText, confirmText } = props;
 
