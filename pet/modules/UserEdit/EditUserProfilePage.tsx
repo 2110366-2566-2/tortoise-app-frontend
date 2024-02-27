@@ -27,26 +27,35 @@ export default function EditUserProfilePage () {
         return null;
     }
 
+    // useEffect(() => {
+    //     form.setValue('first_name', form.getValues().first_name || userProfile.first_name);
+    //     form.setValue('last_name', form.getValues().last_name || userProfile.last_name);
+    //     form.setValue('phoneNumber', form.getValues().phoneNumber || userProfile.phoneNumber);
+    //     form.setValue('gender', form.getValues().gender || userProfile.gender);
+    //     form.setValue('address.houseNumber', form.getValues().address.houseNumber || userProfile.address.houseNumber);
+    //     form.setValue('address.building', form.getValues().address.building || userProfile.address.building);
+    //     form.setValue('address.street', form.getValues().address.street || userProfile.address.street);
+    //     form.setValue('address.subdistrict', form.getValues().address.subdistrict || userProfile.address.subdistrict);
+    //     form.setValue('address.district', form.getValues().address.district || userProfile.address.district);
+    //     form.setValue('address.province', form.getValues().address.province || userProfile.address.province);
+    //     form.setValue('address.postalCode', form.getValues().address.postalCode || userProfile.address.postalCode);
+    //     // form.setValue('first_name', form.getValues().first_name || userProfile.first_name);
+    // }, [form]);
+
     const handleUpdate = (updatedData: IUserDetail) => {
         console.log('Updated data:', updatedData);
         return updatedData;
     };
 
-    useEffect(() => {
-        form.setValue('first_name', form.getValues().first_name || userProfile.first_name);
-        form.setValue('last_name', form.getValues().last_name || userProfile.last_name);
-        form.setValue('phoneNumber', form.getValues().phoneNumber || userProfile.phoneNumber);
-        form.setValue('gender', form.getValues().gender || userProfile.gender);
-        form.setValue('address.houseNumber', form.getValues().address.houseNumber || userProfile.address.houseNumber);
-        // form.setValue('first_name', form.getValues().first_name || userProfile.first_name);
-    });
+    
 
     const onSubmit = async (data: IUserDetail) => {
         console.log(data)
+        router.back()
     };
 
     return (
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
             <Typography fontFamily={fira_sans_800.style.fontFamily} fontSize={30} color={'#472F05'} textAlign={'center'} mt={4}>
                 Update your Profile HERE!
             </Typography>
@@ -71,50 +80,50 @@ export default function EditUserProfilePage () {
                         <Grid container spacing={4}>
                             <Grid item xs={12} md={6}>
                                 <CustomTextField
-                                {...form.register('first_name')}
-                                name={'first_name'}
-                                label="First Name"
-                                variant="outlined"
-                                defaultValue={userProfile.first_name}
-                                type={'text'}
-                                fullWidth
-                                // disabled={}
+                                    {...form.register('first_name')}
+                                    name={'first_name'}
+                                    label="First Name"
+                                    variant="outlined"
+                                    defaultValue={userProfile.first_name}
+                                    type={'text'}
+                                    fullWidth
+                                    // disabled={}
                                 />
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <CustomTextField
-                                {...form.register('last_name')}
-                                name={'last_name'}
-                                label="Last Name"
-                                variant="outlined"
-                                defaultValue={userProfile.last_name}
-                                type={'text'}
-                                fullWidth
-                                // disabled={}
+                                    {...form.register('last_name')}
+                                    name={'last_name'}
+                                    label="Last Name"
+                                    variant="outlined"
+                                    defaultValue={userProfile.last_name}
+                                    type={'text'}
+                                    fullWidth
+                                    // disabled={}
                                 />
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <CustomTextField
-                                {...form.register('gender')}
-                                name={'gender'}
-                                label="Gender"
-                                variant="outlined"
-                                defaultValue={userProfile.gender}
-                                type={'text'}
-                                fullWidth
-                                // disabled={}
+                                    {...form.register('gender')}
+                                    name={'gender'}
+                                    label="Gender"
+                                    variant="outlined"
+                                    defaultValue={userProfile.gender}
+                                    type={'text'}
+                                    fullWidth
+                                    // disabled={}
                                 />
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <CustomTextField
-                                {...form.register('phoneNumber')}
-                                name={'phoneNumber'}
-                                label="Tel"
-                                variant="outlined"
-                                defaultValue={userProfile.phoneNumber}
-                                type={'text'}
-                                fullWidth
-                                // disabled={}
+                                    {...form.register('phoneNumber')}
+                                    name={'phoneNumber'}
+                                    label="Tel"
+                                    variant="outlined"
+                                    defaultValue={userProfile.phoneNumber}
+                                    type={'text'}
+                                    fullWidth
+                                    // disabled={}
                                 />
                             </Grid>
                         </Grid>
@@ -223,18 +232,18 @@ export default function EditUserProfilePage () {
                 <Box display={'flex'} flexDirection={'row'} justifyContent={'center'}>
                     <ColorButton
                         sx={{
-                            mt: 3, px: 3,
+                            mt: 5, px: 3,
                             border: '2px solid #472F05',
                             borderRadius: 0,
                             boxShadow: '3px 2px #472F05',
                             fontFamily: fira_sans_600.style.fontFamily,
                             fontSize: 18,
-                            textAlign: 'center'
+                            textAlign: 'center',
+                            bgcolor: '#FAA943'
                         }}
-                        onClick={() => {
+                        onClick={
                             form.handleSubmit(onSubmit)
-                            router.back()
-                        }}
+                        }
                     >
                         Update Profile!
                     </ColorButton>

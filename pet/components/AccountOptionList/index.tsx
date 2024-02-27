@@ -1,4 +1,5 @@
 import { Box, Divider, Typography } from '@mui/material';
+import ConfirmDialog from '../ConfirmDialog';
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -7,15 +8,29 @@ import ListItemText from '@mui/material/ListItemText';
 import PasswordIcon from '@mui/icons-material/Password';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useState } from 'react';
 import { fira_sans_600 } from '../../core/theme/theme';
 import { useRouter } from 'next/navigation';
 
 export default function AccountOptionList() {
 
+    const [openDialog, setOpenDialog] = useState(false);
     const router = useRouter();
+
+    const handleChangePasswordConfirm = async() => {
+        console.log('confirm change password')
+    }
 
     return (
         <Box sx={{mt: 2}}>
+            <ConfirmDialog
+                open={openDialog}
+                setOpen={setOpenDialog}
+                header={'Change Password naa'}
+                cancelText="Cancel"
+                confirmText="Delete"
+                handleConfirm={handleChangePasswordConfirm}
+            />
             <List
                 sx={{ width: 300, border: '2px solid #472F05', boxShadow: '4px 4px #472F05', borderRadius: 1, my: 2}}
                 component="nav"
