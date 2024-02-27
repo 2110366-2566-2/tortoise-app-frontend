@@ -5,27 +5,19 @@ import { useEffect, useState } from 'react';
 import CenterLoader from '@components/CenterLoader';
 import TransactionFilter from '@components/TransactionFilter';
 import Transaction from '@components/Transaction/index';
-import { Typography, Grid, createTheme, ThemeProvider, Box } from '@mui/material';
-import useGetTransactionHistory from '@services/api/v1/user/useGetTransactionHistory';
+import { Typography, Grid, ThemeProvider, Box } from '@mui/material';
+import useGetTransactionHistory from '@services/api/v1/transaction/useGetTransactionHistory';
 import Image from 'next/image';
 import dogSleep from '@public/image/dogSleep.png';
-import { set } from 'react-hook-form';
-
-import { Fira_Sans_Condensed } from 'next/font/google';
-
-const fira_sans_condensed = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] });
-
-const theme = createTheme({
-    typography: {
-        fontFamily: fira_sans_condensed.style.fontFamily,
-    },
-});
+import transactionTheme from '@core/theme/transactionTheme';
 
 function TransactionHistoryPage() {
     const [data, setData] = useState([]);
     const [role, setRole] = useState(1);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const { theme } = transactionTheme
 
     useEffect(() => {
         const fetchData = async () => {
@@ -58,8 +50,7 @@ function TransactionHistoryPage() {
     }, [data]);
 
     if (loading) return <CenterLoader />;
-    // Never have error ;)
-    // if (error) return <Error />;
+    if (error) return <></>
 
     return (
         <>

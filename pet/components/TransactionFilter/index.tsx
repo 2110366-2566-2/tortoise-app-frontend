@@ -1,41 +1,20 @@
 import React from 'react'
-import { Grid, FormControl, ButtonProps, createTheme, ThemeProvider } from '@mui/material';
+import { Grid, FormControl } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import Button from '@mui/material/Button';
-import { makeStyles, styled } from '@mui/styles';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateRange } from '@mui/x-date-pickers-pro';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
-import { Dayjs } from 'dayjs';
-import { heIL } from '@mui/x-data-grid';
-import { Height } from '@mui/icons-material';
-import { Fira_Sans_Condensed } from 'next/font/google';
-
-const fira_sans_condensed = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] });
-
-const theme = createTheme({
-    typography: {
-        fontFamily: fira_sans_condensed.style.fontFamily,
-    },
-});
-
-const ColorButton = styled(Button)<ButtonProps>({
-    color: '#472F05',
-    backgroundColor: '#F9C067',
-    '&:hover': {
-        backgroundColor: '#FAA943',
-    },
-    width: 115,
-    height: 60
-});
+import transactionTheme from '@core/theme/transactionTheme';
 
 function TransactionFilter() {
     const [dateRange, setDateRange] = React.useState<DateRange<Date>>([null, null]);
     const [paymentMethod, setPaymentMethod] = React.useState('');
     const [status, setStatus] = React.useState('');
+
+    const { ColorButton } = transactionTheme;
 
     // Handle sumbit
     const handleSubmit = () => {

@@ -1,21 +1,4 @@
-type Transaction = {
-    seller_name: string;
-    price: number;
-    pet_name: string;
-    timestamp: {
-        date: string;
-        time: string;
-    };
-    status: string;
-    payment_method: string;
-};
-
-type TransactionResponse = {
-    role: number;
-    data: Transaction[];
-    loading: boolean;
-    error: any;
-};
+import { Transaction, TransactionResponse } from "./type";
 
 function useGetTransactionHistory(): Promise<TransactionResponse> {
     // Mock data

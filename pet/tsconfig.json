@@ -22,6 +22,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "@components/*": ["components/*"],
+      "@core/*": ["core/*"],
       "@modules/*": ["modules/*"],
       "@services/*": ["services/*"],
       "@public/*": ["public/*"]

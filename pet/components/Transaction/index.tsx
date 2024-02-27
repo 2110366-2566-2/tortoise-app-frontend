@@ -1,48 +1,18 @@
 import React from 'react'
-import { Paper, Grid, Slide, Box, Typography, TextField } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Paper, Grid, Slide, Box, TextField } from '@mui/material';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Image from 'next/image';
 import mockDog from '@public/image/mockdog1.jpg';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import HorizontalRuleOutlinedIcon from '@mui/icons-material/HorizontalRuleOutlined';
-import { ClassSharp } from '@mui/icons-material';
-
-const useStyles = makeStyles({
-    gridItem: {
-        // borderRight: '1px solid #808080'
-    },
-    date: {
-        fontWeight: 800,
-        fontSize: '1.2em'
-    },
-    timestamp: {
-        fontWeight: 500,
-        fontSize: '1.2em',
-        opacity: 0.7
-    },
-    paymentMethod: {
-        fontSize: '1.1em',
-        opacity: 0.8
-    },
-    price: {
-        fontSize: '1.2em'
-    },
-    status: {
-        fontSize: '1.2em'
-    },
-    expandIcon: {
-        fontSize: '2em',
-        color: '#8b94aa'
-    }
-});
+import transactionTheme from '@core/theme/transactionTheme';
 
 function Transaction( { role, transaction }: { role: number, transaction: any } ) {
     const [hovered, setHovered] = React.useState(false);
     const [showContent, setShowContent] = React.useState(false);
-    const classes = useStyles();
+
+    const { transactionStyles } = transactionTheme
+    const classes = transactionStyles();
     const containerRef = React.useRef<HTMLElement>(null);
 
     const statusTxt = () => {
