@@ -26,7 +26,7 @@ export default function AccountOptionList() {
             <ChangePasswordDialog
                 open={openChangePasswordDialog}
                 setOpen={setOpenChangePasswordDialog}
-                header={'Change Password naa'}
+                header={'Change Password'}
                 cancelText="Cancel"
                 confirmText="Confirm"
                 handleConfirm={handleChangePasswordConfirm}

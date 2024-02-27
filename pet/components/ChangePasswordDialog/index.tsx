@@ -74,7 +74,7 @@ export default function ChangePasswordDialog(props: CustomDialogProps) {
                         <form onSubmit={form.handleSubmit(onSubmit)} style={{paddingLeft: 10, paddingRight: 10, paddingTop: 30}}>
 
                             <Grid container spacing={3}>
-                                <Grid item md={12}>
+                                <Grid item xs={12} md={12}>
                                     <CustomPinkTextField
                                         {...form.register('o_password')}
                                         name={'o_password'}
@@ -99,7 +99,7 @@ export default function ChangePasswordDialog(props: CustomDialogProps) {
                                         // disabled={}
                                     />
                                 </Grid>
-                                <Grid item md={12}>
+                                <Grid item xs={12} md={12}>
                                     <CustomPinkTextField
                                         {...form.register('password')}
                                         name={'password'}
@@ -124,7 +124,7 @@ export default function ChangePasswordDialog(props: CustomDialogProps) {
                                         // disabled={}
                                     />
                                 </Grid>
-                                <Grid item md={12}>
+                                <Grid item xs={12} md={12}>
                                     <CustomPinkTextField
                                         name={'confirm_password'}
                                         label="Confirm New Password"
