@@ -18,3 +18,8 @@ export interface Address {
     province: string,
     postalCode: string,
 }
+
+export interface IChangePassword {
+    o_password: string,
+    password: string
+}

@@ -1,5 +1,5 @@
-import { Box, Divider, Typography } from '@mui/material';
-import ConfirmDialog from '../ConfirmDialog';
+import { Box, Typography } from '@mui/material';
+import ChangePasswordDialog from '../ChangePasswordDialog';
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation';
 
 export default function AccountOptionList() {
 
-    const [openDialog, setOpenDialog] = useState(false);
+    const [openChangePasswordDialog, setOpenChangePasswordDialog] = useState(false);
     const router = useRouter();
 
     const handleChangePasswordConfirm = async() => {
@@ -23,12 +23,12 @@ export default function AccountOptionList() {
 
     return (
         <Box sx={{mt: 2}}>
-            <ConfirmDialog
-                open={openDialog}
-                setOpen={setOpenDialog}
+            <ChangePasswordDialog
+                open={openChangePasswordDialog}
+                setOpen={setOpenChangePasswordDialog}
                 header={'Change Password naa'}
                 cancelText="Cancel"
-                confirmText="Delete"
+                confirmText="Confirm"
                 handleConfirm={handleChangePasswordConfirm}
             />
             <List
@@ -59,7 +59,9 @@ export default function AccountOptionList() {
                     }/>
                 </ListItemButton>
 
-                <ListItemButton sx={{'&:hover': {backgroundColor: '#E5CB9A'}}}>
+                <ListItemButton sx={{'&:hover': {backgroundColor: '#E5CB9A'}}}
+                    onClick={() => setOpenChangePasswordDialog(true)}
+                >
                     <ListItemIcon>
                     <PasswordIcon sx={{color: '#472F05'}} />
                     </ListItemIcon>
