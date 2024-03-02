@@ -10,7 +10,7 @@ export interface IUserDetail {
 }
 
 export interface Address {
-    housenumber: string,
+    houseNumber: string,
     building: string,
     street: string,
     district: string,
