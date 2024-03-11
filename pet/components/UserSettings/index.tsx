@@ -38,6 +38,15 @@ export default function UserSettingsCard(props: IUserDetail) {
         { field: 'col2', headerName: 'Column 2', width: 300 },
     ];
 
+    const address = [props.address.houseNumber,
+        props.address.building, 
+        props.address.street, 
+        props.address.subdistrict,
+        props.address.district,
+        props.address.province,
+        props.address.postalCode,
+    ]
+
     return (
         <Box
             sx={{
@@ -132,31 +141,16 @@ export default function UserSettingsCard(props: IUserDetail) {
                                 spacing={0}
                                 sx={{
                                     display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'start',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
                                 }}
                             >
                                 <FormLabel sx={sxFormLabel}>Address:</FormLabel>
-                                <DataGrid
-                                    rows={rows}
-                                    columns={columns}
-                                    hideFooter={true}
-                                    columnHeaderHeight={0}
-                                    rowHeight={45}
-                                    sx={{
-                                        mx: 3,
-                                        width: '90%',
-                                        border: '5px double #472F05',
-                                        borderRadius: 0,
-                                        boxShadow: '3px 3px #472F05',
-                                        fontFamily: fira_sans_600.style.fontFamily,
-                                        fontSize: 18,
-                                        color: '#472F05',
-                                        '& .MuiDataGrid-cell': {
-                                            paddingLeft: 3,
-                                        },
-                                    }}
-                                />
+                                <FormControl sx={{ display: { sm: 'flex-column', md: 'flex-row' }, gap: 2 }}>
+                                    <Typography sx={sxTypography}>
+                                        {address.join(', ')}
+                                    </Typography>
+                                </FormControl>
                             </Stack>
                         </Box>
                     </Stack>

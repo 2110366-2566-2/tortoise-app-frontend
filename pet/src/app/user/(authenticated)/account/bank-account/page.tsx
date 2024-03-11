@@ -3,66 +3,53 @@ import { Box, Button, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { ColorButton, CustomTextField } from '../../../../../../components/CustomInput/type';
 import { SubmitHandler } from 'react-hook-form';
+import { register } from 'module';
+import { CustomGreenButton, CustomGreenTextField, fira_sans_600, fira_sans_800 } from '@core/theme/theme';
+import { useRouter } from 'next/navigation';
 
 export default function addBankForm() {
+
+    const router = useRouter()
     const form = useForm<AddBankFormData>();
 
     interface AddBankFormData {
-        accountname: string;
-        accountnumber: string;
-        branchname: string;
+        accountName: string;
+        accountNumber: string;
+        branchName: string;
     }
 
     const onSubmit: SubmitHandler<AddBankFormData> = async (data) => {
         try {
             console.log(data); // ตรวจสอบว่าข้อมูลถูกส่งไปถูกต้อง
+            router.refresh();
+            router.push('/user/account')
         } catch (err) {
             console.error(err);
         }
     };
 
     return (
-        <Box sx={{ my: '5%', mx: '15%' }}>
-            <Box
-                sx={{
-                    height: 'auto',
-                    width: 300,
-                    paddingX: 3,
-                    paddingY: 1,
-                    fontSize: 22,
-                    backgroundColor: '#472F05',
-                    color: 'whitesmoke',
-                    border: '2px solid black',
-                    borderBottom: 0,
-                    borderTopLeftRadius: 5,
-                    borderTopRightRadius: 5,
-                    boxShadow: '3px 3px black',
-                    textAlign: 'center',
-                }}
+        <Box  sx={{ px: {xs: '8%', md: '15%'}, }}>
+            <Typography 
+                py={4}
+                align={'center'} 
+                fontFamily={fira_sans_800.style.fontFamily} 
+                fontSize={30}
+                color={'#472F05'}
             >
-                Add new bank account
-            </Box>
+                Add New Bank-Account
+            </Typography>
             <Box
                 sx={{
-                    py: 5,
+                    py: 8,
                     px: 10,
-                    border: '2px solid black',
-                    boxShadow: '7px 7px #472F05',
-                    backgroundColor: '#FDF6F2',
+                    border: '3px solid #472F05',
+                    borderRadius: 2,
+                    boxShadow: '10px 10px #472F05',
+                    backgroundColor: '#EBEBD3',
                 }}
             >
                 <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
-                    <Box
-                        sx={{
-                            fontFamily: 'Fira Sans Condensed, sans-serif',
-                            width: '100%',
-                            pl: 1,
-                            pb: 3,
-                            fontSize: 30,
-                        }}
-                    >
-                        Basic Information:
-                    </Box>
 
                     <Box
                         sx={{
@@ -70,26 +57,29 @@ export default function addBankForm() {
                             height: 'auto',
                             display: 'flex',
                             flexDirection: 'column',
-                            gap: '20px',
+                            gap: 4,
                         }}
                     >
-                        <div>Account Name</div>
-                        <CustomTextField
-                            name="accountname"
+                        <CustomGreenTextField
+                            {...form.register('accountName')}
+                            name="accountName"
+                            label='Account Name'
                             variant="outlined"
                             sx={{ width: '100%' }}
                         />
 
-                        <div>Account Number</div>
-                        <CustomTextField
-                            name="accountnumber"
+                        <CustomGreenTextField
+                            {...form.register('accountNumber')}
+                            name="accountNumber"
+                            label='Account Number'
                             variant="outlined"
                             sx={{ width: '100%' }}
                         />
 
-                        <div>Branch Name</div>
-                        <CustomTextField
-                            name="branchname"
+                        <CustomGreenTextField
+                            {...form.register('branchName')}
+                            name="branchName"
+                            label='Branch Name'
                             variant="outlined"
                             sx={{ width: '100%' }}
                         />
@@ -97,25 +87,25 @@ export default function addBankForm() {
                         <Box
                             sx={{
                                 marginTop: 2,
-                                backgroundColor: '#FAA943',
+                                backgroundColor: '#74A059',
                                 display: 'flex',
                                 flexDirection: 'column',
                                 justifyContent: 'center',
                             }}
                         >
-                            <Button type="submit"
+                            <CustomGreenButton type="submit"
                                 sx={{
                                     paddingY: 1,
                                     border: '2px solid #472F05',
                                     borderRadius: 0,
                                     boxShadow: '3px 2px #472F05',
-                                    fontFamily: 'Fira Sans Condensed, sans-serif',
+                                    fontFamily: fira_sans_600.style.fontFamily,
                                     fontSize: 18,
                                 }}
-                                //onClick={form.handleSubmit(onSubmit)
+                                onClick={() => form.handleSubmit(onSubmit)}
                             >
                                 Add new account
-                            </Button>
+                            </CustomGreenButton>
 
                         </Box>
                     </Box>

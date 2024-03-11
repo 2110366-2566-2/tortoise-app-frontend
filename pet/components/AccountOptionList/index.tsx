@@ -9,14 +9,18 @@ import ListItemText from '@mui/material/ListItemText';
 import PasswordIcon from '@mui/icons-material/Password';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import { useState } from 'react';
 import { fira_sans_600 } from '../../core/theme/theme';
 import { useRouter } from 'next/navigation';
+import DeleteBankAccountDialog from '@components/DeleteBankAccountDialog';
 
 export default function AccountOptionList() {
 
     const [openChangePasswordDialog, setOpenChangePasswordDialog] = useState(false);
     const [openDeleteUserDialog, setOpenDeleteUserDialog] = useState(false);
+    const [openDeleteBankAccountDialog, setOpenDeleteBankAccountDialog] = useState(false);
+
     const router = useRouter();
 
     const handleChangePasswordConfirm = async() => {
@@ -24,6 +28,10 @@ export default function AccountOptionList() {
     }
 
     const handleDeleteUserConfirm = async() => {
+        console.log('confirm delete user')
+    }
+
+    const handleDeleteBankAccountConfirm = async() => {
         console.log('confirm delete user')
     }
 
@@ -44,6 +52,14 @@ export default function AccountOptionList() {
                 cancelText="Cancel"
                 confirmText="Delete"
                 handleConfirm={handleDeleteUserConfirm}
+            />
+            <DeleteBankAccountDialog
+                open={openDeleteBankAccountDialog}
+                setOpen={setOpenDeleteBankAccountDialog}
+                header={'Delete Bank Account'}
+                cancelText="Cancel"
+                confirmText="Delete"
+                handleConfirm={handleDeleteBankAccountConfirm}
             />
             <List
                 sx={{ width: 300, border: '2px solid #472F05', boxShadow: '4px 4px #472F05', borderRadius: 1, my: 2}}
@@ -119,14 +135,16 @@ export default function AccountOptionList() {
                     onClick={() => router.push('/user/account/bank-account')}
                 >
                     <ListItemIcon>
-                        <DeleteIcon sx={{color: '#472F05'}} />
+                        <AccountBalanceWalletIcon sx={{color: '#472F05'}} />
                     </ListItemIcon>
                     <ListItemText primary={
                         <Typography sx={{fontFamily: fira_sans_600.style.fontFamily, color: '#472F05' }}>Add Bank Account</Typography>
                     }/>
                 </ListItemButton>
 
-                <ListItemButton sx={{'&:hover': {backgroundColor: '#E18A7A'}}}>
+                <ListItemButton sx={{'&:hover': {backgroundColor: '#E18A7A'}}}
+                    onClick={() => setOpenDeleteBankAccountDialog(true)}
+                >
                     <ListItemIcon>
                         <DeleteIcon sx={{color: 'red'}} />
                     </ListItemIcon>
