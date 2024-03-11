@@ -115,7 +115,7 @@ export default function UserProfilePage() {
                             <Box 
                                 sx={{
                                     py: 8,
-                                    backgroundColor: '#F6F4D2'
+                                    backgroundColor: '#EBEBD3'
                                 }}
                             >
                                 <Typography 

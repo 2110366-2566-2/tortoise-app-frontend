@@ -1,6 +1,6 @@
 'use client'
 
-import { Tabs, styled, TextField } from '@mui/material';
+import { Tabs, styled, TextField, Button, ButtonProps } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { Fira_Sans_Condensed } from 'next/font/google';
 export const fira_sans_400 = Fira_Sans_Condensed({ weight: ['400'], subsets: ['latin'] });
@@ -62,6 +62,14 @@ export const THEME = createTheme({
     }
 });
 
+export const CustomGreenButton = styled(Button)<ButtonProps>(({ theme }) => ({
+    color: theme.palette.getContrastText('#F9C067'),
+    backgroundColor: '#F6F4D2',
+    '&:hover': {
+      backgroundColor: '#5C984A'
+    }
+}));
+
 export const CustomTabs = styled(Tabs)({
     '& .css-1bgl54s-MuiButtonBase-root-MuiTab-root.Mui-selected': {
         fontFamily: fira_sans_600.style.fontFamily,
@@ -119,3 +127,39 @@ export const CustomPinkTextField = styled(TextField)({
       }
   },
 });
+
+export const CustomGreenTextField = styled(TextField)({
+        
+    '& label.Mui-focused': {
+        color: '#472F05',
+    },
+    '& label': {
+        fontFamily: fira_sans_600.style.fontFamily
+    },
+    '& .MuiInput-underline:after': {
+        borderBottomColor: '#B2BAC2',
+    },
+    '& .MuiInputBase-input': {
+        fontFamily: fira_sans_600.style.fontFamily
+    },
+    '& .MuiInputBase-input:hover': {
+        backgroundColor: '#A5BE7D'
+    },
+    '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+            borderRadius: 0,
+            border: '1px solid #472F05',
+            boxShadow: '3px 3px #472F05',
+        },
+        '&:hover fieldset': {
+            border: '2px solid #472F05',
+        },
+        '&.Mui-focused fieldset': {
+            border: '2px solid #472F05',
+        },
+        '&.Mui-error': {
+            color: 'red',
+            boxShadow: '3px 2px #B12000'
+        }
+    },
+  });
