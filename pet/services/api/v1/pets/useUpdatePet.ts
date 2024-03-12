@@ -5,26 +5,26 @@ import { requestClient } from '../../../clients/requestClient';
 import { IMutationHook, IResponseData, IAxiosResponse } from '../../models';
 
 export const useUpdatePet = ({
-  onSuccess,
-  onError,
-  options,
+    onSuccess,
+    onError,
+    options,
 }: IMutationHook<IResponseData<unknown>, IPetUpdateParams>) => {
-  return useMutation({
-    mutationKey: ['useUpdatePet'],
-    mutationFn: async (params: IPetUpdateParams) => {
-        const {petId, payload} = params
-      try {
-        const response: IAxiosResponse = await requestClient.put(`api/v1/pets/${petId}`, payload);
-        if (response.data.message !== 'success') {
-          throw response.data.result.message as AxiosError;
-        }
-        return response.data.result.message;
-      } catch (err) {
-        throw err as AxiosError;
-      }
-    },
-    onSuccess: onSuccess,
-    onError: onError,
-    ...options,
-  });
+    return useMutation({
+        mutationKey: ['useUpdatePet'],
+        mutationFn: async (params: IPetUpdateParams) => {
+            const { petId, payload } = params;
+            try {
+                const response: IAxiosResponse = await requestClient.put(`api/v1/pets/${petId}`, payload);
+                if (!response.success) {
+                    throw new Error() as AxiosError;
+                }
+                return response.data;
+            } catch (err) {
+                throw err as AxiosError;
+            }
+        },
+        onSuccess: onSuccess,
+        onError: onError,
+        ...options,
+    });
 };

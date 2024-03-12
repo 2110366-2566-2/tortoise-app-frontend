@@ -1,20 +1,20 @@
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { IUserUpdateParams } from './type';
 import { requestClient } from '../../../clients/requestClient';
 import { IMutationHook, IResponseData, IAxiosResponse } from '../../models';
+import { IChangePasswordParams } from './type';
 
-export const useUpdateUserProfile = ({
+export const useUpdateUserPassword = ({
     onSuccess,
     onError,
     options,
-}: IMutationHook<IResponseData<unknown>, IUserUpdateParams>) => {
+}: IMutationHook<IResponseData<unknown>, IChangePasswordParams>) => {
     return useMutation({
-        mutationKey: ['useUpdateUser'],
-        mutationFn: async (params: IUserUpdateParams) => {
+        mutationKey: ['useUpdateUserPassword'],
+        mutationFn: async (params: IChangePasswordParams) => {
             const { user_id, payload } = params;
             try {
-                const response: IAxiosResponse = await requestClient.put(`api/v1/user/${user_id}`, payload);
+                const response: IAxiosResponse = await requestClient.put(`api/v1/user/passwd/${user_id}`, payload);
                 if (!response.success) {
                     throw new Error() as AxiosError;
                 }
