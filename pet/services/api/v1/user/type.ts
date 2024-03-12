@@ -20,8 +20,13 @@ export interface Address {
 }
 
 export interface IChangePassword {
-    o_password: string;
+    old_password: string;
     password: string;
+}
+
+export interface IChangePasswordParams {
+    user_id: string;
+    payload: IChangePassword;
 }
 
 export interface IUserUpdateParams {
