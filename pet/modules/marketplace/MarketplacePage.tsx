@@ -12,9 +12,9 @@ export default function MarketplacePage() {
 
     return (
         <Box sx={{ textAlign: '-webkit-center' }}>
-            <Box sx={{ height: '50vh', p: '24px 10% 8px' }}>
+            {/* <Box sx={{ height: '50vh', p: '24px 10% 8px' }}>
                 <ImageCarousel itemLists={carouselItems} />
-            </Box>
+            </Box> */}
 
             <Box sx={{ p: '32px 10% 8px' }}>
                 <SearchField />
