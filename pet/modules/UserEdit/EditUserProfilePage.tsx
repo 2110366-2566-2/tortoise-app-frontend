@@ -8,20 +8,20 @@ import useGetSession from '../../core/auth/useGetSession';
 import useGetUserProfile from '../../services/api/v1/user/useGetUserProfile';
 import { CustomTextField } from '../../components/CustomInput/type';
 import UserProfileCard from '../../components/UserProfileCard';
-import EditUserSettings from '../../components/UserProfileEdit';
-import { Address, IUserDetail } from '../../services/api/v1/user/type';
+import { Address, IUserDetail, IUserUpdateParams, IUserUpdatePayload } from '../../services/api/v1/user/type';
 import { useForm } from 'react-hook-form';
 import { fira_sans_600, fira_sans_800 } from '../../core/theme/theme';
 import { ColorButton } from '../../components/CustomInput/type';
+import { useUpdateUserProfile } from '@services/api/v1/user/useUpdateUserProfile';
+import useToastUI from '@core/hooks/useToastUI';
 
-
-export default function EditUserProfilePage () {
-
-    const router = useRouter()
+export default function EditUserProfilePage() {
+    const router = useRouter();
     const session = useGetSession();
+    const toastUI = useToastUI();
     const { data: userProfile, isSuccess: userProfileSuccess } = useGetUserProfile(session.userID || '');
 
-    const form = useForm<IUserDetail>();
+    const form = useForm<IUserUpdatePayload>();
 
     if (!userProfileSuccess) {
         return null;
@@ -42,103 +42,121 @@ export default function EditUserProfilePage () {
     //     // form.setValue('first_name', form.getValues().first_name || userProfile.first_name);
     // }, [form]);
 
+    const { mutateAsync: mutateUpdateUserProfile } = useUpdateUserProfile({
+        onSuccess: () => {
+            toastUI.toastSuccess('Profile updated');
+            router.push('/user/account');
+        },
+        onError: (err) => {
+            toastUI.toastError(err.message);
+        },
+    });
+
     const handleUpdate = (updatedData: IUserDetail) => {
         console.log('Updated data:', updatedData);
         return updatedData;
     };
 
-    
-
-    const onSubmit = async (data: IUserDetail) => {
-        console.log(data)
-        router.back()
+    const onSubmit = async (data: IUserUpdatePayload) => {
+        try {
+            await mutateUpdateUserProfile({ user_id: session.userID, payload: data } as IUserUpdateParams);
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     return (
         <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
-            <Typography fontFamily={fira_sans_800.style.fontFamily} fontSize={30} color={'#472F05'} textAlign={'center'} mt={4}>
+            <Typography
+                fontFamily={fira_sans_800.style.fontFamily}
+                fontSize={30}
+                color={'#472F05'}
+                textAlign={'center'}
+                mt={4}
+            >
                 Update your Profile HERE!
             </Typography>
-                <Box 
-                    sx={{ 
-                        m: 5, p: 5, 
-                        border: '3px solid #472F05', 
-                        boxShadow: '7px 7px #472F05', 
-                        borderRadius: 2,
-                        bgcolor: '#DDB892'
+            <Box
+                sx={{
+                    m: 5,
+                    p: 5,
+                    border: '3px solid #472F05',
+                    boxShadow: '7px 7px #472F05',
+                    borderRadius: 2,
+                    bgcolor: '#DDB892',
+                }}
+            >
+                <Box
+                    sx={{
+                        p: 3,
+                        border: '2px solid #472F05',
+                        borderRadius: 1,
+                        boxShadow: '4px 4px #472F05',
+                        bgcolor: '#FFF8E8',
                     }}
                 >
-                    <Box 
-                        sx={{
-                            p: 3,
-                            border: '2px solid #472F05',
-                            borderRadius: 1,
-                            boxShadow: '4px 4px #472F05',
-                            bgcolor: '#FFF8E8'
-                        }}
-                    >
-                        <Grid container spacing={4}>
-                            <Grid item xs={12} md={6}>
-                                <CustomTextField
-                                    {...form.register('first_name')}
-                                    name={'first_name'}
-                                    label="First Name"
-                                    variant="outlined"
-                                    defaultValue={userProfile.first_name}
-                                    type={'text'}
-                                    fullWidth
-                                    // disabled={}
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <CustomTextField
-                                    {...form.register('last_name')}
-                                    name={'last_name'}
-                                    label="Last Name"
-                                    variant="outlined"
-                                    defaultValue={userProfile.last_name}
-                                    type={'text'}
-                                    fullWidth
-                                    // disabled={}
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <CustomTextField
-                                    {...form.register('gender')}
-                                    name={'gender'}
-                                    label="Gender"
-                                    variant="outlined"
-                                    defaultValue={userProfile.gender}
-                                    type={'text'}
-                                    fullWidth
-                                    // disabled={}
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <CustomTextField
-                                    {...form.register('phoneNumber')}
-                                    name={'phoneNumber'}
-                                    label="Tel"
-                                    variant="outlined"
-                                    defaultValue={userProfile.phoneNumber}
-                                    type={'text'}
-                                    fullWidth
-                                    // disabled={}
-                                />
-                            </Grid>
+                    <Grid container spacing={4}>
+                        <Grid item xs={12} md={6}>
+                            <CustomTextField
+                                {...form.register('first_name')}
+                                name={'first_name'}
+                                label="First Name"
+                                variant="outlined"
+                                defaultValue={userProfile.first_name}
+                                type={'text'}
+                                fullWidth
+                                // disabled={}
+                            />
                         </Grid>
-                    </Box>
+                        <Grid item xs={12} md={6}>
+                            <CustomTextField
+                                {...form.register('last_name')}
+                                name={'last_name'}
+                                label="Last Name"
+                                variant="outlined"
+                                defaultValue={userProfile.last_name}
+                                type={'text'}
+                                fullWidth
+                                // disabled={}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                            <CustomTextField
+                                {...form.register('gender')}
+                                name={'gender'}
+                                label="Gender"
+                                variant="outlined"
+                                defaultValue={userProfile.gender}
+                                type={'text'}
+                                fullWidth
+                                // disabled={}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                            <CustomTextField
+                                {...form.register('phoneNumber')}
+                                name={'phoneNumber'}
+                                label="Tel"
+                                variant="outlined"
+                                defaultValue={userProfile.phoneNumber}
+                                type={'text'}
+                                fullWidth
+                                // disabled={}
+                            />
+                        </Grid>
+                    </Grid>
+                </Box>
                 <Box>
                     <Typography fontFamily={fira_sans_800.style.fontFamily} pt={3} fontSize={23} color={'#472F05'}>
                         Address:
                     </Typography>
-                    <Box 
+                    <Box
                         sx={{
                             p: 3,
                             border: '2px solid #472F05',
                             borderRadius: 1,
                             boxShadow: '4px 4px #472F05',
-                            bgcolor: '#FFF8E8'
+                            bgcolor: '#FFF8E8',
                         }}
                     >
                         <Grid container spacing={3}>
@@ -232,23 +250,21 @@ export default function EditUserProfilePage () {
                 <Box display={'flex'} flexDirection={'row'} justifyContent={'center'}>
                     <ColorButton
                         sx={{
-                            mt: 5, px: 3,
+                            mt: 5,
+                            px: 3,
                             border: '2px solid #472F05',
                             borderRadius: 0,
                             boxShadow: '3px 2px #472F05',
                             fontFamily: fira_sans_600.style.fontFamily,
                             fontSize: 18,
                             textAlign: 'center',
-                            bgcolor: '#FAA943'
+                            bgcolor: '#FAA943',
                         }}
-                        onClick={
-                            form.handleSubmit(onSubmit)
-                        }
+                        onClick={form.handleSubmit(onSubmit)}
                     >
                         Update Profile!
                     </ColorButton>
                 </Box>
-                
             </Box>
         </form>
     );

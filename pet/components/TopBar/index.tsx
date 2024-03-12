@@ -16,14 +16,21 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { usePathname, useRouter } from 'next/navigation';
 import { Fira_Sans_Condensed } from 'next/font/google';
 import useLogout from '../../core/auth/useLogout';
+import useGetSession from '@core/auth/useGetSession';
 
-const pages = ['My Shop', 'Marketplace', 'My Orders'];
-const settings = ['Account', 'Logout'];
 const fira_sans_600 = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] });
 
 function TopBar() {
     const path = usePathname();
     const router = useRouter();
+    const session = useGetSession();
+
+    const pages = [
+        ...(session.role === 'seller' ? ['My Shop'] : []),
+        'Marketplace',
+        ...(session.role === 'buyer' ? ['My Orders'] : []),
+    ];
+    const settings = ['Account', 'Logout'];
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
