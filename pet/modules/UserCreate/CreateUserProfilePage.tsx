@@ -1,163 +1,193 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import { Avatar, Button, Tab, Typography } from '@mui/material';
+import { Box, Grid, Avatar, Tab } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { IUserDetail } from '../../../../services/api/v1/user/type';
+import useGetSession from '../../core/auth/useGetSession';
+import useGetUserProfile from '../../services/api/v1/user/useGetUserProfile';
+import { CustomTextField } from '../../components/CustomInput/type';
+import UserProfileCard from '../../components/UserProfileCard';
+import { Address, IUserDetail, IUserUpdateParams, IUserUpdatePayload } from '../../services/api/v1/user/type';
 import { useForm } from 'react-hook-form';
-import { fira_sans_600, fira_sans_800 } from '../../../../core/theme/theme';
-import { ColorButton, CustomTextField } from '../../../../components/CustomInput/type';
+import { fira_sans_600, fira_sans_800 } from '../../core/theme/theme';
+import { ColorButton } from '../../components/CustomInput/type';
+import { useUpdateUserProfile } from '@services/api/v1/user/useUpdateUserProfile';
+import useToastUI from '@core/hooks/useToastUI';
 
+export default function CreateUserProfilePage() {
+    const router = useRouter();
+    const session = useGetSession();
+    const toastUI = useToastUI();
+    const { data: userProfile, isSuccess: userProfileSuccess } = useGetUserProfile(session.userID || '');
 
-export default function createprofilepage() {
-  const form = useForm<IUserDetail>();
-  const [avatarSrc, setAvatarSrc] = useState(''); // สร้าง state เพื่อเก็บค่า src ของ Avatar
-  const router = useRouter()
-  
-  useEffect(() => {
-        form.setValue('first_name', form.getValues().first_name || "");
-        form.setValue('last_name', form.getValues().last_name || "");
-        form.setValue('phoneNumber', form.getValues().phoneNumber || "");
-        form.setValue('gender', form.getValues().gender || "");
-        form.setValue('address.houseNumber', form.getValues().address.houseNumber || "");
-        form.setValue('image', form.getValues().image || "");
-        // form.setValue('first_name', form.getValues().first_name || userProfile.first_name);
-    });
-    
-  // ฟังก์ชัน handleFileChange เมื่อมีการเลือกไฟล์ใหม่
-  const handleFileChange = (event) => {
-    const file = event.target.files[0]; // ไฟล์ที่เลือก
-    const reader = new FileReader();
+    const form = useForm<IUserUpdatePayload>();
 
-    reader.onload = () => {
-      const newSrc = reader.result; // ข้อมูลของไฟล์ที่ถูกอ่านเข้ามา
-      setAvatarSrc(newSrc); // เปลี่ยนค่า src ของ Avatar
+    if (!userProfileSuccess) {
+        return null;
+    }
+
+    const [avatarSrc, setAvatarSrc] = useState<string | undefined>(''); // สร้าง state เพื่อเก็บค่า src ของ Avatar
+
+    // ฟังก์ชัน handleFileChange เมื่อมีการเลือกไฟล์ใหม่
+    const handleFileChange = (event: any) => {
+        const file = event.target.files[0]; // ไฟล์ที่เลือก
+        const reader = new FileReader();
+
+        reader.onload = () => {
+        const newSrc = reader.result?.toString(); // ข้อมูลของไฟล์ที่ถูกอ่านเข้ามา
+            setAvatarSrc(newSrc); // เปลี่ยนค่า src ของ Avatar
+        };
+
+        reader.readAsDataURL(file); // อ่านไฟล์ในรูปแบบ Data URL
     };
 
-    reader.readAsDataURL(file); // อ่านไฟล์ในรูปแบบ Data URL
-  };
+    const { mutateAsync: mutateUpdateUserProfile } = useUpdateUserProfile({
+        onSuccess: () => {
+            toastUI.toastSuccess('Profile Created!');
+            router.push('/user/marketplace');
+        },
+        onError: (err) => {
+            toastUI.toastError(err.message);
+        },
+    });
 
-  const onSubmit = async (data: IUserDetail) => {
-        console.log(data)
-  };
+    const handleUpdate = (updatedData: IUserDetail) => {
+        console.log('Updated data:', updatedData);
+        return updatedData;
+    };
 
-  return (
-    <Box display={'flex'} flexDirection={'column'} alignItems={'center'} pb={3}>
-        <Typography fontFamily={fira_sans_800.style.fontFamily} fontSize={30} color={'#472F05'} textAlign={'center'} mt={4}>
-            Create your new Profile HERE!
-        </Typography>
-        <Box 
-            display={'flex'} 
-            flexDirection={'column'} 
-            alignItems={'center'} 
-            py={3}
-            px={4}
-            border={'3px solid #472F05'}
-            boxShadow={'6px 6px #472F05'}
-            borderRadius={0}
-            sx={{
-            backgroundColor: '#E5CB9A'
-            }}
-          >
-          <Avatar 
-            alt='Profile Picture'
-            src={avatarSrc} // ใช้ค่า src ที่เก็บใน state มาเป็นค่า src ของ Avatar
-            sx={{ 
-              width: 180 , 
-              height: 180,  
-              border: '2px solid #472F05', 
-              boxShadow: 10,
-              fontSize: 70,
-              fontFamily: fira_sans_800.style.fontFamily
-            }} 
-          />
-          
-          <Tab/>
-          <input type="file" id="myFile" name="filename" onChange={handleFileChange} />
-        </Box>
+    const onSubmit = async (data: IUserUpdatePayload) => {
+        try {
+            await mutateUpdateUserProfile({ user_id: session.userID, payload: data } as IUserUpdateParams);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    return (
+        <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+            <Typography
+                fontFamily={fira_sans_800.style.fontFamily}
+                fontSize={30}
+                color={'#472F05'}
+                textAlign={'center'}
+                mt={4}
+            >
+                Update your Profile HERE!
+            </Typography>
+
+            <Box 
+                display={'flex'} 
+                flexDirection={'column'} 
+                alignItems={'center'}
+                mx={'20%'}
+                py={3}
+                px={4}
+                border={'3px solid #472F05'}
+                boxShadow={'6px 6px #472F05'}
+                borderRadius={0}
+                sx={{
+                    backgroundColor: '#E5CB9A'
+                }}
+            >
+            <Avatar 
+                alt='Profile Picture'
+                src={avatarSrc} // ใช้ค่า src ที่เก็บใน state มาเป็นค่า src ของ Avatar
+                sx={{ 
+                width: 180 , 
+                height: 180,  
+                border: '2px solid #472F05', 
+                boxShadow: 10,
+                fontSize: 70,
+                fontFamily: fira_sans_800.style.fontFamily
+                }} 
+            />
             
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <Box 
-                    sx={{ 
-                        m: 5, p: 5, 
-                        border: '3px solid #472F05', 
-                        boxShadow: '7px 7px #472F05', 
-                        borderRadius: 2,
-                        bgcolor: '#DDB892'
+                <Tab/>
+                <input type="file" id="myFile" name="filename" onChange={handleFileChange} />
+            </Box>
+
+            <Box
+                sx={{
+                    m: 5,
+                    p: 5,
+                    border: '3px solid #472F05',
+                    boxShadow: '7px 7px #472F05',
+                    borderRadius: 2,
+                    bgcolor: '#DDB892',
+                }}
+            >
+                <Box
+                    sx={{
+                        p: 3,
+                        border: '2px solid #472F05',
+                        borderRadius: 1,
+                        boxShadow: '4px 4px #472F05',
+                        bgcolor: '#FFF8E8',
                     }}
                 >
-                    <Box 
-                        sx={{
-                            p: 3,
-                            border: '2px solid #472F05',
-                            borderRadius: 1,
-                            boxShadow: '4px 4px #472F05',
-                            bgcolor: '#FFF8E8'
-                        }}
-                    >
-                        <Grid container spacing={4}>
-                            <Grid item xs={12} md={6}>
-                                <CustomTextField
+                    <Grid container spacing={4}>
+                        <Grid item xs={12} md={6}>
+                            <CustomTextField
                                 {...form.register('first_name')}
                                 name={'first_name'}
                                 label="First Name"
                                 variant="outlined"
-                                //defaultValue={userProfile.first_name}
+                                defaultValue={userProfile.first_name}
                                 type={'text'}
                                 fullWidth
                                 // disabled={}
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <CustomTextField
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                            <CustomTextField
                                 {...form.register('last_name')}
                                 name={'last_name'}
                                 label="Last Name"
                                 variant="outlined"
-                                //defaultValue={userProfile.last_name}
+                                defaultValue={userProfile.last_name}
                                 type={'text'}
                                 fullWidth
                                 // disabled={}
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <CustomTextField
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                            <CustomTextField
                                 {...form.register('gender')}
                                 name={'gender'}
                                 label="Gender"
                                 variant="outlined"
-                                //defaultValue={userProfile.gender}
+                                defaultValue={userProfile.gender}
                                 type={'text'}
                                 fullWidth
                                 // disabled={}
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <CustomTextField
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                            <CustomTextField
                                 {...form.register('phoneNumber')}
                                 name={'phoneNumber'}
                                 label="Tel"
                                 variant="outlined"
-                                //defaultValue={userProfile.phoneNumber}
+                                defaultValue={userProfile.phoneNumber}
                                 type={'text'}
                                 fullWidth
                                 // disabled={}
-                                />
-                            </Grid>
+                            />
                         </Grid>
-                    </Box>
+                    </Grid>
+                </Box>
                 <Box>
                     <Typography fontFamily={fira_sans_800.style.fontFamily} pt={3} fontSize={23} color={'#472F05'}>
                         Address:
                     </Typography>
-                    <Box 
+                    <Box
                         sx={{
                             p: 3,
                             border: '2px solid #472F05',
                             borderRadius: 1,
                             boxShadow: '4px 4px #472F05',
-                            bgcolor: '#FFF8E8'
+                            bgcolor: '#FFF8E8',
                         }}
                     >
                         <Grid container spacing={3}>
@@ -167,7 +197,7 @@ export default function createprofilepage() {
                                     name={'address.houseNumber'}
                                     label="House Number"
                                     variant="outlined"
-                                    //defaultValue={userProfile.address.houseNumber}
+                                    defaultValue={userProfile.address.houseNumber}
                                     type={'text'}
                                     fullWidth
                                     // disabled={}
@@ -179,7 +209,7 @@ export default function createprofilepage() {
                                     name={'address.building'}
                                     label="Building"
                                     variant="outlined"
-                                    //defaultValue={userProfile.address.building}
+                                    defaultValue={userProfile.address.building}
                                     type={'text'}
                                     fullWidth
                                     // disabled={}
@@ -191,7 +221,7 @@ export default function createprofilepage() {
                                     name={'address.street'}
                                     label="Street"
                                     variant="outlined"
-                                    //defaultValue={userProfile.address.street}
+                                    defaultValue={userProfile.address.street}
                                     type={'text'}
                                     fullWidth
                                     // disabled={}
@@ -203,7 +233,7 @@ export default function createprofilepage() {
                                     name={'address.subdistrict'}
                                     label="Sub-District"
                                     variant="outlined"
-                                    //defaultValue={userProfile.address.subdistrict}
+                                    defaultValue={userProfile.address.subdistrict}
                                     type={'text'}
                                     fullWidth
                                     // disabled={}
@@ -215,7 +245,7 @@ export default function createprofilepage() {
                                     name={'address.district'}
                                     label="District"
                                     variant="outlined"
-                                    //defaultValue={userProfile.address.district}
+                                    defaultValue={userProfile.address.district}
                                     type={'text'}
                                     fullWidth
                                     // disabled={}
@@ -227,7 +257,7 @@ export default function createprofilepage() {
                                     name={'address.province'}
                                     label="Province"
                                     variant="outlined"
-                                    //defaultValue={userProfile.address.province}
+                                    defaultValue={userProfile.address.province}
                                     type={'text'}
                                     fullWidth
                                     // disabled={}
@@ -239,7 +269,7 @@ export default function createprofilepage() {
                                     name={'address.postalCode'}
                                     label="Postal Code"
                                     variant="outlined"
-                                    //defaultValue={userProfile.address.postalCode}
+                                    defaultValue={userProfile.address.postalCode}
                                     type={'text'}
                                     fullWidth
                                     // disabled={}
@@ -251,29 +281,23 @@ export default function createprofilepage() {
                 <Box display={'flex'} flexDirection={'row'} justifyContent={'center'}>
                     <ColorButton
                         sx={{
-                            mt: 3, px: 3,
+                            mt: 5,
+                            px: 3,
                             border: '2px solid #472F05',
                             borderRadius: 0,
                             boxShadow: '3px 2px #472F05',
                             fontFamily: fira_sans_600.style.fontFamily,
                             fontSize: 18,
-                            textAlign: 'center'
+                            textAlign: 'center',
+                            bgcolor: '#FAA943',
                         }}
-                        onClick={() => {
-                            form.handleSubmit(onSubmit)
-                            router.push('my-shop')
-                        }}
+                        onClick={form.handleSubmit(onSubmit)}
                     >
-                        Create New Profile!
+                        Create your Profile!
                     </ColorButton>
                 </Box>
-                
             </Box>
         </form>
-        
-
-
-    </Box>
-  );
+    );
 }
 
