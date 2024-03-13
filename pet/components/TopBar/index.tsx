@@ -216,8 +216,15 @@ function TopBar() {
                                         }
                                         return router.push(`/user/${setting.toLowerCase()}`);
                                     }}
+                                    sx={{
+                                        "&:hover": {
+                                            backgroundColor: '#CCB2B2'
+                                        }
+                                    }}  
                                 >
-                                    <Typography textAlign="center">{setting}</Typography>
+                                    <Typography fontFamily={fira_sans_600.style.fontFamily} textAlign="center">
+                                        {setting}
+                                    </Typography>
                                 </MenuItem>
                             ))}
                         </Menu>

@@ -65,9 +65,9 @@ function Transaction( { role, transaction }: { role: number, transaction: any } 
                 onClick={() => setShowContent(!showContent)}
             >
                 <Grid item xs={3} className={classes.gridItem}>
-                    <span className={classes.date}>{transaction.timestamp.date}</span>
+                    <span className={classes.date}>{transaction.date}</span>
                     <br />
-                    <span className={classes.timestamp}>{transaction.timestamp.time}</span>
+                    <span className={classes.timestamp}>{transaction.time}</span>
                 </Grid>
                 <Grid item xs={3} className={classes.gridItem}>
                     <span className={classes.paymentMethod}>{transaction.payment_method}</span>
@@ -100,16 +100,16 @@ function Transaction( { role, transaction }: { role: number, transaction: any } 
                     <Box display="flex" alignItems="center" justifyContent="space-between" width="100%" height="20px">
                         <Box>
                             <Image width={300} height={300}
-                                src={mockDog}
+                                src={transaction.pet_detail.media}
                                 alt="Pet Picture"
                                 style={{ objectFit: 'cover', width: '50%', height: 'auto', maxHeight: 'fit-content', border: '2px solid black', borderRadius: 3 }}
                             />
                         </Box>
-                        <Box display="flex" flexDirection="column" marginLeft="-13%">
+                        <Box display="flex" flexDirection="column" marginLeft="-10%">
                             <TextField
                                 label="Pet Name"
                                 id="standard-size-small"
-                                defaultValue="Mah Deng"
+                                defaultValue={transaction.pet_detail.name}
                                 size="small"
                                 variant="standard"
                                 InputProps={{
@@ -119,7 +119,7 @@ function Transaction( { role, transaction }: { role: number, transaction: any } 
                             <TextField
                                 label="Age"
                                 id="standard-size-small"
-                                defaultValue="69"
+                                defaultValue={transaction.pet_detail.age}
                                 size="small"
                                 variant="standard"
                                 InputProps={{
@@ -129,7 +129,7 @@ function Transaction( { role, transaction }: { role: number, transaction: any } 
                             <TextField
                                 label="Sex"
                                 id="standard-size-small"
-                                defaultValue="Male"
+                                defaultValue={transaction.pet_detail.sex}
                                 size="small"
                                 variant="standard"
                                 InputProps={{
@@ -139,7 +139,7 @@ function Transaction( { role, transaction }: { role: number, transaction: any } 
                             <TextField
                                 label="Species"
                                 id="standard-size-small"
-                                defaultValue="Mah Kark"
+                                defaultValue={transaction.pet_detail.species}
                                 size="small"
                                 variant="standard"
                                 InputProps={{
@@ -151,7 +151,7 @@ function Transaction( { role, transaction }: { role: number, transaction: any } 
                             <TextField
                                 id="outlined-read-only-input"
                                 label="Seller Name"
-                                defaultValue="Mohammed Salah"
+                                defaultValue={transaction.seller_name}
                                 InputProps={{
                                     readOnly: true,
                                 }}
@@ -167,7 +167,7 @@ function Transaction( { role, transaction }: { role: number, transaction: any } 
                             <TextField
                                 id="outlined-read-only-input"
                                 label="Buyer Name"
-                                defaultValue="Steve McManaman"
+                                defaultValue={transaction.buyer_name}
                                 InputProps={{
                                     readOnly: true
                                 }}

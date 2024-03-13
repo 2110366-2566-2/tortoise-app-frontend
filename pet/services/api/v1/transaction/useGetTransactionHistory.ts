@@ -1,111 +1,33 @@
+import { useEffect, useState } from "react";
 import { Transaction, TransactionResponse } from "./type";
+import { requestClient } from "@services/clients/requestClient";
+import { getLocalStorageValue } from "@core/utils";
+import { DEFAULT_DEV_TOKEN } from "@services/clients/config";
 
-function useGetTransactionHistory(): Promise<TransactionResponse> {
-    // Mock data
-    const mockData = {
-        role: 1,
-        data: [
-            {
-                seller_name: 'John Doe',
-                price: 1000,
-                pet_name: 'Fluffy',
-                timestamp: {
-                    date: '2021-10-10',
-                    time: '10:00'
-                },
-                status: 'pending',
-                payment_method: 'paypal'
-            },
-            {
-                seller_name: 'Jane Doe',
-                price: 500,
-                pet_name: 'Fido',
-                timestamp: {
-                    date: '2021-10-11',
-                    time: '11:00'
-                },
-                status: 'pending',
-                payment_method: 'creditcard'
-            },
-            {
-                seller_name: 'John Doe',
-                price: 1000,
-                pet_name: 'Fluffy',
-                timestamp: {
-                    date: '2021-10-12',
-                    time: '12:00'
-                },
-                status: 'paid',
-                payment_method: 'paypal'
-            },
-            {
-                seller_name: 'Jane Doe',
-                price: 500,
-                pet_name: 'Fido',
-                timestamp: {
-                    date: '2021-10-13',
-                    time: '13:00'
-                },
-                status: 'paid',
-                payment_method: 'creditcard'
-            },
-            {
-                seller_name: 'John Doe',
-                price: 1000,
-                pet_name: 'Fluffy',
-                timestamp: {
-                    date: '2021-10-14',
-                    time: '14:00'
-                },
-                status: 'paid',
-                payment_method: 'paypal'
-            },
-            {
-                seller_name: 'Jane Doe',
-                price: 500,
-                pet_name: 'Fido',
-                timestamp: {
-                    date: '2021-10-15',
-                    time: '15:00'
-                },
-                status: 'paid',
-                payment_method: 'creditcard'
-            },
-            {
-                seller_name: 'John Doe',
-                price: 1000,
-                pet_name: 'Fluffy',
-                timestamp: {
-                    date: '2021-10-16',
-                    time: '16:00'
-                },
-                status: 'paid',
-                payment_method: 'paypal'
-            },
-            {
-                seller_name: 'Jane Doe',
-                price: 500,
-                pet_name: 'Fido',
-                timestamp: {
-                    date: '2021-10-17',
-                    time: '17:00'
-                },
-                status: 'paid',
-                payment_method: 'creditcard'
-            }
-        ],
-    };
-
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve({
-                role: mockData.role,
-                data: mockData.data,
-                loading: false,
-                error: null
-            });
-        }, 1500);
-    });
+async function useGetTransactionHistory(): Promise<TransactionResponse> {
+    try {
+        const sessionId = await getLocalStorageValue('session_id');
+        const token = sessionId ?? DEFAULT_DEV_TOKEN;
+        const headers = {
+            'Authorization': 'Bearer ' + token,
+        };
+        const response = await requestClient.get('/api/v1/transactions/', { headers });
+        const data: Transaction[] = response.data.transactions;
+        const role = response.data.role;
+        return {
+            role: role,
+            data: data,
+            loading: false,
+            error: null
+        };
+    } catch (error) {
+        return {
+            role: "",
+            data: [],
+            loading: false,
+            error: "error"
+        };
+    }
 }
 
 export default useGetTransactionHistory;

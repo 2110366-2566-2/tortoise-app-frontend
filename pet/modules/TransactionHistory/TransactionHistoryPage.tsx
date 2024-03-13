@@ -10,10 +10,11 @@ import useGetTransactionHistory from '@services/api/v1/transaction/useGetTransac
 import Image from 'next/image';
 import dogSleep from '@public/image/dogSleep.png';
 import transactionTheme from '@core/theme/transactionTheme';
+import { set } from 'react-hook-form';
 
 function TransactionHistoryPage() {
     const [data, setData] = useState([]);
-    const [role, setRole] = useState(1);
+    const [role, setRole] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -21,20 +22,43 @@ function TransactionHistoryPage() {
 
     useEffect(() => {
         const fetchData = async () => {
-            // Mock API call
             const response : any = await useGetTransactionHistory();
             const formattedData = response.data.map((transaction: any) => {
-                if (transaction.payment_method.toLowerCase() === 'paypal') {
-                    transaction.payment_method = 'PAYPAL';
+
+                const ts = new Date(transaction.timestamp);
+
+                const year = ts.getFullYear();
+                const month = ts.getMonth() + 1; // Months are zero-indexed
+                const day = ts.getDate();
+
+                const hours = ts.getHours();
+                var minutes = ts.getMinutes().toString();
+                if (minutes.length === 1) {
+                    minutes = '0' + minutes;
+                }
+
+                transaction.date = `${year}-${month}-${day}`;
+                transaction.time = `${hours}:${minutes}`;
+
+                if (transaction.pet_detail.sex.toLowerCase() === 'm') {
+                    transaction.pet_detail.sex = 'Male';
+                } else if (transaction.pet_detail.sex.toLowerCase() === 'f') {
+                    transaction.pet_detail.sex = 'Female';
+                }
+
+                if (transaction.payment_method.toLowerCase() === 'promptpay') {
+                    transaction.payment_method = 'PROMPT PAY';
                 } else if (transaction.payment_method.toLowerCase() === 'creditcard') {
                     transaction.payment_method = 'CREDIT CARD';
                 }
-                if (role === 1) {
+                if (response.role === "seller") {
+                    setRole(1);
                     return {
                         ...transaction,
                         price: '+' + transaction.price.toLocaleString() + ' THB'
                     }
-                } else if (role === 2) {
+                } else if (response.role === "buyer") {
+                    setRole(2);
                     return {
                         ...transaction,
                         price: '-' + transaction.price.toLocaleString() + ' THB'
@@ -42,12 +66,11 @@ function TransactionHistoryPage() {
                 }
             });
             setData(formattedData);
-            setRole(response.role);
             setLoading(response.loading);
             setError(response.error);
         };
         fetchData();
-    }, [data]);
+    }, []);
 
     if (loading) return <CenterLoader />;
     if (error) return <></>
