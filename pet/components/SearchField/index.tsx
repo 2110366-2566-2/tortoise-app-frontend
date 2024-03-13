@@ -38,7 +38,14 @@ export default function SearchField() {
     }
 
     const CATEGORY_CHOICES = (petCategoryList || []).map((category) => (
-        <MenuItem onClick={handleSelect} >
+        <MenuItem 
+            onClick={handleSelect} 
+            sx={{
+                '&:hover': {
+                    backgroundColor: '#F79762'
+                }
+            }}
+        >
             <Typography color={'#472F05'} fontFamily={fira_sans_600.style.fontFamily} >
                 {category.category.replace(/^\w/, (first) => first.toUpperCase())}
             </Typography>
@@ -84,7 +91,12 @@ export default function SearchField() {
                     anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 >
                     <Box width={100}>
-                        <Typography pb={1} pl={2} color={'#472F05'} fontFamily={fira_sans_800.style.fontFamily} >
+                        <Typography
+                            pb={1} 
+                            pl={2} 
+                            color={'#472F05'}
+                            fontFamily={fira_sans_800.style.fontFamily} 
+                        >
                             Type
                         </Typography>
                         <Divider />
