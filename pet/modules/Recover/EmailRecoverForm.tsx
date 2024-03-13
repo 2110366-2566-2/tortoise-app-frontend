@@ -19,6 +19,8 @@ import { useForm } from 'react-hook-form';
 import { fira_sans_600 } from '../../core/theme/theme';
 import useToastUI from '../../core/hooks/useToastUI';
 import { useRouter } from 'next/navigation';
+import useVerifyEmail from '@services/api/v1/user/useVerifyEmail';
+import useGetOTP from '@services/api/v1/user/useGetOTP';
 
 type FormValues = {
     email: string;
@@ -79,12 +81,29 @@ export default function EmailRecoverForm() {
             setEmailError(true);
             return toastUI.toastError('Email is required');
         }
+        
+        useVerifyEmail(data.email).then((res) => {
+            if (!res) {
+                setEmailError(true);
+                return toastUI.toastError('Email is not registered');
+            } else {
+                useGetOTP(data.email).then((res) => {
+                    if (!res) {
+                        toastUI.toastError('Failed to send OTP');
+                    } else {
+                        toastUI.toastSuccess('OTP has been sent to your email');
+                    }
+                })
+                router.push('recover/cSN7Z4xV6IYTbOaH?email=' + data.email);
+            }
+        });
+
+        /*
         if (data.password !== confirmPassword) {
             setConfirmPasswordError(true);
             return toastUI.toastError('Password and Confirm Password do not match');
         }
-
-        router.push('recover/cSN7Z4xV6IYTbOaH');
+        */
     };
     return (
         <React.Fragment>
@@ -116,7 +135,7 @@ export default function EmailRecoverForm() {
                                         ' @media(max-width:479px)': { fontSize: '1.2rem' },
                                     }}
                                 >
-                                    Recover Password
+                                    Recover Username
                                 </Typography>
                             </Stack>
                             <Stack sx={{ alignItems: 'center', width: '100%' }} spacing="10px">
@@ -132,6 +151,7 @@ export default function EmailRecoverForm() {
                                     }}
                                     sx={sxTextField}
                                 />
+                                {/*
                                 <CustomTextField
                                     {...form.register('password')}
                                     fullWidth
@@ -178,6 +198,7 @@ export default function EmailRecoverForm() {
                                         ),
                                     }}
                                 />
+                                */}
                                 <Button
                                     disableElevation
                                     type="submit"
