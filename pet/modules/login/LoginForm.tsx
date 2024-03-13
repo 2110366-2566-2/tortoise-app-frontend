@@ -164,7 +164,7 @@ export default function LoginForm() {
                             fontSize: '14px',
                         }}
                     >
-                        Forgot Password?
+                        Forgot Username?
                     </Link>
                     <ColorButton
                         sx={{
