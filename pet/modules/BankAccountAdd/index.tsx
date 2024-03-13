@@ -6,34 +6,42 @@ import { SubmitHandler } from 'react-hook-form';
 import { register } from 'module';
 import { CustomGreenButton, CustomGreenTextField, fira_sans_600, fira_sans_800 } from '@core/theme/theme';
 import { useRouter } from 'next/navigation';
+import { IBankAccountCreateParams, IBankAccountInfo } from '@services/api/v1/seller/type';
+import useCreateBankAccount from '@services/api/v1/seller/useCreateBankAccount';
+import useToastUI from '@core/hooks/useToastUI';
+import useGetSession from '@core/auth/useGetSession';
 
-export default function addBankForm() {
+export default function AddBankForm() {
+    const router = useRouter();
+    const form = useForm<IBankAccountInfo>();
+    const toastUI = useToastUI();
+    const session = useGetSession();
 
-    const router = useRouter()
-    const form = useForm<AddBankFormData>();
+    const { mutateAsync: mutateCreateBankAccount } = useCreateBankAccount({
+        onSuccess: () => {
+            toastUI.toastSuccess('Pet created successfully');
+            router.push('/user/my-shop');
+        },
+        onError: () => {
+            toastUI.toastError('Pet creation failed');
+        },
+    });
 
-    interface AddBankFormData {
-        accountName: string;
-        accountNumber: string;
-        branchName: string;
-    }
-
-    const onSubmit: SubmitHandler<AddBankFormData> = async (data) => {
+    const onSubmit: SubmitHandler<IBankAccountInfo> = async (data: IBankAccountInfo) => {
         try {
-            console.log(data); // ตรวจสอบว่าข้อมูลถูกส่งไปถูกต้อง
-            router.refresh();
-            router.push('/user/account')
+            await mutateCreateBankAccount({ seller_id: session?.userID, payload: data } as IBankAccountCreateParams);
+            router.push('/user/account');
         } catch (err) {
             console.error(err);
         }
     };
 
     return (
-        <Box  sx={{ px: {xs: '8%', md: '15%'}, }}>
-            <Typography 
+        <Box sx={{ px: { xs: '8%', md: '15%' } }}>
+            <Typography
                 py={4}
-                align={'center'} 
-                fontFamily={fira_sans_800.style.fontFamily} 
+                align={'center'}
+                fontFamily={fira_sans_800.style.fontFamily}
                 fontSize={30}
                 color={'#472F05'}
             >
@@ -50,7 +58,6 @@ export default function addBankForm() {
                 }}
             >
                 <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
-
                     <Box
                         sx={{
                             width: '100%',
@@ -61,25 +68,25 @@ export default function addBankForm() {
                         }}
                     >
                         <CustomGreenTextField
-                            {...form.register('accountName')}
-                            name="accountName"
-                            label='Account Name'
+                            {...form.register('bank_account_name')}
+                            name="bank_account_name"
+                            label="Account Name"
                             variant="outlined"
                             sx={{ width: '100%' }}
                         />
 
                         <CustomGreenTextField
-                            {...form.register('accountNumber')}
-                            name="accountNumber"
-                            label='Account Number'
+                            {...form.register('bank_account_number')}
+                            name="bank_account_number"
+                            label="Account Number"
                             variant="outlined"
                             sx={{ width: '100%' }}
                         />
 
                         <CustomGreenTextField
-                            {...form.register('branchName')}
-                            name="branchName"
-                            label='Branch Name'
+                            {...form.register('bank_name')}
+                            name="bank_name"
+                            label="Bank Name"
                             variant="outlined"
                             sx={{ width: '100%' }}
                         />
@@ -93,7 +100,8 @@ export default function addBankForm() {
                                 justifyContent: 'center',
                             }}
                         >
-                            <CustomGreenButton type="submit"
+                            <CustomGreenButton
+                                type="submit"
                                 sx={{
                                     paddingY: 1,
                                     border: '2px solid #472F05',
@@ -106,7 +114,6 @@ export default function addBankForm() {
                             >
                                 Add new account
                             </CustomGreenButton>
-
                         </Box>
                     </Box>
                 </form>

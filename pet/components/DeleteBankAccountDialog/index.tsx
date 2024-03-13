@@ -16,9 +16,12 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useToastUI from '../../core/hooks/useToastUI';
 import { CustomDialogProps } from '../CustomDialog/type';
+import useDeleteBankAccount from '@services/api/v1/seller/useDeleteBankAccount';
+import useGetSession from '@core/auth/useGetSession';
+import { ISellerQueryParams } from '@services/api/v1/seller/type';
 
 interface ConfirmDeleteInput {
-    password: string
+    password: string;
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -31,24 +34,30 @@ const Transition = React.forwardRef(function Transition(
 });
 
 export default function DeleteBankAccountDialog(props: CustomDialogProps) {
-
     const { open, setOpen, header, description, cancelText, confirmText } = props;
 
-    const toastUI = useToastUI()
-    const router = useRouter()
+    const toastUI = useToastUI();
+    const router = useRouter();
+    const session = useGetSession();
 
-    const [showPassword, setShowPassword] = useState(false)
+    const [showPassword, setShowPassword] = useState(false);
 
     const form = useForm<ConfirmDeleteInput>();
 
-    const onSubmit = async (data: ConfirmDeleteInput) => {
-        //mock showing data
-        console.log(data)
+    const deleteBankAccount = useDeleteBankAccount({
+        onSuccess: () => {
+            toastUI.toastSuccess('Bank Account Deleted');
+        },
+        onError: (error) => {
+            toastUI.toastError(`Deletion Failed ${error}`);
+        },
+    });
 
-        toastUI.toastSuccess('Deleted User Success (Mock!)')
-        handleClose()
-        router.refresh()
-    }
+    const onSubmit = async (data: ConfirmDeleteInput) => {
+        deleteBankAccount.mutate({ seller_id: session.userID } as ISellerQueryParams);
+        handleClose();
+        router.refresh();
+    };
 
     const handleClose = () => {
         setOpen(false);
@@ -64,38 +73,40 @@ export default function DeleteBankAccountDialog(props: CustomDialogProps) {
                 aria-describedby="alert-dialog-slide-description"
                 fullWidth
             >
-                <DialogTitle 
-                    sx={{ 
-                        py: 2.5, px: 4,
+                <DialogTitle
+                    sx={{
+                        py: 2.5,
+                        px: 4,
                         textAlign: 'center',
-                        backgroundColor: '#782222', 
+                        backgroundColor: '#782222',
                         fontFamily: fira_sans_800.style.fontFamily,
                         fontSize: 25,
-                        color: 'whitesmoke'
+                        color: 'whitesmoke',
                     }}
                 >
                     {header}
                 </DialogTitle>
-                {(
-                    <DialogContent sx={{backgroundColor: '#EBEBD3'}}>
-
-                        <Typography 
-                        sx={{
-                            fontFamily: fira_sans_600.style.fontFamily, 
-                            fontSize: 20, 
-                            color: '#472F05', 
-                            textAlign: 'center',
-                            py: 3}}>
+                {
+                    <DialogContent sx={{ backgroundColor: '#EBEBD3' }}>
+                        <Typography
+                            sx={{
+                                fontFamily: fira_sans_600.style.fontFamily,
+                                fontSize: 20,
+                                color: '#472F05',
+                                textAlign: 'center',
+                                py: 3,
+                            }}
+                        >
                             Please provide your password to confirm delete account.
                         </Typography>
 
-                        <form onSubmit={form.handleSubmit(onSubmit)} 
+                        <form
+                            onSubmit={form.handleSubmit(onSubmit)}
                             style={{
-                                paddingLeft: 10, 
-                                paddingRight: 10, 
+                                paddingLeft: 10,
+                                paddingRight: 10,
                             }}
                         >
-
                             <Grid container spacing={3}>
                                 <Grid item xs={12} md={12}>
                                     <CustomGreenTextField
@@ -122,49 +133,52 @@ export default function DeleteBankAccountDialog(props: CustomDialogProps) {
                                         // disabled={}
                                     />
                                 </Grid>
-                                
                             </Grid>
                         </form>
                     </DialogContent>
-                )}
-                <DialogActions sx={{ backgroundColor: '#EBEBD3', pb: 3, px: 4 }} >
-                    <Button onClick={handleClose}
+                }
+                <DialogActions sx={{ backgroundColor: '#EBEBD3', pb: 3, px: 4 }}>
+                    <Button
+                        onClick={handleClose}
                         sx={{
                             '&.MuiButton-root': {
                                 border: '2px solid #472F05',
                                 borderRadius: 0,
                                 boxShadow: '3px 3px #472F05',
-                                width: 90, 
-                                py: 0.5, mr: 1,
+                                width: 90,
+                                py: 0.5,
+                                mr: 1,
                                 color: '#472F05',
                                 fontSize: 18,
-                                fontFamily: fira_sans_600.style.fontFamily, 
-                                backgroundColor: '#FAA943'
+                                fontFamily: fira_sans_600.style.fontFamily,
+                                backgroundColor: '#FAA943',
                             },
                             '&:hover': {
-                                backgroundColor: '#FB7B43'
-                            }
+                                backgroundColor: '#FB7B43',
+                            },
                         }}
                     >
                         {cancelText}
                     </Button>
 
-                    <Button onClick={form.handleSubmit(onSubmit)} 
+                    <Button
+                        onClick={form.handleSubmit(onSubmit)}
                         sx={{
                             '&.MuiButton-root': {
                                 border: '2px solid #472F05',
                                 borderRadius: 0,
                                 boxShadow: '3px 3px #472F05',
-                                width: 90, 
-                                py: 0.5, px: 1,
+                                width: 90,
+                                py: 0.5,
+                                px: 1,
                                 color: '#472F05',
                                 fontSize: 18,
-                                fontFamily: fira_sans_600.style.fontFamily, 
-                                backgroundColor: '#E18A7A'
+                                fontFamily: fira_sans_600.style.fontFamily,
+                                backgroundColor: '#E18A7A',
                             },
                             '&:hover': {
-                                backgroundColor: '#CF5555'
-                            }
+                                backgroundColor: '#CF5555',
+                            },
                         }}
                     >
                         {confirmText}

@@ -9,13 +9,16 @@ import ListItemText from '@mui/material/ListItemText';
 import PasswordIcon from '@mui/icons-material/Password';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import { useState } from 'react';
 import { fira_sans_600 } from '../../core/theme/theme';
 import { useRouter } from 'next/navigation';
 import DeleteBankAccountDialog from '@components/DeleteBankAccountDialog';
 import { useUpdateUserPassword } from '@services/api/v1/user/useUpdateUserPassword';
 import useToastUI from '@core/hooks/useToastUI';
+import useGetSession from '@core/auth/useGetSession';
+import SellerOptionLists from './SellerOption';
+import useDeleteBankAccount from '@services/api/v1/seller/useDeleteBankAccount';
+import { ISellerQueryParams } from '@services/api/v1/seller/type';
 
 export default function AccountOptionList() {
     const [openChangePasswordDialog, setOpenChangePasswordDialog] = useState(false);
@@ -24,6 +27,7 @@ export default function AccountOptionList() {
 
     const router = useRouter();
     const toastUI = useToastUI();
+    const session = useGetSession();
 
     const handleChangePasswordConfirm = async () => {
         console.log('confirm change password');
@@ -34,7 +38,7 @@ export default function AccountOptionList() {
     };
 
     const handleDeleteBankAccountConfirm = async () => {
-        console.log('confirm delete user');
+        console.log('confirm delete bank account');
     };
 
     return (
@@ -133,59 +137,12 @@ export default function AccountOptionList() {
                 </ListItemButton>
             </List>
 
-            <List
-                sx={{ width: 300, border: '2px solid #472F05', boxShadow: '4px 4px #472F05', borderRadius: 1, my: 2 }}
-                component="nav"
-                aria-labelledby="nested-list-subheader"
-                subheader={
-                    <ListSubheader
-                        component="div"
-                        id="nested-list-subheader"
-                        sx={{
-                            pt: 1,
-                            borderTopRightRadius: 1,
-                            borderTopLeftRadius: 1,
-                            backgroundColor: '#84B66B',
-                        }}
-                    >
-                        <Typography sx={{ fontFamily: fira_sans_600.style.fontFamily, pb: 1, color: '#472F05' }}>
-                            Bank Account Settings
-                        </Typography>
-                    </ListSubheader>
-                }
-            >
-                <ListItemButton
-                    sx={{ '&:hover': { backgroundColor: '#CAD2C5' } }}
-                    onClick={() => router.push('/user/account/bank-account')}
-                >
-                    <ListItemIcon>
-                        <AccountBalanceWalletIcon sx={{ color: '#472F05' }} />
-                    </ListItemIcon>
-                    <ListItemText
-                        primary={
-                            <Typography sx={{ fontFamily: fira_sans_600.style.fontFamily, color: '#472F05' }}>
-                                Add Bank Account
-                            </Typography>
-                        }
-                    />
-                </ListItemButton>
-
-                <ListItemButton
-                    sx={{ '&:hover': { backgroundColor: '#E18A7A' } }}
-                    onClick={() => setOpenDeleteBankAccountDialog(true)}
-                >
-                    <ListItemIcon>
-                        <DeleteIcon sx={{ color: 'red' }} />
-                    </ListItemIcon>
-                    <ListItemText
-                        primary={
-                            <Typography sx={{ fontFamily: fira_sans_600.style.fontFamily, color: 'red' }}>
-                                Delete Bank Account
-                            </Typography>
-                        }
-                    />
-                </ListItemButton>
-            </List>
+            {session?.role === 'seller' && (
+                <SellerOptionLists
+                    seller_id={session.userID as string}
+                    setOpenDeleteBankAccountDialog={setOpenDeleteBankAccountDialog}
+                />
+            )}
         </Box>
     );
 }
