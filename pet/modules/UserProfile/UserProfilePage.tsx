@@ -10,6 +10,9 @@ import AccountOptionList from '../../components/AccountOptionList';
 import { IUserDetail } from '../../services/api/v1/user/type';
 import useGetUserProfile from '../../services/api/v1/user/useGetUserProfile';
 import useGetSession from '../../core/auth/useGetSession';
+import useGetBankAccount from '@services/api/v1/seller/useGetBankAccount';
+import { ISellerQueryParams } from '@services/api/v1/seller/type';
+import BankAccountShowCase from '@modules/BankAccountShowCase';
 
 export default function UserProfilePage() {
     const session = useGetSession();
@@ -88,22 +91,22 @@ export default function UserProfilePage() {
                             address={userProfile.address}
                             image={userProfile.image}
                         />
-                        <Box 
+                        <Box
                             sx={{
                                 width: '100%',
                                 alignSelf: 'normal',
                                 border: '3px solid #472F05',
                                 borderRadius: 0,
-                                boxShadow: '5px 5px #472F05'
+                                boxShadow: '5px 5px #472F05',
                             }}
                         >
-                            <Box 
+                            <Box
                                 sx={{
-                                    backgroundColor: '#84B66B'
+                                    backgroundColor: '#84B66B',
                                 }}
                             >
-                                <Typography 
-                                    align='center'
+                                <Typography
+                                    align="center"
                                     color={'#472F05'}
                                     fontFamily={fira_sans_600.style.fontFamily}
                                     fontSize={22}
@@ -112,19 +115,15 @@ export default function UserProfilePage() {
                                     Bank Account
                                 </Typography>
                             </Box>
-                            <Box 
+                            <Box
                                 sx={{
                                     py: 8,
-                                    backgroundColor: '#EBEBD3'
+                                    backgroundColor: '#EBEBD3',
                                 }}
                             >
-                                <Typography 
-                                    align='center' 
-                                    color={'#472F05'}
-                                    fontFamily={fira_sans_400.style.fontFamily}
-                                >
-                                    Bank Account (Next Sprint)
-                                </Typography>
+                                {session?.role === 'seller' && (
+                                    <BankAccountShowCase seller_id={session.userID as string} />
+                                )}
                             </Box>
                         </Box>
                     </Grid>

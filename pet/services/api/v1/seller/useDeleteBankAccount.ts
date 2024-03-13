@@ -1,22 +1,22 @@
 import { useMutation } from '@tanstack/react-query';
 import { requestClient } from '../../../clients/requestClient';
-import { IPetQueryParams } from './type';
+import { ISellerQueryParams } from './type';
 import { IAxiosResponse, IMutationHook, IResponseData } from '../../models';
 import { AxiosError } from 'axios';
 
-export default function useDeletePet({
+export default function useDeleteBankAccount({
     onSuccess,
     onError,
     options,
-}: IMutationHook<IResponseData<IPetQueryParams>, IPetQueryParams>) {
+}: IMutationHook<IResponseData<ISellerQueryParams>, ISellerQueryParams>) {
     return useMutation({
-        mutationKey: ['deletePet'],
-        mutationFn: async (request: IPetQueryParams) => {
+        mutationKey: ['deleteBankAccount'],
+        mutationFn: async (request: ISellerQueryParams) => {
             try {
-                const { petId } = request;
-                const response: IAxiosResponse = await requestClient.delete(`/api/v1/pets/${petId}`);
+                const { seller_id } = request;
+                const response: IAxiosResponse = await requestClient.delete(`/api/v1/bank/${seller_id}`);
                 const responseData = response.data;
-                return responseData as IResponseData<IPetQueryParams>;
+                return responseData as IResponseData<ISellerQueryParams>;
             } catch (err) {
                 throw err as AxiosError;
             }
