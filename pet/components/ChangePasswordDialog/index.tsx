@@ -39,6 +39,7 @@ export default function ChangePasswordDialog(props: CustomDialogProps) {
     const [showOldPassword, setShowOldPassword] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [confirmPassword, setConfirmPassword] = useState('')
 
     const form = useForm<IChangePassword>();
 
@@ -54,6 +55,9 @@ export default function ChangePasswordDialog(props: CustomDialogProps) {
     });
 
     const onSubmit = async (data: IChangePassword) => {
+        if(confirmPassword === '' || data.password !== confirmPassword){
+            return toastUI.toastError("Wrong Password Confirmation")
+        }
         try {
             await mutateUpdateUserPassword({ user_id: session.userID, payload: data } as IChangePasswordParams);
         } catch (err) {
@@ -149,6 +153,8 @@ export default function ChangePasswordDialog(props: CustomDialogProps) {
                                         name={'confirm_password'}
                                         label="Confirm New Password"
                                         variant="outlined"
+                                        value={confirmPassword}
+                                        onChange={(e) => {setConfirmPassword(e.target.value)}}
                                         type={showConfirmPassword ? 'text' : 'password'}
                                         fullWidth
                                         InputProps={{
