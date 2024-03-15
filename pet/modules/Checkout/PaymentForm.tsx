@@ -2,29 +2,27 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import PaymentMethodTab from '../../components/PaymentMethodTab';
+import PaymentMethodTab from '../../components/payment/PaymentMethodTab';
 import { useState, Fragment } from 'react';
 import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import MockQR from '../../public/image/MockQR.png';
-import { CustomTextField } from '../../components/CustomInput/type';
+import { CustomTextField } from '../../components/core/CustomInput/type';
 import { fira_sans_600, fira_sans_800 } from '../../core/theme/theme';
 
 export default function PaymentForm() {
-
     const [value, setValue] = useState(0);
-    
 
     return (
         <Fragment>
-            <Box sx={{px: 4}}>
-                <Typography 
+            <Box sx={{ px: 4 }}>
+                <Typography
                     sx={{
-                        fontFamily: fira_sans_800.style.fontFamily, 
-                        textAlign: 'center', 
+                        fontFamily: fira_sans_800.style.fontFamily,
+                        textAlign: 'center',
                         fontSize: 20,
                         color: '#472F05',
-                        mb: 2
+                        mb: 2,
                     }}
                 >
                     Select your Payment Method
@@ -75,12 +73,17 @@ export default function PaymentForm() {
                         </Grid>
                         <Grid item xs={12} sx={{ overflow: 'hidden' }}>
                             <FormControlLabel
-                                control={<Checkbox color='primary' name="saveCard" value="yes"
-                                    sx={{
-                                        '&.MuiCheckbox-colorPrimary': {
-                                            color: '#472F05'
-                                        }
-                                    }}/>
+                                control={
+                                    <Checkbox
+                                        color="primary"
+                                        name="saveCard"
+                                        value="yes"
+                                        sx={{
+                                            '&.MuiCheckbox-colorPrimary': {
+                                                color: '#472F05',
+                                            },
+                                        }}
+                                    />
                                 }
                                 label={
                                     <Typography fontFamily={fira_sans_600.style.fontFamily} color={'#472F05'}>
@@ -91,14 +94,16 @@ export default function PaymentForm() {
                         </Grid>
                     </Grid>
                 ) : (
-                    <Box 
-                        sx={{ 
-                            display: 'block', 
-                            py: 2, px: 2,
-                            mx: 15, my: 3,
+                    <Box
+                        sx={{
+                            display: 'block',
+                            py: 2,
+                            px: 2,
+                            mx: 15,
+                            my: 3,
                             textAlign: '-webkit-center',
-                            border: {xs: '2px solid #472F05', md: '4px solid #472F05'},
-                            boxShadow: '5px 5px #472F05'
+                            border: { xs: '2px solid #472F05', md: '4px solid #472F05' },
+                            boxShadow: '5px 5px #472F05',
                         }}
                     >
                         <Image src={MockQR} alt="QR Image" sizes={'80%'} style={{ position: 'relative' }} />

@@ -1,7 +1,7 @@
 'use client';
 import { Box, Button, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { ColorButton, CustomTextField } from '@components/CustomInput/type';
+import { ColorButton, CustomTextField } from '@components/core/CustomInput/type';
 import { SubmitHandler } from 'react-hook-form';
 import { register } from 'module';
 import { CustomGreenButton, CustomGreenTextField, fira_sans_600, fira_sans_800 } from '@core/theme/theme';

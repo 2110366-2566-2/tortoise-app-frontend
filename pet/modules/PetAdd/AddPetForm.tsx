@@ -3,11 +3,11 @@ import { Box, MenuItem, InputAdornment, Typography, Button } from '@mui/material
 import { useForm, useWatch } from 'react-hook-form';
 import { Fira_Sans_Condensed } from 'next/font/google';
 import { IPetCreateParams, IPetDetail, IPetUpdatePayload, MedicalRecord } from '../../services/api/v1/pets/type';
-import { CustomTextField, ColorButton } from '../../components/CustomInput/type';
-import ImageUploader from '../../components/ImageDropbox';
+import { CustomTextField, ColorButton } from '../../components/core/CustomInput/type';
+import ImageUploader from '../../components/core/ImageDropbox';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import MedicalRecordForm from '../../components/MedicalRecordForm';
+import MedicalRecordForm from '../../components/pet/MedicalRecordForm';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
@@ -30,7 +30,7 @@ import {
 } from '@mui/x-data-grid';
 import { randomId } from '@mui/x-data-grid-generator';
 import { fira_sans_600 } from '../../core/theme/theme';
-import SelectField, { SelectFieldChoice } from '../../components/SelectField';
+import SelectField, { SelectFieldChoice } from '../../components/core/SelectField';
 import { useCreatePet } from '../../services/api/v1/pets/useCreatePet';
 import useToastUI from '../../core/hooks/useToastUI';
 

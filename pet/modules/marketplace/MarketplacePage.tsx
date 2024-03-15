@@ -1,20 +1,19 @@
 'use client';
 import { Box, Typography } from '@mui/material';
-import PetCatalogue from '../../components/PetCatalogue';
-import SearchField from '../../components/SearchField';
-import ImageCarousel from '../../components/ImageCarousel';
+import PetCatalogue from '../../components/pet/PetCatalogue';
+import SearchField from '../../components/core/SearchField';
+import ImageCarousel from '../../components/core/ImageCarousel';
 import { useEffect, useState } from 'react';
 import useGetSession from '@core/auth/useGetSession';
 import useGetUserProfile from '@services/api/v1/user/useGetUserProfile';
 import { IUserDetail } from '@services/api/v1/user/type';
-import NewUserDialog from '@components/NewUserDialog';
+import NewUserDialog from '@components/user/NewUserDialog';
 
 export default function MarketplacePage() {
-
     const session = useGetSession();
     const { data: userProfile, isSuccess: userProfileSuccess } = useGetUserProfile(session.userID || '');
 
-    const [openNewUserDialog, setOpenNewUserDialog] = useState(false)
+    const [openNewUserDialog, setOpenNewUserDialog] = useState(false);
 
     const required_props = [
         userProfile?.first_name,
@@ -25,21 +24,21 @@ export default function MarketplacePage() {
         userProfile?.address.street,
         userProfile?.address.district,
         userProfile?.address.province,
-        userProfile?.address.postalCode
-    ]
+        userProfile?.address.postalCode,
+    ];
 
     const handleNewUserProfile = () => {
-        required_props.forEach(element => {
-            if(!element || element === '') {
-                setOpenNewUserDialog(true)
+        required_props.forEach((element) => {
+            if (!element || element === '') {
+                setOpenNewUserDialog(true);
             }
-            console.log(element)
-        }); 
-    }
+            console.log(element);
+        });
+    };
 
     useEffect(() => {
-        handleNewUserProfile()
-    }, [])
+        handleNewUserProfile();
+    }, []);
 
     if (!userProfileSuccess) {
         return null;

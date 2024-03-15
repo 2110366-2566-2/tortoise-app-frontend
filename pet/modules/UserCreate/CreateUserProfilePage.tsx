@@ -5,12 +5,12 @@ import { Button, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import useGetSession from '../../core/auth/useGetSession';
 import useGetUserProfile from '../../services/api/v1/user/useGetUserProfile';
-import { CustomTextField } from '../../components/CustomInput/type';
-import UserProfileCard from '../../components/UserProfileCard';
+import { CustomTextField } from '../../components/core/CustomInput/type';
+import UserProfileCard from '../../components/user/UserProfileCard';
 import { Address, IUserDetail, IUserUpdateParams, IUserUpdatePayload } from '../../services/api/v1/user/type';
 import { useForm } from 'react-hook-form';
 import { fira_sans_600, fira_sans_800 } from '../../core/theme/theme';
-import { ColorButton } from '../../components/CustomInput/type';
+import { ColorButton } from '../../components/core/CustomInput/type';
 import { useUpdateUserProfile } from '@services/api/v1/user/useUpdateUserProfile';
 import useToastUI from '@core/hooks/useToastUI';
 
@@ -34,7 +34,7 @@ export default function CreateUserProfilePage() {
         const reader = new FileReader();
 
         reader.onload = () => {
-        const newSrc = reader.result?.toString(); // ข้อมูลของไฟล์ที่ถูกอ่านเข้ามา
+            const newSrc = reader.result?.toString(); // ข้อมูลของไฟล์ที่ถูกอ่านเข้ามา
             setAvatarSrc(newSrc); // เปลี่ยนค่า src ของ Avatar
         };
 
@@ -76,9 +76,9 @@ export default function CreateUserProfilePage() {
                 Update your Profile HERE!
             </Typography>
 
-            <Box 
-                display={'flex'} 
-                flexDirection={'column'} 
+            <Box
+                display={'flex'}
+                flexDirection={'column'}
                 alignItems={'center'}
                 mx={'20%'}
                 py={3}
@@ -87,23 +87,23 @@ export default function CreateUserProfilePage() {
                 boxShadow={'6px 6px #472F05'}
                 borderRadius={0}
                 sx={{
-                    backgroundColor: '#E5CB9A'
+                    backgroundColor: '#E5CB9A',
                 }}
             >
-            <Avatar 
-                alt='Profile Picture'
-                src={avatarSrc} // ใช้ค่า src ที่เก็บใน state มาเป็นค่า src ของ Avatar
-                sx={{ 
-                width: 180 , 
-                height: 180,  
-                border: '2px solid #472F05', 
-                boxShadow: 10,
-                fontSize: 70,
-                fontFamily: fira_sans_800.style.fontFamily
-                }} 
-            />
-            
-                <Tab/>
+                <Avatar
+                    alt="Profile Picture"
+                    src={avatarSrc} // ใช้ค่า src ที่เก็บใน state มาเป็นค่า src ของ Avatar
+                    sx={{
+                        width: 180,
+                        height: 180,
+                        border: '2px solid #472F05',
+                        boxShadow: 10,
+                        fontSize: 70,
+                        fontFamily: fira_sans_800.style.fontFamily,
+                    }}
+                />
+
+                <Tab />
                 <input type="file" id="myFile" name="filename" onChange={handleFileChange} />
             </Box>
 
@@ -300,4 +300,3 @@ export default function CreateUserProfilePage() {
         </form>
     );
 }
-

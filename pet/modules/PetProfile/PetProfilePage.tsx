@@ -1,14 +1,12 @@
 'use client';
 import React, { useState } from 'react';
 import Grid from '@mui/material/Grid';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import ProfileCard from '../../components/ProfileCard.tsx';
-import SettingsCard from '../../components/SettingsCard';
+import SettingsCard from '../../components/pet/SettingsCard';
 import { Box } from '@mui/material';
-import useGetPetByID from '../../services/api/v1/pets/useGetPetByID.js';
+import useGetPetByID from '../../services/api/v1/pets/useGetPetByID';
 import { useParams } from 'next/navigation.js';
-import { IPetQueryParams } from '../../services/api/v1/pets/type.js';
-import dayjs from 'dayjs';
+import { IPetQueryParams } from '../../services/api/v1/pets/type';
+import ProfileCard from '@components/user/ProfileCard';
 
 export default function PetProfile() {
     const params = useParams();

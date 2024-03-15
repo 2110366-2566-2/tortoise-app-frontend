@@ -18,16 +18,20 @@ import Review from './Review';
 import { useRouter } from 'next/navigation';
 import { fira_sans_600, fira_sans_800 } from '../../core/theme/theme';
 import { StepIcon } from '@mui/material';
-import { ColorButton } from '../../components/CustomInput/type';
+import { ColorButton } from '../../components/core/CustomInput/type';
 
 function Copyright() {
     return (
-        <Typography variant="body2" color="text.secondary" align="center" 
-        sx={{
-            color: '#472F05',
-            fontSize: 16,
-            fontFamily: fira_sans_600.style.fontFamily
-        }}>
+        <Typography
+            variant="body2"
+            color="text.secondary"
+            align="center"
+            sx={{
+                color: '#472F05',
+                fontSize: 16,
+                fontFamily: fira_sans_600.style.fontFamily,
+            }}
+        >
             {'Copyright © PetPal by Tortoise '}
             {/* <Link color="inherit" rel="preload">
                 PetPal by Tortoise
@@ -68,24 +72,30 @@ export default function CheckoutPage() {
     return (
         <React.Fragment>
             <CssBaseline />
-            <Container component="main" sx={{ mb: 4, maxWidth: {xs: 'sm', md: 'md'} }}>
-                <Paper variant="outlined" 
-                sx={{ 
-                    my: { xs: 2, md: 3 }, 
-                    p: { xs: 2, md: 3 }, 
-                    border: '3px solid #472F05',
-                    borderRadius: 0,
-                    boxShadow: '6px 6px #472F05',
-                    backgroundColor: '#FFF8E8'
+            <Container component="main" sx={{ mb: 4, maxWidth: { xs: 'sm', md: 'md' } }}>
+                <Paper
+                    variant="outlined"
+                    sx={{
+                        my: { xs: 2, md: 3 },
+                        p: { xs: 2, md: 3 },
+                        border: '3px solid #472F05',
+                        borderRadius: 0,
+                        boxShadow: '6px 6px #472F05',
+                        backgroundColor: '#FFF8E8',
                     }}
                 >
-                    <Typography component="h1" variant="h4" align="center" 
-                    sx={{ overflow: 'hidden', fontFamily: fira_sans_800.style.fontFamily, color: '#472F05' }}>
+                    <Typography
+                        component="h1"
+                        variant="h4"
+                        align="center"
+                        sx={{ overflow: 'hidden', fontFamily: fira_sans_800.style.fontFamily, color: '#472F05' }}
+                    >
                         Checkout
                     </Typography>
                     <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5, overflow: 'hidden' }}>
                         {steps.map((label) => (
-                            <Step key={label}
+                            <Step
+                                key={label}
                                 sx={{
                                     '& .MuiStepLabel-root .Mui-completed': {
                                         color: '#472F05',
@@ -94,14 +104,14 @@ export default function CheckoutPage() {
                                         color: '#472F05', // circle color (ACTIVE)
                                     },
                                     '& .MuiStepLabel-root .MuiStepIcon-text': {
-                                        fontFamily: fira_sans_800.style.fontFamily, // circle's number 
+                                        fontFamily: fira_sans_800.style.fontFamily, // circle's number
                                         fontSize: 15,
-                                    }
+                                    },
                                 }}
                             >
                                 {/* <StepIcon></StepIcon> */}
-                                <StepLabel >
-                                    <Typography sx={{fontFamily: fira_sans_800.style.fontFamily, color: '#472F05'}}>
+                                <StepLabel>
+                                    <Typography sx={{ fontFamily: fira_sans_800.style.fontFamily, color: '#472F05' }}>
                                         {label}
                                     </Typography>
                                 </StepLabel>
@@ -110,34 +120,38 @@ export default function CheckoutPage() {
                     </Stepper>
                     {activeStep === steps.length ? (
                         <React.Fragment>
-                            <Typography variant="h5" gutterBottom
-                                sx={{ 
-                                    fontFamily: fira_sans_800.style.fontFamily, 
-                                    color: '#472F05', 
+                            <Typography
+                                variant="h5"
+                                gutterBottom
+                                sx={{
+                                    fontFamily: fira_sans_800.style.fontFamily,
+                                    color: '#472F05',
                                     textAlign: 'center',
-                                    pb: 2
+                                    pb: 2,
                                 }}
                             >
                                 Thank you for your order!
                             </Typography>
-                            <Typography variant="subtitle1"
-                                sx={{ 
-                                    fontFamily: fira_sans_600.style.fontFamily, 
+                            <Typography
+                                variant="subtitle1"
+                                sx={{
+                                    fontFamily: fira_sans_600.style.fontFamily,
                                     color: '#472F05',
                                     textAlign: 'center',
-                                    px: 2
+                                    px: 2,
                                 }}
                             >
                                 Your order number is #2001539. We have emailed your order confirmation, and will send
                                 you an update when your order has shipped.
                             </Typography>
                             <Box sx={{ py: '16px', textAlign: 'center' }}>
-                                <Button 
+                                <Button
                                     onClick={() => {
                                         router.push('/user/my-orders');
                                     }}
                                     sx={{
-                                        px: 3, py: 1,
+                                        px: 3,
+                                        py: 1,
                                         '&.MuiButton-root': {
                                             border: '2px solid #472F05',
                                             boxShadow: '3px 3px #472F05',
@@ -146,8 +160,8 @@ export default function CheckoutPage() {
                                             backgroundColor: '#FAA943',
                                         },
                                         '&:hover': {
-                                            backgroundColor: '#F79762'
-                                        }
+                                            backgroundColor: '#F79762',
+                                        },
                                     }}
                                 >
                                     <Typography fontFamily={fira_sans_600.style.fontFamily}>
@@ -161,37 +175,45 @@ export default function CheckoutPage() {
                             {getStepContent(activeStep)}
                             <Box sx={{ display: 'flex', justifyContent: 'flex-end', overflow: 'hidden', mt: 3, mx: 2 }}>
                                 {activeStep !== 0 && (
-                                    <Button onClick={handleBack} 
+                                    <Button
+                                        onClick={handleBack}
+                                        sx={{
+                                            '&.MuiButton-root': {
+                                                border: '2px solid #472F05',
+                                                boxShadow: '3px 3px #472F05',
+                                                color: '#472F05',
+                                                borderRadius: 0,
+                                                backgroundColor: '#E18A7A',
+                                                px: 2,
+                                                mr: 3,
+                                                mb: 3,
+                                            },
+                                            '&:hover': {
+                                                backgroundColor: '#E2725B',
+                                            },
+                                        }}
+                                    >
+                                        <Typography fontFamily={fira_sans_600.style.fontFamily}>Back</Typography>
+                                    </Button>
+                                )}
+                                <Button
+                                    onClick={handleNext}
                                     sx={{
                                         '&.MuiButton-root': {
                                             border: '2px solid #472F05',
                                             boxShadow: '3px 3px #472F05',
                                             color: '#472F05',
                                             borderRadius: 0,
-                                            backgroundColor: '#E18A7A',
-                                            px: 2, mr: 3, mb: 3,
+                                            backgroundColor: '#FAA943',
+                                            px: 2,
+                                            mr: 3,
+                                            mb: 3,
                                         },
                                         '&:hover': {
-                                            backgroundColor: '#E2725B'
-                                        }
-                                    }}>
-                                        <Typography fontFamily={fira_sans_600.style.fontFamily}>Back</Typography>
-                                    </Button>
-                                )}
-                                <Button onClick={handleNext} 
-                                sx={{
-                                    '&.MuiButton-root': {
-                                        border: '2px solid #472F05',
-                                        boxShadow: '3px 3px #472F05',
-                                        color: '#472F05',
-                                        borderRadius: 0,
-                                        backgroundColor: '#FAA943',
-                                        px: 2, mr: 3, mb: 3,
-                                    },
-                                    '&:hover': {
-                                        backgroundColor: '#F79762'
-                                    }
-                                }}>
+                                            backgroundColor: '#F79762',
+                                        },
+                                    }}
+                                >
                                     <Typography fontFamily={fira_sans_600.style.fontFamily}>
                                         {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
                                     </Typography>

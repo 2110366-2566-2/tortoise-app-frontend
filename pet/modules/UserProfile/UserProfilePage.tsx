@@ -4,15 +4,15 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { Avatar, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import UserSettingsCard from '../../components/UserSettings';
+import UserSettingsCard from '../../components/user/UserSettings';
 import { fira_sans_400, fira_sans_600, fira_sans_800 } from '../../core/theme/theme';
-import AccountOptionList from '../../components/AccountOptionList';
+import AccountOptionList from '../../components/user/AccountOptionList';
 import { IUserDetail } from '../../services/api/v1/user/type';
 import useGetUserProfile from '../../services/api/v1/user/useGetUserProfile';
 import useGetSession from '../../core/auth/useGetSession';
 import useGetBankAccount from '@services/api/v1/seller/useGetBankAccount';
 import { ISellerQueryParams } from '@services/api/v1/seller/type';
-import BankAccountShowCase from '@modules/BankAccountShowCase';
+import BankAccountShowCase from '@components/user/BankAccountShowCase';
 
 export default function UserProfilePage() {
     const session = useGetSession();
