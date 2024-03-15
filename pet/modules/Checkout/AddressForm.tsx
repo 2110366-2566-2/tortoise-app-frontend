@@ -4,23 +4,23 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { Box, styled } from '@mui/material'
+import { Box, styled } from '@mui/material';
 import { fira_sans_600, fira_sans_800 } from '../../core/theme/theme';
-import { CustomTextField } from '../../components/CustomInput/type';
+import { CustomTextField } from '../../components/core/CustomInput/type';
 import { sxTextField } from '../../core/theme/theme';
 
 export default function AddressForm() {
-
     return (
         <React.Fragment>
-            <Box sx={{px: 4}}>
-                <Typography gutterBottom 
+            <Box sx={{ px: 4 }}>
+                <Typography
+                    gutterBottom
                     sx={{
-                        fontFamily: fira_sans_800.style.fontFamily, 
-                        textAlign: 'center', 
+                        fontFamily: fira_sans_800.style.fontFamily,
+                        textAlign: 'center',
                         fontSize: 20,
                         color: '#472F05',
-                        mb: 2
+                        mb: 2,
                     }}
                 >
                     Shipping address
@@ -46,7 +46,6 @@ export default function AddressForm() {
                             fullWidth
                             autoComplete="family-name"
                             sx={sxTextField}
-                        
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -58,7 +57,6 @@ export default function AddressForm() {
                             fullWidth
                             autoComplete="shipping address-line1"
                             sx={sxTextField}
-                            
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -69,7 +67,6 @@ export default function AddressForm() {
                             fullWidth
                             autoComplete="shipping address-line2"
                             sx={sxTextField}
-                            
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -81,11 +78,16 @@ export default function AddressForm() {
                             fullWidth
                             autoComplete="shipping address-level2"
                             sx={sxTextField}
-                            
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <CustomTextField id="state" name="state" label="State/Province/Region" fullWidth sx={sxTextField} />
+                        <CustomTextField
+                            id="state"
+                            name="state"
+                            label="State/Province/Region"
+                            fullWidth
+                            sx={sxTextField}
+                        />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <CustomTextField
@@ -96,7 +98,6 @@ export default function AddressForm() {
                             fullWidth
                             autoComplete="shipping postal-code"
                             sx={sxTextField}
-                            
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -108,17 +109,21 @@ export default function AddressForm() {
                             fullWidth
                             autoComplete="shipping country"
                             sx={sxTextField}
-                            
                         />
                     </Grid>
                     <Grid item xs={12}>
                         <FormControlLabel
-                            control={<Checkbox color='primary' name="saveAddress" value="yes"
-                                sx={{
-                                    '&.MuiCheckbox-colorPrimary': {
-                                        color: '#472F05'
-                                    }
-                                }}/>
+                            control={
+                                <Checkbox
+                                    color="primary"
+                                    name="saveAddress"
+                                    value="yes"
+                                    sx={{
+                                        '&.MuiCheckbox-colorPrimary': {
+                                            color: '#472F05',
+                                        },
+                                    }}
+                                />
                             }
                             label={
                                 <Typography fontFamily={fira_sans_600.style.fontFamily} color={'#472F05'}>

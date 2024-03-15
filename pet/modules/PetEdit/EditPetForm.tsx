@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Grid from '@mui/material/Grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import SettingsCard from '../../components/SettingsCard';
+import SettingsCard from '../../components/pet/SettingsCard';
 import { Box, Button, IconButton, Typography } from '@mui/material';
 import useGetPetByID from '../../services/api/v1/pets/useGetPetByID';
 import { useParams, useRouter } from 'next/navigation';
@@ -10,10 +10,10 @@ import { IPetDetail, IPetQueryParams, IPetUpdateParams, IPetUpdatePayload } from
 import dayjs from 'dayjs';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ConfirmDialog from '../../components/ConfirmDialog';
-import ProfileCard from '../../components/ProfileCard.tsx';
+import ConfirmDialog from '../../components/core/ConfirmDialog';
+import ProfileCard from '../../components/user/ProfileCard';
 import useDeletePet from '../../services/api/v1/pets/useDeletePet';
-import PetEditCard from '../../components/PetEditCard';
+import PetEditCard from '../../components/pet/PetEditCard';
 import SaveIcon from '@mui/icons-material/Save';
 import { useForm } from 'react-hook-form';
 import { useUpdatePet } from '../../services/api/v1/pets/useUpdatePet';
@@ -82,7 +82,7 @@ export default function EditPetForm() {
 
     return (
         <form onSubmit={form.handleSubmit(handleSubmitEdit)} noValidate>
-            <Typography sx={{mt: 4, fontFamily: fira_sans_600.style.fontFamily, textAlign: 'center', fontSize: 30}}>
+            <Typography sx={{ mt: 4, fontFamily: fira_sans_600.style.fontFamily, textAlign: 'center', fontSize: 30 }}>
                 Edit your Pet Information Here
             </Typography>
             <Box sx={{ alignSelf: 'center', marginTop: 1 }}>
@@ -94,29 +94,31 @@ export default function EditPetForm() {
                     confirmText="Delete"
                     handleConfirm={handleDelete}
                 />
-                <Box sx={{ px: 7, textAlign: 'end', float: 'inline-end', display: 'flex', flexDirection: 'row'}}>
+                <Box sx={{ px: 7, textAlign: 'end', float: 'inline-end', display: 'flex', flexDirection: 'row' }}>
                     <Button
-                        sx={{ 
-                            display: editMode ? 'none' : 'flex', 
-                            // backgroundColor: 'whitesmoke', 
+                        sx={{
+                            display: editMode ? 'none' : 'flex',
+                            // backgroundColor: 'whitesmoke',
                             '&.MuiButton-root': {
                                 border: '2px solid #472F05',
                                 boxShadow: '3px 3px #472F05',
                                 color: '#472F05',
                                 borderRadius: 0,
                                 backgroundColor: '#FAA943',
-                                px: 2
+                                px: 2,
                             },
                             '&:hover': {
-                                backgroundColor: '#F79762'
-                            }
+                                backgroundColor: '#F79762',
+                            },
                         }}
                         onClick={() => {
                             setEditMode(true);
                         }}
                     >
                         {<EditIcon />}
-                        <Typography sx={{fontFamily: fira_sans_600.style.fontFamily, fontSize: 18}}>{`Edit`}</Typography>
+                        <Typography
+                            sx={{ fontFamily: fira_sans_600.style.fontFamily, fontSize: 18 }}
+                        >{`Edit`}</Typography>
                     </Button>
                     <Button
                         type="submit"
@@ -128,18 +130,18 @@ export default function EditPetForm() {
                                 color: '#472F05',
                                 borderRadius: 0,
                                 backgroundColor: '#FAA943',
-                                px: 2
+                                px: 2,
                             },
                             '&:hover': {
-                                backgroundColor: '#F79762'
-                            }
+                                backgroundColor: '#F79762',
+                            },
                         }}
                         onClick={() => {
                             setEditMode(false);
                         }}
                     >
                         {<SaveIcon />}
-                        <Typography sx={{fontFamily: fira_sans_600.style.fontFamily}}>{`Save`}</Typography>
+                        <Typography sx={{ fontFamily: fira_sans_600.style.fontFamily }}>{`Save`}</Typography>
                     </Button>
                     <Button
                         onClick={() => {
@@ -152,15 +154,18 @@ export default function EditPetForm() {
                                 color: '#472F05',
                                 borderRadius: 0,
                                 backgroundColor: '#E18A7A',
-                                px: 2, mx: 2
+                                px: 2,
+                                mx: 2,
                             },
                             '&:hover': {
-                                backgroundColor: '#E2725B'
-                            }
+                                backgroundColor: '#E2725B',
+                            },
                         }}
                     >
                         <DeleteIcon />
-                        <Typography sx={{fontFamily: fira_sans_600.style.fontFamily, fontSize: 18}}>{`Delete`}</Typography>
+                        <Typography
+                            sx={{ fontFamily: fira_sans_600.style.fontFamily, fontSize: 18 }}
+                        >{`Delete`}</Typography>
                     </Button>
                 </Box>
                 <Grid container direction="column" sx={{ overflowX: 'hidden', flexWrap: 'nowrap', mb: 3 }}>
@@ -175,7 +180,11 @@ export default function EditPetForm() {
                             px: { xs: 5, md: 7 },
                         }}
                     >
-                        <Grid item md={5} sx={{ alignSelf: { xs: 'center', md: 'normal' }, justifySelf: 'center', mt: 3}}>
+                        <Grid
+                            item
+                            md={5}
+                            sx={{ alignSelf: { xs: 'center', md: 'normal' }, justifySelf: 'center', mt: 3 }}
+                        >
                             <ProfileCard petImage={petFullDetail.media} />
                         </Grid>
 

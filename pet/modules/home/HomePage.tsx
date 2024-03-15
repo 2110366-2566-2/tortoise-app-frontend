@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Box } from '@mui/material';
 import Button, { ButtonProps } from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
-import TopBarHomepage from '../../components/TopBarHomepage';
+import TopBarHomepage from '../../components/core/TopBarHomepage';
 import Image from 'next/image';
 import mockPicture from '../../public/image/petHomepage.jpg';
 import { Fira_Sans_Condensed } from 'next/font/google';

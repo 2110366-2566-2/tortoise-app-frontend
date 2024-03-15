@@ -6,12 +6,12 @@ import { Button, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import useGetSession from '../../core/auth/useGetSession';
 import useGetUserProfile from '../../services/api/v1/user/useGetUserProfile';
-import { CustomTextField } from '../../components/CustomInput/type';
-import UserProfileCard from '../../components/UserProfileCard';
+import { CustomTextField } from '../../components/core/CustomInput/type';
+import UserProfileCard from '../../components/user/UserProfileCard';
 import { Address, IUserDetail, IUserUpdateParams, IUserUpdatePayload } from '../../services/api/v1/user/type';
 import { useForm } from 'react-hook-form';
 import { fira_sans_600, fira_sans_800 } from '../../core/theme/theme';
-import { ColorButton } from '../../components/CustomInput/type';
+import { ColorButton } from '../../components/core/CustomInput/type';
 import { useUpdateUserProfile } from '@services/api/v1/user/useUpdateUserProfile';
 import useToastUI from '@core/hooks/useToastUI';
 
