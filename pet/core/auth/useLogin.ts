@@ -18,7 +18,7 @@ const setSessionData = async (sessionId: string) => {
 export default async function useLogin({username, password}: LoginInfo) {
     
     try{
-        const response = await authClient.post('/api/v1/user/login', {
+        const response = await authClient.post('/api/v1/login', {
             username,
             password,
         })
