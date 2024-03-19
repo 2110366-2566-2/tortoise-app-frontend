@@ -17,5 +17,6 @@ export default function useGetUserProfile(queryParams: string, queryOptions?: an
         },
         refetchOnMount: true,
         ...queryOptions,
+        throwOnError: true,
     });
 }

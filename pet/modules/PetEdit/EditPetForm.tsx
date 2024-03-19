@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ConfirmDialog from '../../components/core/ConfirmDialog';
-import ProfileCard from '../../components/user/ProfileCard';
+import ProfileCard from '../../components/pet/ProfileCard';
 import useDeletePet from '../../services/api/v1/pets/useDeletePet';
 import PetEditCard from '../../components/pet/PetEditCard';
 import SaveIcon from '@mui/icons-material/Save';

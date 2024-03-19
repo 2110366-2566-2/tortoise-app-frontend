@@ -21,7 +21,7 @@ export default function HomeLayout({
 
     useEffect(() => {
         sessionCheck();
-    }, [localStorage]);
+    }, [typeof window]);
 
     return (
         <>
