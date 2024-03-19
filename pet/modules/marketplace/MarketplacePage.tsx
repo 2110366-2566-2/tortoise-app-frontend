@@ -10,39 +10,39 @@ import { IUserDetail } from '@services/api/v1/user/type';
 import NewUserDialog from '@components/user/NewUserDialog';
 
 export default function MarketplacePage() {
-    const session = useGetSession();
-    const { data: userProfile, isSuccess: userProfileSuccess } = useGetUserProfile(session.userID || '');
+    // const session = useGetSession();
+    // const { data: userProfile, isSuccess: userProfileSuccess } = useGetUserProfile(session.userID || '');
 
-    const [openNewUserDialog, setOpenNewUserDialog] = useState(false);
+    // const [openNewUserDialog, setOpenNewUserDialog] = useState(false);
 
-    const required_props = [
-        userProfile?.first_name,
-        userProfile?.last_name,
-        userProfile?.gender,
-        userProfile?.phoneNumber,
-        userProfile?.address.building,
-        userProfile?.address.street,
-        userProfile?.address.district,
-        userProfile?.address.province,
-        userProfile?.address.postalCode,
-    ];
+    // const required_props = [
+    //     userProfile?.first_name,
+    //     userProfile?.last_name,
+    //     userProfile?.gender,
+    //     userProfile?.phoneNumber,
+    //     userProfile?.address.building,
+    //     userProfile?.address.street,
+    //     userProfile?.address.district,
+    //     userProfile?.address.province,
+    //     userProfile?.address.postalCode,
+    // ];
 
-    const handleNewUserProfile = () => {
-        required_props.forEach((element) => {
-            if (!element || element === '') {
-                setOpenNewUserDialog(true);
-            }
-            console.log(element);
-        });
-    };
+    // const handleNewUserProfile = () => {
+    //     required_props.forEach((element) => {
+    //         if (!element || element === '') {
+    //             setOpenNewUserDialog(true);
+    //         }
+    //         console.log(element);
+    //     });
+    // };
 
-    useEffect(() => {
-        handleNewUserProfile();
-    }, []);
+    // useEffect(() => {
+    //     handleNewUserProfile();
+    // }, []);
 
-    if (!userProfileSuccess) {
-        return null;
-    }
+    // if (!userProfileSuccess) {
+    //     return null;
+    // }
 
     const carouselItems = [
         'https://drive.google.com/uc?id=17CcoKvTnth9Cm2Dm2XNQ3MmB-vNx0Mof',
@@ -51,14 +51,14 @@ export default function MarketplacePage() {
 
     return (
         <Box sx={{ textAlign: '-webkit-center' }}>
-            <NewUserDialog
+            {/* <NewUserDialog
                 open={openNewUserDialog}
                 setOpen={handleNewUserProfile}
                 header={'Are you a new User?'}
                 cancelText="Cancel"
                 confirmText="Create Profile"
                 handleConfirm={handleNewUserProfile}
-            />
+            /> */}
             {/* <Box sx={{ height: '50vh', p: '24px 10% 8px' }}>
                 <ImageCarousel itemLists={carouselItems} />
             </Box> */}
