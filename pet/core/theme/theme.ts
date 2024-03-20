@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { Tabs, styled, TextField, Button, ButtonProps } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
@@ -22,32 +22,32 @@ export const THEME = createTheme({
     components: {
         MuiCssBaseline: {
             styleOverrides: {
-              body: {
-                scrollbarColor: "#6b6b6b #2b2b2b",
-                "&::-webkit-scrollbar, & *::-webkit-scrollbar": {
-                  backgroundColor: "#2b2b2b",
+                body: {
+                    scrollbarColor: '#6b6b6b #2b2b2b',
+                    '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
+                        backgroundColor: '#2b2b2b',
+                    },
+                    '&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb': {
+                        borderRadius: 8,
+                        backgroundColor: '#6b6b6b',
+                        minHeight: 24,
+                        border: '3px solid #2b2b2b',
+                    },
+                    '&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus': {
+                        backgroundColor: '#959595',
+                    },
+                    '&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active': {
+                        backgroundColor: '#959595',
+                    },
+                    '&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover': {
+                        backgroundColor: '#959595',
+                    },
+                    '&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner': {
+                        backgroundColor: '#2b2b2b',
+                    },
                 },
-                "&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb": {
-                  borderRadius: 8,
-                  backgroundColor: "#6b6b6b",
-                  minHeight: 24,
-                  border: "3px solid #2b2b2b",
-                },
-                "&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus": {
-                  backgroundColor: "#959595",
-                },
-                "&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active": {
-                  backgroundColor: "#959595",
-                },
-                "&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover": {
-                  backgroundColor: "#959595",
-                },
-                "&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner": {
-                  backgroundColor: "#2b2b2b",
-                },
-              },
             },
-          },
+        },
         MuiTypography: {
             variants: [
                 {
@@ -55,19 +55,19 @@ export const THEME = createTheme({
                     style: {
                         fontFamily: ['Fira Sans Condensed', 'Roboto Condensed', 'sans-serif'].join(','),
                         fontSize: 14,
-                    }
-                }
-            ]
-        }
-    }
+                    },
+                },
+            ],
+        },
+    },
 });
 
 export const CustomGreenButton = styled(Button)<ButtonProps>(({ theme }) => ({
     color: theme.palette.getContrastText('#F9C067'),
     backgroundColor: '#F6F4D2',
     '&:hover': {
-      backgroundColor: '#5C984A'
-    }
+        backgroundColor: '#5C984A',
+    },
 }));
 
 export const CustomTabs = styled(Tabs)({
@@ -89,61 +89,23 @@ export const CustomTabs = styled(Tabs)({
     '& .MuiButtonBase-root-MuiTab-root.Mui-selected': {
         color: '#6A443E',
     },
-
 });
 
 export const CustomPinkTextField = styled(TextField)({
-        
-  '& label.Mui-focused': {
-      color: '#472F05',
-  },
-  '& label': {
-      fontFamily: fira_sans_600.style.fontFamily
-  },
-  '& .MuiInput-underline:after': {
-      borderBottomColor: '#B2BAC2',
-  },
-  '& .MuiInputBase-input': {
-      fontFamily: fira_sans_600.style.fontFamily
-  },
-  '& .MuiInputBase-input:hover': {
-      backgroundColor: '#F3DDD1'
-  },
-  '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-          borderRadius: 0,
-          border: '1px solid #472F05',
-          boxShadow: '3px 3px #472F05',
-      },
-      '&:hover fieldset': {
-          border: '2px solid #472F05',
-      },
-      '&.Mui-focused fieldset': {
-          border: '2px solid #472F05',
-      },
-      '&.Mui-error': {
-          color: 'red',
-          boxShadow: '3px 2px #B12000'
-      }
-  },
-});
-
-export const CustomGreenTextField = styled(TextField)({
-        
     '& label.Mui-focused': {
         color: '#472F05',
     },
     '& label': {
-        fontFamily: fira_sans_600.style.fontFamily
+        fontFamily: fira_sans_600.style.fontFamily,
     },
     '& .MuiInput-underline:after': {
         borderBottomColor: '#B2BAC2',
     },
     '& .MuiInputBase-input': {
-        fontFamily: fira_sans_600.style.fontFamily
+        fontFamily: fira_sans_600.style.fontFamily,
     },
     '& .MuiInputBase-input:hover': {
-        backgroundColor: '#A5BE7D'
+        backgroundColor: '#F3DDD1',
     },
     '& .MuiOutlinedInput-root': {
         '& fieldset': {
@@ -159,9 +121,45 @@ export const CustomGreenTextField = styled(TextField)({
         },
         '&.Mui-error': {
             color: 'red',
-            boxShadow: '3px 2px #B12000'
-        }
+            boxShadow: '3px 2px #B12000',
+        },
     },
+});
+
+export const CustomGreenTextField = styled(TextField)({
+    '& label.Mui-focused': {
+        color: '#472F05',
+    },
+    '& label': {
+        fontFamily: fira_sans_600.style.fontFamily,
+    },
+    '& .MuiInput-underline:after': {
+        borderBottomColor: '#B2BAC2',
+    },
+    '& .MuiInputBase-input': {
+        fontFamily: fira_sans_600.style.fontFamily,
+    },
+    '& .MuiInputBase-input:hover': {
+        backgroundColor: '#A5BE7D',
+    },
+    '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+            borderRadius: 0,
+            border: '1px solid #472F05',
+            boxShadow: '3px 3px #472F05',
+        },
+        '&:hover fieldset': {
+            border: '2px solid #472F05',
+        },
+        '&.Mui-focused fieldset': {
+            border: '2px solid #472F05',
+        },
+        '&.Mui-error': {
+            color: 'red',
+            boxShadow: '3px 2px #B12000',
+        },
+    },
+
   });
 
 export const CustomBlueTextField = styled(TextField)({
@@ -199,3 +197,12 @@ export const CustomBlueTextField = styled(TextField)({
         }
     },
   });
+
+export const sxFormLabel = { fontFamily: fira_sans_600.style.fontFamily, fontSize: 24, color: '#472F05' };
+export const sxTypography = {
+    fontFamily: fira_sans_600.style.fontFamily,
+    fontSize: 18,
+    paddingLeft: 3,
+    color: 'rgb(72,52,24)',
+};
+

@@ -28,6 +28,6 @@
             "@public/*": ["public/*"],
         },
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/user/ProfileCard"],
+    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/pet/ProfileCard"],
     "exclude": ["node_modules"],
 }

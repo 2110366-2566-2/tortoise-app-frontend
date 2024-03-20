@@ -6,7 +6,7 @@ import { Box } from '@mui/material';
 import useGetPetByID from '../../services/api/v1/pets/useGetPetByID';
 import { useParams } from 'next/navigation.js';
 import { IPetQueryParams } from '../../services/api/v1/pets/type';
-import ProfileCard from '@components/user/ProfileCard';
+import ProfileCard from '@components/pet/ProfileCard';
 
 export default function PetProfile() {
     const params = useParams();
