@@ -159,7 +159,44 @@ export const CustomGreenTextField = styled(TextField)({
             boxShadow: '3px 2px #B12000',
         },
     },
-});
+
+  });
+
+export const CustomBlueTextField = styled(TextField)({
+    '& label.Mui-focused': {
+        color: '#472F05',
+    },
+    '& label': {
+        fontFamily: fira_sans_600.style.fontFamily
+    },
+    '& .MuiInput-underline:after': {
+        borderBottomColor: '#B2BAC2',
+    },
+    '& .MuiInputBase-input': {
+        fontFamily: fira_sans_600.style.fontFamily,
+        backgroundColor: '#D2DFE6'
+    },
+    '& .MuiInputBase-input:hover': {
+        backgroundColor: '#D7E3E9'
+    },
+    '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+            borderRadius: 0,
+            border: '1px solid #472F05',
+            boxShadow: '3px 3px #472F05',
+        },
+        '&:hover fieldset': {
+            border: '2px solid #472F05',
+        },
+        '&.Mui-focused fieldset': {
+            border: '2px solid #472F05',
+        },
+        '&.Mui-error': {
+            color: 'red',
+            boxShadow: '3px 2px #B12000'
+        }
+    },
+  });
 
 export const sxFormLabel = { fontFamily: fira_sans_600.style.fontFamily, fontSize: 24, color: '#472F05' };
 export const sxTypography = {
@@ -168,3 +205,4 @@ export const sxTypography = {
     paddingLeft: 3,
     color: 'rgb(72,52,24)',
 };
+
