@@ -18,7 +18,13 @@ export default function PetProfile() {
     if (!petSuccess) return null;
 
     return (
-        <Box sx={{ alignSelf: 'center', marginTop: 5 }}>
+        <Box 
+            sx={{ 
+                alignSelf: 'center', 
+                marginTop: 5, 
+                mx: 5
+            }}
+        >
             <Grid container direction="column" sx={{ overflowX: 'hidden', flexWrap: 'nowrap' }}>
                 <Grid
                     container
@@ -32,8 +38,29 @@ export default function PetProfile() {
                         px: { xs: 5, md: 8 },
                     }}
                 >
-                    <Grid item md={5} sx={{ alignSelf: 'center' }}>
-                        <ProfileCard petImage={petFullDetail.media} />
+                    <Grid item md={5} sx={{ alignSelf: 'normal', justifySelf: 'center' }}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection :'row',
+                                justifyContent: 'center'
+                            }}
+                        >
+                            <ProfileCard petImage={petFullDetail.media} />
+                        </Box>
+                        <Box
+                            sx={{
+                                height: 100,
+                                border: '2px solid #472F05',
+                                borderRadius: 0,
+                                boxShadow: '3px 3px #472F05',
+                                backgroundColor: '#FEF1DA',
+                                my: 3,
+                                textAlign: 'center'
+                            }}
+                        >
+                            MultiPicture Tab (Implement Later) 
+                        </Box>
                     </Grid>
 
                     <Grid item md={7}>
@@ -53,43 +80,44 @@ export default function PetProfile() {
                             species={petFullDetail.species}
                             weight={petFullDetail.weight}
                         />
+                        <Box sx={{ marginTop: 3, marginBottom: 5 }}>
+                            <Box
+                                sx={{
+                                    height: 'auto',
+                                    width: 150,
+                                    paddingX: 3,
+                                    paddingY: 1,
+                                    fontSize: 20,
+                                    backgroundColor: '#472F05',
+                                    color: 'whitesmoke',
+                                    border: '2px solid black',
+                                    borderBottom: 0,
+                                    borderTopLeftRadius: 5,
+                                    borderTopRightRadius: 5,
+                                    boxShadow: '3px 3px black',
+                                    textAlign: 'center',
+                                }}
+                            >
+                                Description:
+                            </Box>
+                            <Box
+                                sx={{
+                                    width: '100%',
+                                    paddingX: 3,
+                                    paddingY: 1,
+                                    fontSize: 16,
+                                    backgroundColor: 'whitesmoke',
+                                    border: '2px solid #472F05',
+                                    boxShadow: '3px 3px black',
+                                }}
+                            >
+                                {petFullDetail.description.split('\\n').join('\n')}
+                            </Box>
+                        </Box>
                     </Grid>
                 </Grid>
             </Grid>
-            <Box sx={{ marginX: 10, marginTop: 3, marginBottom: 5 }}>
-                <Box
-                    sx={{
-                        height: 'auto',
-                        width: 150,
-                        paddingX: 3,
-                        paddingY: 1,
-                        fontSize: 20,
-                        backgroundColor: '#472F05',
-                        color: 'whitesmoke',
-                        border: '2px solid black',
-                        borderBottom: 0,
-                        borderTopLeftRadius: 5,
-                        borderTopRightRadius: 5,
-                        boxShadow: '3px 3px black',
-                        textAlign: 'center',
-                    }}
-                >
-                    Description:
-                </Box>
-                <Box
-                    sx={{
-                        width: '100%',
-                        paddingX: 3,
-                        paddingY: 1,
-                        fontSize: 16,
-                        backgroundColor: 'whitesmoke',
-                        border: '2px solid #472F05',
-                        boxShadow: '3px 3px black',
-                    }}
-                >
-                    {petFullDetail.description.split('\\n').join('\n')}
-                </Box>
-            </Box>
+            
         </Box>
     );
 }
