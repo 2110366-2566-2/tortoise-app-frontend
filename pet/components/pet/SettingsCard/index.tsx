@@ -20,6 +20,8 @@ import { ButtonProps, styled } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import useGetUserProfile from '@services/api/v1/user/useGetUserProfile';
 import { fira_sans_800 } from '@core/theme/theme';
+import SellerShopBriefCard from '@components/user/SellerShopBriefCard';
+import SellerProfileCard from '@components/user/SellerProfileCard';
 
 const fira_sans_600 = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] });
 
@@ -30,8 +32,6 @@ const theme = createTheme({
 });
 
 export default function SettingsCard(props: IPetDetail) {
-
-    const { data: sellerProfile, isSuccess: sellerProfileSuccess } = useGetUserProfile(props.seller_id || '');
 
     const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
         color: theme.palette.getContrastText('#F9C067'),
@@ -49,15 +49,15 @@ export default function SettingsCard(props: IPetDetail) {
         { id: 4, col1: 'Category:', col2: props.category },
         { id: 5, col1: 'Species:', col2: props.species },
         { id: 6, col1: 'Behavior:', col2: props.behavior },
-        { id: 7, col1: 'Seller:',   col2: sellerProfile?.first_name },
     ];
 
     const columns: GridColDef[] = [
         { field: 'col1', headerName: 'Column 1', width: 130 },
-        { field: 'col2', headerName: 'Column 2', width: 200 },
+        { field: 'col2', headerName: 'Column 2', flex: 1 },
     ];
 
     return (
+        
         <Box sx={{ height: 'auto', width: 'auto', margin: 1, mx: 1 }}>
             <Box sx={{ boxShadow: '6px 6px #472F05' }}>
                 <Box

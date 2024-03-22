@@ -2,8 +2,10 @@
 import React, { useState } from 'react';
 import Grid from '@mui/material/Grid';
 import SettingsCard from '../../components/pet/SettingsCard';
+import SellerProfileCard from '@components/user/SellerProfileCard';
 import { Box } from '@mui/material';
 import useGetPetByID from '../../services/api/v1/pets/useGetPetByID';
+import useGetUserProfile from '@services/api/v1/user/useGetUserProfile';
 import { useParams } from 'next/navigation.js';
 import { IPetQueryParams } from '../../services/api/v1/pets/type';
 import ProfileCard from '@components/pet/ProfileCard';
@@ -13,6 +15,7 @@ export default function PetProfile() {
     const petParams: IPetQueryParams = {
         petId: params?.petId as string,
     };
+
     const { data: petFullDetail, isSuccess: petSuccess, isError: petError } = useGetPetByID(petParams);
 
     if (!petSuccess) return null;
@@ -29,7 +32,7 @@ export default function PetProfile() {
                 <Grid
                     container
                     direction={{ xs: 'column', md: 'row' }}
-                    spacing={5}
+                    spacing={8}
                     sx={{
                         display: 'flex',
                         flexWrap: 'nowrap',
@@ -54,13 +57,14 @@ export default function PetProfile() {
                                 border: '2px solid #472F05',
                                 borderRadius: 0,
                                 boxShadow: '3px 3px #472F05',
-                                backgroundColor: '#FEF1DA',
+                                backgroundColor: '#F3DDD1',
                                 my: 3,
                                 textAlign: 'center'
                             }}
                         >
                             MultiPicture Tab (Implement Later) 
                         </Box>
+                        <SellerProfileCard sellerId={petFullDetail.seller_id} />
                     </Grid>
 
                     <Grid item md={7}>
@@ -117,7 +121,6 @@ export default function PetProfile() {
                     </Grid>
                 </Grid>
             </Grid>
-            
         </Box>
     );
 }
