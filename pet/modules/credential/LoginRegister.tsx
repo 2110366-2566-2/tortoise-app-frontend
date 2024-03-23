@@ -5,7 +5,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import LoginLeftFrame from '../../public/image/login_hero.png';
 import Image from 'next/image';
-import LoginForm from '../Login/LoginForm';
+import LoginForm from '../LoginUser/LoginForm';
 import RegisterForm from '../Register/RegisterForm';
 import { Fira_Sans_Condensed } from 'next/font/google';
 
