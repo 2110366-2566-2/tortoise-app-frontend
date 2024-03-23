@@ -1,18 +1,32 @@
 'use client';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-export default function UserLayout({
+import { getLocalStorageValue } from '@core/utils';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import TopBarAdmin from '@components/admin/TopBarAdmin';
+
+export default function HomeLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const queryClient = new QueryClient();
-    queryClient.prefetchQuery;
+    // const router = useRouter();
+
+    // const sessionCheck = async () => {
+    //     const session_id = await localStorage.getItem('session_id');
+    //     if (!session_id) {
+    //         router.push('/user/login');
+    //         return null;
+    //     }
+    // };
+
+    // useEffect(() => {
+    //     sessionCheck();
+    // }, [typeof window]);
+
     return (
-        <QueryClientProvider client={queryClient}>
-            <ToastContainer limit={1} stacked newestOnTop />
+        <>
+            <TopBarAdmin />
             {children}
-        </QueryClientProvider>
+        </>
     );
 }

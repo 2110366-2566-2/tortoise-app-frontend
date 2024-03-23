@@ -1,6 +1,2 @@
-// export default () => {
-//     return <div>Hello</div>;
-// };
-
-import AdminLoginPage from "@modules/login/AdminLoginPage";
+import AdminLoginPage from "@modules/LoginAdmin/AdminLoginPage";
 export default AdminLoginPage;

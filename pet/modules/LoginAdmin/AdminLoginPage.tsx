@@ -22,8 +22,10 @@ export default function AdminLoginPage() {
     const [showPassword, setShowPassword] = useState(false)
 
     const onSubmit = async (data: LoginInfo) => {
+        //Mock Login Success
         console.log(data);
-        return toastUI.toastSuccess('Mock Login')
+        toastUI.toastSuccess('Mock Login')
+        router.push('/admin/report')
     }
     
     return (
