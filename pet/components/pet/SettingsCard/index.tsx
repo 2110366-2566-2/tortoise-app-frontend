@@ -18,6 +18,10 @@ import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 import { Fira_Sans_Condensed } from 'next/font/google';
 import { ButtonProps, styled } from '@mui/material';
 import { useRouter } from 'next/navigation';
+import useGetUserProfile from '@services/api/v1/user/useGetUserProfile';
+import { fira_sans_800 } from '@core/theme/theme';
+import SellerShopBriefCard from '@components/user/SellerShopBriefCard';
+import SellerProfileCard from '@components/user/SellerProfileCard';
 
 const fira_sans_600 = Fira_Sans_Condensed({ weight: ['600'], subsets: ['latin'] });
 
@@ -28,6 +32,7 @@ const theme = createTheme({
 });
 
 export default function SettingsCard(props: IPetDetail) {
+
     const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
         color: theme.palette.getContrastText('#F9C067'),
         '&:hover': {
@@ -44,16 +49,16 @@ export default function SettingsCard(props: IPetDetail) {
         { id: 4, col1: 'Category:', col2: props.category },
         { id: 5, col1: 'Species:', col2: props.species },
         { id: 6, col1: 'Behavior:', col2: props.behavior },
-        // { id: 7, col1: 'Meidcal Records:',   col2: props.medical_records },
     ];
 
     const columns: GridColDef[] = [
-        { field: 'col1', headerName: 'Column 1', width: 150 },
-        { field: 'col2', headerName: 'Column 2', width: 250 },
+        { field: 'col1', headerName: 'Column 1', width: 130 },
+        { field: 'col2', headerName: 'Column 2', flex: 1 },
     ];
 
     return (
-        <Box sx={{ height: 'auto', width: 'auto', margin: 1 }}>
+        
+        <Box sx={{ height: 'auto', width: 'auto', margin: 1, mx: 1 }}>
             <Box sx={{ boxShadow: '6px 6px #472F05' }}>
                 <Box
                     sx={{
@@ -83,32 +88,107 @@ export default function SettingsCard(props: IPetDetail) {
                         },
                     }}
                 />
+                <Box 
+                    sx={{ 
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        width: 'auto', 
+                        height: 'auto',
+                        border: '2px solid #472F05',
+                        borderTop: 0,
+                        backgroundColor: '#F3C894'
+                    }}
+                >
+                    <Button
+                        onClick={() => router.push(`/user/seller-account/${props.seller_id}`)}
+                        sx={{
+                            '&.MuiButton-root': {
+                                border: '2px solid #472F05',
+                                boxShadow: '3px 3px #472F05',
+                                color: '#472F05',
+                                borderRadius: 0,
+                                backgroundColor: '#A4B89D',
+                                my: 1.5,
+                                px: 2,
+                                py: 1,
+                            },
+                            '&:hover': {
+                                backgroundColor: '#97AE8F',
+                            },
+                        }}
+                    >
+                        <Typography
+                            fontFamily={fira_sans_600.style.fontFamily}
+                            fontSize={16}
+                            color={'#472F05'}
+                        >
+                            View Seller Profile
+                        </Typography>
+                    </Button>
+                </Box>
             </Box>
             <Box
-                sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', marginTop: 4, fontSize: 25 }}
+                sx={{ 
+                    display: 'flex', 
+                    flexDirection: 'row', 
+                    justifyContent: 'space-between', 
+                    marginTop: 4,
+                    py: 2, px: 2,
+                    border: '2px solid #472F05',
+                    borderRadius: 1,
+                    boxShadow: '3px 3px #472F05',
+                    backgroundColor: '#FEF1DA'
+                }}
             >
-                <Box sx={{ paddingRight: 3, paddingTop: 1, marginLeft: 3, position: 'initial', left: 0 }}>
-                    Price: ฿{props.price}
+                <Box 
+                    sx={{ 
+                        py: 1, px: 1,
+                        // border: '2px solid #472F05',
+                        // borderRadius: 1,
+                        // boxShadow: '2px 2px #472F05',
+                        // backgroundColor: '#FCD082'
+
+                    }}
+                >
+                    <Typography
+                        fontFamily={fira_sans_600.style.fontFamily}
+                        fontSize={25}
+                    >
+                        Price: ฿{props.price}
+                    </Typography>
                 </Box>
-                <Box sx={{ width: 'auto', height: 'auto', backgroundColor: '#FAA943', boxShadow: '2px 2px #472F05' }}>
-                    <ColorButton
+                <Box sx={{ width: 'auto', height: 'auto', }}>
+                    <Button
                         onClick={() => {
                             router.push(`${props.id}/checkout`);
                         }}
                         sx={{
-                            paddingX: 2,
-                            paddingTop: 1,
-                            fontFamily: fira_sans_600.style.fontFamily,
-                            fontSize: 18,
-                            borderRadius: 0,
-                            border: '2px solid #472F05',
-                            ':&hover': { border: '3px solid #472F05' },
+                            '&.MuiButton-root': {
+                                border: '2px solid #472F05',
+                                boxShadow: '3px 3px #472F05',
+                                color: '#472F05',
+                                borderRadius: 0,
+                                backgroundColor: '#FAA943',
+                                px: 2,
+                                py: 1,
+                            },
+                            '&:hover': {
+                                backgroundColor: '#F79762',
+                            },
                         }}
                     >
-                        Buy Now!
-                    </ColorButton>
+                        <Typography
+                            fontFamily={fira_sans_800.style.fontFamily}
+                            fontSize={18}
+                            color={'#472F05'}
+                        >
+                            Buy Now!
+                        </Typography>
+                    </Button>
                 </Box>
             </Box>
+            
         </Box>
 
         //         {/* Medical Records */}
