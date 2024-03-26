@@ -1,14 +1,21 @@
+'use client'
+
 import useGetSession from '@core/auth/useGetSession';
 import { fira_sans_400, fira_sans_600, fira_sans_800, sxFormLabel, sxTypography } from '@core/theme/theme';
-import { Box, Typography, Stack, Card, Divider, FormLabel, FormControl, Avatar } from '@mui/material';
+import { Box, Typography, Stack, Card, Divider, FormLabel, FormControl, Avatar, Button } from '@mui/material';
+import { useRouter } from 'next/navigation';
 import useGetUserProfile from '@services/api/v1/user/useGetUserProfile';
 
 export default function SellerProfileCard({sellerId}: {sellerId: string}) {
 
     const { data: sellerProfile, isSuccess: sellerProfileSuccess } = useGetUserProfile(sellerId || '');
+    const router = useRouter()
+
     if (!sellerProfileSuccess) {
         return null;
     }
+
+
     return (
         <Box
             sx={{
@@ -37,7 +44,16 @@ export default function SellerProfileCard({sellerId}: {sellerId: string}) {
                     </Typography>
                 </Box>
                 <Divider />
-                <Stack direction="row" spacing={5} sx={{ display: 'flex', alignItems: 'center', my: 2, mx: 4 }}>
+                <Stack direction="row" spacing={3} 
+                    sx={{ 
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyItems: 'center',
+                        alignItems: 'center',
+                        my: 2, 
+                        mx: 3,
+                    }}
+                >
                     <Stack direction="column" spacing={1} sx={{ px: 1 }}>
                         <Avatar
                             sx={{ 
@@ -53,19 +69,55 @@ export default function SellerProfileCard({sellerId}: {sellerId: string}) {
                     <Stack spacing={2.5} sx={{ flexGrow: 1 }}>
                         <Stack direction="row" spacing={3} sx={{ color: '#472F05' }}>
                             <Typography fontFamily={fira_sans_600.style.fontFamily} fontSize={18}>Name: </Typography>
-                            <Typography fontFamily={fira_sans_400.style.fontFamily} fontSize={18}>{sellerProfile.first_name}  {sellerProfile.last_name}</Typography>
-                            
+                            <Typography fontFamily={fira_sans_400.style.fontFamily} fontSize={18}>{sellerProfile.first_name}  {sellerProfile.last_name}</Typography>   
                         </Stack>
                         <Stack direction="row" spacing={3} sx={{ color: '#472F05' }}>
                             <Typography fontFamily={fira_sans_600.style.fontFamily} fontSize={18}>Tel: </Typography>
                             <Typography fontFamily={fira_sans_400.style.fontFamily} fontSize={18}>{sellerProfile.phoneNumber}</Typography>
                         </Stack>
                         <Stack direction="row" spacing={3} sx={{ color: '#472F05' }}>
-                            <Typography fontFamily={fira_sans_600.style.fontFamily} fontSize={18}>Review: </Typography>
-                            <Typography fontFamily={fira_sans_400.style.fontFamily} fontSize={18}>Mock 404</Typography>
+                            <Typography fontFamily={fira_sans_600.style.fontFamily} fontSize={18}>Rating: </Typography>
+                            <Typography fontFamily={fira_sans_400.style.fontFamily} fontSize={18}>Mock Rating 404</Typography>
                         </Stack>
                     </Stack>
                 </Stack>
+                <Box 
+                    sx={{ 
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        width: 'auto', 
+                        height: 'auto',
+                        borderTop: 0,
+                    }}
+                >
+                    <Button
+                        onClick={() => router.push(`/user/seller-account/${sellerId}`)}
+                        sx={{
+                            '&.MuiButton-root': {
+                                border: '2px solid #472F05',
+                                boxShadow: '3px 3px #472F05',
+                                color: '#472F05',
+                                borderRadius: 0,
+                                backgroundColor: '#A4B89D',
+                                my: 0.5,
+                                px: 2,
+                                py: 1,
+                            },
+                            '&:hover': {
+                                backgroundColor: '#97AE8F',
+                            },
+                        }}
+                    >
+                        <Typography
+                            fontFamily={fira_sans_800.style.fontFamily}
+                            fontSize={16}
+                            color={'#472F05'}
+                        >
+                            Reviews' Detail
+                        </Typography>
+                    </Button>
+                </Box>
             </Card>
         </Box>
     );

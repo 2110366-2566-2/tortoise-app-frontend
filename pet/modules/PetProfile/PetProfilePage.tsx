@@ -24,8 +24,13 @@ export default function PetProfile() {
         <Box 
             sx={{ 
                 alignSelf: 'center', 
-                marginTop: 5, 
-                mx: 5
+                my: 5, 
+                mx: 5,
+                py: 5,
+                border: '3px solid #472F05',
+                borderRadius: 2,
+                boxShadow: '3px 3px #472F05',
+                backgroundColor: '#FBECDD'
             }}
         >
             <Grid container direction="column" sx={{ overflowX: 'hidden', flexWrap: 'nowrap' }}>
@@ -36,86 +41,118 @@ export default function PetProfile() {
                     sx={{
                         display: 'flex',
                         flexWrap: 'nowrap',
-                        // position: 'absolute',
                         top: '15vh',
                         px: { xs: 5, md: 8 },
                     }}
                 >
-                    <Grid item md={5} sx={{ alignSelf: 'normal', justifySelf: 'center' }}>
+                    <Grid item md={5} 
+                        sx={{ 
+                            alignSelf: 'normal', 
+                            justifySelf: 'center'
+                        }}
+                    >
                         <Box
+                            display={'flex'}
+                            flexDirection={'column'}
+                            border={'2px solid #472F05'}
+                            borderRadius={1}
+                            boxShadow={'3px 3px #472F05'}
+                            p={3}
+                            pb={1}
+                            mb={2}
                             sx={{
-                                display: 'flex',
-                                flexDirection :'row',
-                                justifyContent: 'center'
+                                backgroundColor: '#E9AB8E'
                             }}
-                        >
-                            <ProfileCard petImage={petFullDetail.media} />
-                        </Box>
-                        <Box
-                            sx={{
-                                height: 100,
-                                border: '2px solid #472F05',
-                                borderRadius: 0,
-                                boxShadow: '3px 3px #472F05',
-                                backgroundColor: '#F3DDD1',
-                                my: 3,
-                                textAlign: 'center'
-                            }}
-                        >
-                            MultiPicture Tab (Implement Later) 
-                        </Box>
-                        <SellerProfileCard sellerId={petFullDetail.seller_id} />
-                    </Grid>
-
-                    <Grid item md={7}>
-                        <SettingsCard
-                            id={petFullDetail.id}
-                            media={petFullDetail.media}
-                            seller_id={petFullDetail.seller_id}
-                            age={petFullDetail.age}
-                            behavior={petFullDetail.behavior}
-                            category={petFullDetail.category}
-                            description={petFullDetail.description}
-                            is_sold={petFullDetail.is_sold}
-                            medical_records={petFullDetail.medical_records}
-                            name={petFullDetail.name}
-                            price={petFullDetail.price}
-                            sex={petFullDetail.sex}
-                            species={petFullDetail.species}
-                            weight={petFullDetail.weight}
-                        />
-                        <Box sx={{ marginTop: 3, marginBottom: 5 }}>
+                        > 
                             <Box
                                 sx={{
-                                    height: 'auto',
-                                    width: 150,
-                                    paddingX: 3,
-                                    paddingY: 1,
-                                    fontSize: 20,
-                                    backgroundColor: '#472F05',
-                                    color: 'whitesmoke',
-                                    border: '2px solid black',
-                                    borderBottom: 0,
-                                    borderTopLeftRadius: 5,
-                                    borderTopRightRadius: 5,
-                                    boxShadow: '3px 3px black',
-                                    textAlign: 'center',
+                                    display: 'flex',
+                                    flexDirection :'row',
+                                    justifyContent: 'center'
                                 }}
                             >
-                                Description:
+                                <ProfileCard petImage={petFullDetail.media} />
                             </Box>
                             <Box
                                 sx={{
-                                    width: '100%',
-                                    paddingX: 3,
-                                    paddingY: 1,
-                                    fontSize: 16,
-                                    backgroundColor: 'whitesmoke',
+                                    height: 100,
                                     border: '2px solid #472F05',
-                                    boxShadow: '3px 3px black',
+                                    borderRadius: 0,
+                                    boxShadow: '3px 3px #472F05',
+                                    backgroundColor: '#F3DDD1',
+                                    mt: 3,
+                                    textAlign: 'center'
                                 }}
                             >
-                                {petFullDetail.description.split('\\n').join('\n')}
+                                MultiPicture Tab (Implement Later) 
+                            </Box>
+                            <SellerProfileCard sellerId={petFullDetail.seller_id} />
+                        </Box>
+                    </Grid>
+
+                    <Grid item md={7}>
+                        <Box
+                            display={'flex'}
+                            flexDirection={'column'}
+                            border={'2px solid #472F05'}
+                            borderRadius={1}
+                            boxShadow={'3px 3px #472F05'}
+                            p={3}
+                            pb={1}
+                            mb={3}
+                            sx={{
+                                backgroundColor: '#FDDCA2'
+                            }}
+                        > 
+                            <SettingsCard
+                                id={petFullDetail.id}
+                                media={petFullDetail.media}
+                                seller_id={petFullDetail.seller_id}
+                                age={petFullDetail.age}
+                                behavior={petFullDetail.behavior}
+                                category={petFullDetail.category}
+                                description={petFullDetail.description}
+                                is_sold={petFullDetail.is_sold}
+                                medical_records={petFullDetail.medical_records}
+                                name={petFullDetail.name}
+                                price={petFullDetail.price}
+                                sex={petFullDetail.sex}
+                                species={petFullDetail.species}
+                                weight={petFullDetail.weight}
+                            />
+                            <Box sx={{ marginTop: 3, marginBottom: 5 }}>
+                                <Box
+                                    sx={{
+                                        height: 'auto',
+                                        width: 150,
+                                        paddingX: 3,
+                                        paddingY: 1,
+                                        fontSize: 20,
+                                        backgroundColor: '#472F05',
+                                        color: 'whitesmoke',
+                                        border: '2px solid black',
+                                        borderBottom: 0,
+                                        borderTopLeftRadius: 5,
+                                        borderTopRightRadius: 5,
+                                        boxShadow: '3px 3px black',
+                                        textAlign: 'center',
+                                    }}
+                                >
+                                    Description:
+                                </Box>
+                                <Box
+                                    sx={{
+                                        width: '100%',
+                                        paddingX: 3,
+                                        paddingY: 1,
+                                        fontSize: 16,
+                                        backgroundColor: 'whitesmoke',
+                                        border: '2px solid #472F05',
+                                        boxShadow: '3px 3px black',
+                                    }}
+                                >
+                                    {petFullDetail.description.split('\\n').join('\n')}
+                                </Box>
                             </Box>
                         </Box>
                     </Grid>
