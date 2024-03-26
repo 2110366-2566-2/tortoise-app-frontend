@@ -27,10 +27,10 @@ export default function PetProfile() {
                 my: 5, 
                 mx: 5,
                 py: 5,
-                border: '3px solid #472F05',
+                border: '2px solid #472F05',
                 borderRadius: 2,
                 boxShadow: '3px 3px #472F05',
-                backgroundColor: '#FBECDD'
+                backgroundColor: '#F8D7B8'
             }}
         >
             <Grid container direction="column" sx={{ overflowX: 'hidden', flexWrap: 'nowrap' }}>
@@ -56,7 +56,7 @@ export default function PetProfile() {
                             flexDirection={'column'}
                             border={'2px solid #472F05'}
                             borderRadius={1}
-                            boxShadow={'3px 3px #472F05'}
+                            boxShadow={'4px 4px #472F05'}
                             p={3}
                             pb={1}
                             mb={2}
@@ -73,7 +73,7 @@ export default function PetProfile() {
                             >
                                 <ProfileCard petImage={petFullDetail.media} />
                             </Box>
-                            <Box
+                            {/* <Box
                                 sx={{
                                     height: 100,
                                     border: '2px solid #472F05',
@@ -85,7 +85,7 @@ export default function PetProfile() {
                                 }}
                             >
                                 MultiPicture Tab (Implement Later) 
-                            </Box>
+                            </Box> */}
                             <SellerProfileCard sellerId={petFullDetail.seller_id} />
                         </Box>
                     </Grid>
@@ -96,7 +96,7 @@ export default function PetProfile() {
                             flexDirection={'column'}
                             border={'2px solid #472F05'}
                             borderRadius={1}
-                            boxShadow={'3px 3px #472F05'}
+                            boxShadow={'4px 4px #472F05'}
                             p={3}
                             pb={1}
                             mb={3}
@@ -146,7 +146,7 @@ export default function PetProfile() {
                                         paddingX: 3,
                                         paddingY: 1,
                                         fontSize: 16,
-                                        backgroundColor: 'whitesmoke',
+                                        backgroundColor: '#FEF1DA',
                                         border: '2px solid #472F05',
                                         boxShadow: '3px 3px black',
                                     }}

@@ -5,11 +5,17 @@ import { fira_sans_400, fira_sans_600, fira_sans_800, sxFormLabel, sxTypography 
 import { Box, Typography, Stack, Card, Divider, FormLabel, FormControl, Avatar, Button } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import useGetUserProfile from '@services/api/v1/user/useGetUserProfile';
+import { useState } from 'react';
+import SellerReviewDialog from '../SellerReviewDialog';
 
 export default function SellerProfileCard({sellerId}: {sellerId: string}) {
 
-    const { data: sellerProfile, isSuccess: sellerProfileSuccess } = useGetUserProfile(sellerId || '');
+    const [openSellerReviewDialog, setOpenSellerReviewDialog] = useState(false)
     const router = useRouter()
+    const handleSellerReviewDialog = async () => {
+        console.log('Seller Review Dialog') 
+    }
+    const { data: sellerProfile, isSuccess: sellerProfileSuccess } = useGetUserProfile(sellerId || '');
 
     if (!sellerProfileSuccess) {
         return null;
@@ -26,6 +32,15 @@ export default function SellerProfileCard({sellerId}: {sellerId: string}) {
                 position: 'relative',
             }}
         >
+            <SellerReviewDialog
+                open={openSellerReviewDialog}
+                setOpen={setOpenSellerReviewDialog}
+                header={`${sellerProfile.first_name}'s Shop Reviews`}
+                handleConfirm={handleSellerReviewDialog}
+                cancelText='Close'
+                sellerId={sellerId}
+                sellerName={sellerProfile.first_name}
+            />
             <Card
                 sx={{ border: '2px solid black', boxShadow: '5px 4px #472F05', backgroundColor: '#F3DDD1', py: '8px' }}
             >
@@ -92,7 +107,7 @@ export default function SellerProfileCard({sellerId}: {sellerId: string}) {
                     }}
                 >
                     <Button
-                        onClick={() => router.push(`/user/seller-account/${sellerId}`)}
+                        onClick={() => setOpenSellerReviewDialog(true)}
                         sx={{
                             '&.MuiButton-root': {
                                 border: '2px solid #472F05',

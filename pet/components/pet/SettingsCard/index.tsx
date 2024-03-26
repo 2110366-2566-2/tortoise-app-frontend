@@ -59,14 +59,14 @@ export default function SettingsCard(props: IPetDetail) {
     return (
         
         <Box sx={{ height: 'auto', width: 'auto', margin: 1, mx: 1 }}>
-            <Box sx={{ boxShadow: '6px 6px #472F05' }}>
+            <Box sx={{ boxShadow: '3px 3px #472F05' }}>
                 <Box
                     sx={{
                         height: 'auto',
                         paddingLeft: 3,
                         paddingY: 1,
                         fontSize: 30,
-                        backgroundColor: '#F9C067',
+                        backgroundColor: '#FAA943',
                         border: '2px solid #472F05',
                     }}
                 >
