@@ -37,8 +37,19 @@ export default function UserProfilePage() {
                         pt: 0,
                     }}
                 >
-                    <Grid item md={4} sx={{ alignSelf: 'normal', justifySelf: 'center', mt: 3 }}>
-                        <Box display={'flex'} flexDirection={'column'} alignItems={'center'} pb={3}>
+                    <Grid item md={4} sx={{ alignSelf: 'normal', justifySelf: 'center'}}>
+                        <Box 
+                            display={'flex'} 
+                            flexDirection={'column'} 
+                            alignItems={'center'} 
+                            border={'2px solid #472F05'}
+                            borderRadius={1}
+                            boxShadow={'3px 3px #472F05'}
+                            p={3}
+                            sx={{
+                                backgroundColor: '#F9E6CF'
+                            }}
+                        >
                             <Box
                                 display={'flex'}
                                 flexDirection={'column'}
@@ -81,49 +92,59 @@ export default function UserProfilePage() {
                     </Grid>
 
                     <Grid item md={7.5} sx={{ width: '100%', alignSelf: 'normal', right: 0 }}>
-                        <UserSettingsCard
-                            _id={userProfile._id}
-                            username={userProfile.username}
-                            first_name={userProfile.first_name}
-                            last_name={userProfile.last_name}
-                            gender={userProfile.gender}
-                            phoneNumber={userProfile.phoneNumber}
-                            address={userProfile.address}
-                            image={userProfile.image}
-                        />
                         <Box
+                            border={'2px solid #472F05'}
+                            borderRadius={1}
+                            boxShadow={'3px 3px #472F05'}
+                            p={5}
                             sx={{
-                                width: '100%',
-                                alignSelf: 'normal',
-                                border: '3px solid #472F05',
-                                borderRadius: 0,
-                                boxShadow: '5px 5px #472F05',
+                                backgroundColor: '#F1C9B7'
                             }}
                         >
+                            <UserSettingsCard
+                                _id={userProfile._id}
+                                username={userProfile.username}
+                                first_name={userProfile.first_name}
+                                last_name={userProfile.last_name}
+                                gender={userProfile.gender}
+                                phoneNumber={userProfile.phoneNumber}
+                                address={userProfile.address}
+                                image={userProfile.image}
+                            />
                             <Box
                                 sx={{
-                                    backgroundColor: '#84B66B',
+                                    width: '100%',
+                                    alignSelf: 'normal',
+                                    border: '3px solid #472F05',
+                                    borderRadius: 0,
+                                    boxShadow: '5px 5px #472F05',
                                 }}
                             >
-                                <Typography
-                                    align="center"
-                                    color={'#472F05'}
-                                    fontFamily={fira_sans_600.style.fontFamily}
-                                    fontSize={22}
-                                    py={1}
+                                <Box
+                                    sx={{
+                                        backgroundColor: '#84B66B',
+                                    }}
                                 >
-                                    Bank Account
-                                </Typography>
-                            </Box>
-                            <Box
-                                sx={{
-                                    py: 8,
-                                    backgroundColor: '#EBEBD3',
-                                }}
-                            >
-                                {session?.role === 'seller' && (
-                                    <BankAccountShowCase seller_id={session.userID as string} />
-                                )}
+                                    <Typography
+                                        align="center"
+                                        color={'#472F05'}
+                                        fontFamily={fira_sans_600.style.fontFamily}
+                                        fontSize={22}
+                                        py={1}
+                                    >
+                                        Bank Account
+                                    </Typography>
+                                </Box>
+                                <Box
+                                    sx={{
+                                        py: 2,
+                                        backgroundColor: '#EBEBD3',
+                                    }}
+                                >
+                                    {session?.role === 'seller' && (
+                                        <BankAccountShowCase seller_id={session.userID as string} />
+                                    )}
+                                </Box>
                             </Box>
                         </Box>
                     </Grid>

@@ -51,7 +51,7 @@ export default function UserSettingsCard(props: IUserDetail) {
     return (
         <Box
             sx={{
-                py: 3,
+                pb: 3,
                 width: '100%',
                 display: 'block',
                 position: 'relative',
@@ -61,7 +61,7 @@ export default function UserSettingsCard(props: IUserDetail) {
                 sx={{
                     border: '2px solid black',
                     borderRadius: 1,
-                    boxShadow: '10px 10px #472F05',
+                    boxShadow: '5px 5px #472F05',
                     backgroundColor: '#F3DDD1',
                     py: '8px',
                 }}

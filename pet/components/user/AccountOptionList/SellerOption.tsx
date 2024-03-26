@@ -48,7 +48,7 @@ export default function SellerOptionLists(props: SellerOptionListProps) {
             }
         >
             <ListItemButton
-                sx={{ '&:hover': { backgroundColor: '#CAD2C5' } }}
+                sx={{ backgroundColor: '#FCF1E5', '&:hover': { backgroundColor: '#CAD2C5' } }}
                 disabled={Boolean(bankAccount?.bank_account_number)}
                 onClick={() => router.push('/user/account/bank-account')}
             >
@@ -65,7 +65,7 @@ export default function SellerOptionLists(props: SellerOptionListProps) {
             </ListItemButton>
 
             <ListItemButton
-                sx={{ '&:hover': { backgroundColor: '#E18A7A' } }}
+                sx={{ backgroundColor: '#FCF1E5', '&:hover': { backgroundColor: '#E18A7A' } }}
                 onClick={() => setOpenDeleteBankAccountDialog(true)}
             >
                 <ListItemIcon>
