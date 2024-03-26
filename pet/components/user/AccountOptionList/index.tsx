@@ -89,7 +89,7 @@ export default function AccountOptionList() {
                 }
             >
                 <ListItemButton
-                    sx={{ '&:hover': { backgroundColor: '#E5CB9A' } }}
+                    sx={{ backgroundColor: '#FCF1E5', '&:hover': { backgroundColor: '#E5CB9A' } }}
                     onClick={() => router.push('account/edit-profile')}
                 >
                     <ListItemIcon>
@@ -105,7 +105,7 @@ export default function AccountOptionList() {
                 </ListItemButton>
 
                 <ListItemButton
-                    sx={{ '&:hover': { backgroundColor: '#E5CB9A' } }}
+                    sx={{ backgroundColor: '#FCF1E5', '&:hover': { backgroundColor: '#E5CB9A' } }}
                     onClick={() => setOpenChangePasswordDialog(true)}
                 >
                     <ListItemIcon>
@@ -121,7 +121,7 @@ export default function AccountOptionList() {
                 </ListItemButton>
 
                 <ListItemButton
-                    sx={{ '&:hover': { backgroundColor: '#E18A7A' } }}
+                    sx={{ backgroundColor: '#FCF1E5', '&:hover': { backgroundColor: '#E18A7A' } }}
                     onClick={() => setOpenDeleteUserDialog(true)}
                 >
                     <ListItemIcon>
