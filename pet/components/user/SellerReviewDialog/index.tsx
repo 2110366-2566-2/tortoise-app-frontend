@@ -43,6 +43,7 @@ type SellerReviewDialogProps = {
     handleConfirm: React.MouseEventHandler<HTMLButtonElement>;
     sellerId: string,
     sellerName: string,
+    isMyShop: boolean,
 };
 
 const mockSellerReview = [
@@ -127,6 +128,13 @@ export default function SellerReviewDialog(props: SellerReviewDialogProps) {
         setOpen(false);
     };
 
+    const getCommentable = (itemLength: number) => {
+        if(itemLength === 0 && props.isMyShop) {
+            return true
+        }
+        return false
+    }
+
     return (
         <React.Fragment>
             <Dialog
@@ -166,10 +174,12 @@ export default function SellerReviewDialog(props: SellerReviewDialogProps) {
                             {
                                 mockSellerReview.map(item => 
                                     <SellerReviewItem 
+                                        reviewId={item.id}
                                         reviewNo={mockSellerReview.indexOf(item) + 1}
                                         rating={item.rating_score}
                                         review={item.description}
                                         shopComment={item.comment_records.at(0)?.comment}
+                                        isCommentable={getCommentable(item.comment_records.length)}
                                     />   
                                 )
                             }

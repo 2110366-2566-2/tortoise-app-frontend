@@ -40,6 +40,7 @@ export default function SellerProfileCard({sellerId}: {sellerId: string}) {
                 cancelText='Close'
                 sellerId={sellerId}
                 sellerName={sellerProfile.first_name}
+                isMyShop={false}
             />
             <Card
                 sx={{ border: '2px solid black', boxShadow: '5px 4px #472F05', backgroundColor: '#F3DDD1', py: '8px' }}
