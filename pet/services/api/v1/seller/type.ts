@@ -12,3 +12,13 @@ export interface IBankAccountCreateParams {
 export interface ISellerQueryParams {
     seller_id: string;
 }
+
+export interface ISellerProfile {
+    id: string,
+    first_name: string,
+    last_name: string,
+    pets: string[],
+    bank_account: IBankAccountInfo,
+    license: string,
+    status: string,
+}
