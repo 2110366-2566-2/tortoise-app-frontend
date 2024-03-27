@@ -1,13 +1,17 @@
 import React from 'react'
-import { Paper, Grid, Slide, Box, TextField } from '@mui/material';
+import { Paper, Grid, Slide, Box, TextField, Button, Typography } from '@mui/material';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Image from 'next/image';
 import mockDog from '@public/image/mockdog1.jpg';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import transactionTheme from '@core/theme/transactionTheme';
+import { fira_sans_800 } from '@core/theme/theme';
+import { useRouter } from 'next/navigation';
 
 function Transaction( { role, transaction }: { role: number, transaction: any } ) {
+
+    const router = useRouter()
     const [hovered, setHovered] = React.useState(false);
     const [showContent, setShowContent] = React.useState(false);
 
@@ -87,8 +91,11 @@ function Transaction( { role, transaction }: { role: number, transaction: any } 
                 <Paper
                     component='div'
                     sx={{
-                        p: '100px 30px',
+                        px: '30px',
+                        py: '100px',
+                        pb: '120px',
                         display: 'flex',
+                        flexDirection: 'column',
                         boxShadow: '5px 4px #472F05',
                         alignItems: 'center',
                         backgroundColor: '#fff4e0',
@@ -182,6 +189,34 @@ function Transaction( { role, transaction }: { role: number, transaction: any } 
                             />
                         </Box>
                     </Box>
+                        <Button
+                            onClick={() => router.push(`/user/account/review?bid=${transaction.buyer_id}&sid=${transaction.seller_id}&sname=${transaction.seller_name}`)}
+                            sx={{
+                                '&.MuiButton-root': {
+                                    border: '2px solid #472F05',
+                                    boxShadow: '2px 2px #472F05',
+                                    color: '#472F05',
+                                    borderRadius: 0,
+                                    backgroundColor: '#FAA943',
+                                    px: 2,
+                                    py: 0.5,
+                                    position: 'absolute',
+                                    right: 30,
+                                    bottom: 30,
+                                },
+                                '&:hover': {
+                                    backgroundColor: '#F79762',
+                                },
+                            }}
+                        >
+                            <Typography
+                                color={'#472F05'}
+                                fontFamily={fira_sans_800.style.fontFamily}
+                                fontSize={16}
+                            >
+                                Add Seller's Review
+                            </Typography>
+                        </Button>
                 </Paper>
             </Slide>
         </Box>
