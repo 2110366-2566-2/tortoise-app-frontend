@@ -108,7 +108,10 @@ function TransactionHistoryPage() {
     if (error) return <></>;
 
     return (
-        <>
+        <Box
+            mx={10}
+            my={5}
+        >
             <ThemeProvider theme={theme}>
                 <style>
                     {`
@@ -117,7 +120,18 @@ function TransactionHistoryPage() {
                 }
                 `}
                 </style>
-                <Box display="flex" alignItems="center" justifyContent="space-between" width="100%">
+                <Box 
+                    display="flex" 
+                    alignItems="center" 
+                    justifyContent="space-between" 
+                    width="100%"
+                    border={'2px solid #472F05'}
+                    borderRadius={1}
+                    boxShadow={'4px 4px #472F05'}
+                    sx={{
+                        backgroundColor: '#FCCD7A'
+                    }}
+                >
                     <Box flex="1">
                         <Typography
                             variant="h4"
@@ -132,12 +146,12 @@ function TransactionHistoryPage() {
                             Transaction History
                         </Typography>
                         <Typography
-                            variant="subtitle1"
+                            variant='subtitle1'
                             sx={{
                                 textAlign: 'left',
                                 fontWeight: 500,
                                 p: '8px 10% 70px',
-                                color: '#808080',
+                                color: '#684301',
                                 paddingLeft: '25%',
                             }}
                         >
@@ -160,39 +174,50 @@ function TransactionHistoryPage() {
                         />
                     </Box>
                 </Box>
-                <TransactionFilter data={data} filter={filter}/>
-                {filterData.length > 0 && (
-                    <Grid container justifyContent="center" alignItems="center" columns={{ xs: 12 }} spacing={{ xs: 1 }}>
-                        <Grid item xs={2.12}>
-                            <Typography variant="subtitle1" sx={{ fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa' }}>
-                                DATE & TIME
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={2.23}>
-                            <Typography variant="subtitle1" sx={{ fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa' }}>
-                                TYPE
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={1.38}>
-                            <Typography variant="subtitle1" sx={{ fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa' }}>
-                                STATUS
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={2.12}>
-                            <Typography variant="subtitle1" sx={{ fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa' }}>
-                                AMOUNT
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={1.18}></Grid>
-                        {filterData.map((transaction, index) => (
-                            <Grid item xs={9} key={index}>
-                                <Transaction role={role} transaction={transaction} />
+                <Box
+                    sx={{
+                        border: '2px solid #472F05',
+                        borderRadius: 1,
+                        boxShadow: '4px 4px #472F05',
+                        backgroundColor: '#FEEED2',
+                        my: 2,
+                        pb: 5,
+                    }}
+                >
+                    <TransactionFilter data={data} filter={filter}/>        
+                    {filterData.length > 0 && (
+                        <Grid container justifyContent="center" alignItems="center" columns={{ xs: 12 }} spacing={{ xs: 1 }}>
+                            <Grid item xs={2.12}>
+                                <Typography variant="subtitle1" sx={{ fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa' }}>
+                                    DATE & TIME
+                                </Typography>
                             </Grid>
-                        ))}
-                    </Grid>
-                )}
+                            <Grid item xs={2.23}>
+                                <Typography variant="subtitle1" sx={{ fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa' }}>
+                                    TYPE
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={1.38}>
+                                <Typography variant="subtitle1" sx={{ fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa' }}>
+                                    STATUS
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={2.12}>
+                                <Typography variant="subtitle1" sx={{ fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa' }}>
+                                    AMOUNT
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={1.18}></Grid>
+                            {filterData.map((transaction, index) => (
+                                <Grid item xs={9} key={index}>
+                                    <Transaction role={role} transaction={transaction} />
+                                </Grid>
+                            ))}
+                        </Grid>
+                    )}
+                </Box>
             </ThemeProvider>
-        </>
+        </Box>
     );
 }
 

@@ -41,6 +41,7 @@ function TransactionFilter({ data, filter }: { data: any, filter: any }) {
             spacing={5}
             columns={{xs: 12}}
             paddingBottom={6}
+            paddingTop={6}
         >
             <Grid item xs={3.6}>
                 <LocalizationProvider dateAdapter={AdapterDayjs} >
@@ -87,9 +88,14 @@ function TransactionFilter({ data, filter }: { data: any, filter: any }) {
                 <ColorButton
                     variant='contained'
                     sx={{
-                        border: '1px solid #472F05',
-                        borderRadius: 1.25,
+                        border: '2px solid #472F05',
+                        borderRadius: 0,
+                        boxShadow: '4px 4px #472F05',
                         fontSize: 19,
+                        '&:hover': {
+                            border: '2px solid #472F05',
+                            boxShadow: '4px 4px #472F05',
+                        }
                     }}
                     onClick={handleSubmit}
                 >
