@@ -4,7 +4,7 @@ import { DEFAULT_DEV_TOKEN } from "@services/clients/config";
 import { gridColumnsTotalWidthSelector } from "@mui/x-data-grid";
 import jwt from 'jsonwebtoken'
 
-async function useCreateReportSystem(report: string) {
+async function useCreateReportSystem(report: string, category: string) {
     try {
         const sessionId = await getLocalStorageValue('session_id');
         const token = sessionId ?? DEFAULT_DEV_TOKEN;
@@ -24,7 +24,7 @@ async function useCreateReportSystem(report: string) {
             'is_solved': false,
         }
 
-        await requestClient.post('/api/v1/report/system', body, { headers });
+        await requestClient.post(`/api/v1/report/${category}`, body, { headers });
 
         return true;
     } catch (error) {

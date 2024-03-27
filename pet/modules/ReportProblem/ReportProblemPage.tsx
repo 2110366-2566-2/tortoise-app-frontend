@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation';
-import { ThemeProvider, Typography, TextField } from '@mui/material'
+import { ThemeProvider, Typography, TextField, MenuItem } from '@mui/material'
 import Image from 'next/image'
 import catSeeker from '@public/image/catSeeker.png'
 import { Box } from '@mui/system'
@@ -10,18 +10,26 @@ import transactionTheme from '@core/theme/transactionTheme';
 import { ColorButton } from '@components/core/CustomInput/type';
 import useCreateReportSystem from '@services/api/v1/report/useCreateReportSystem';
 import useToastUI from '@core/hooks/useToastUI';
+import { fira_sans_600, sxTextField } from '@core/theme/theme';
+import { CustomTextField } from '@components/core/CustomInput/type';
+
+const category_master = [
+    { label: 'System', value: 'system' },
+    { label: 'Party', value: 'party' },
+];
 
 function ReportProblemPage() {
+
     const { theme } = transactionTheme;
 
+    const [category, setCategory] = useState('system')
     const [report, setReport] = useState('');
 
     const router = useRouter();
-
     const toastUI = useToastUI();
 
     const handleSubmit = () => {
-        useCreateReportSystem(report).then((res) => {
+        useCreateReportSystem(report, category).then((res) => {
             setReport('');
             if (res) {
                 toastUI.toastSuccess('Report submitted successfully!');
@@ -38,7 +46,7 @@ function ReportProblemPage() {
             <style>
                 {`
                 body {
-                    min-width: 2000px;
+                    min-width: 1000px;
                 }
             `}
             </style>
@@ -83,14 +91,14 @@ function ReportProblemPage() {
                     sx={{
                         p: 5,
                         width: '500px',
-                        height: '350px',
+                        // height: '350px',
                         border: '1px solid #472F05',
                         boxShadow: '5px 5px #472F05',
-                        borderRadius: 5,
-                        bgcolor: '#F8F8F8',
-                        marginLeft: '-200%',
-                        marginRight: '36%',
-                        marginTop: '-2%',
+                        borderRadius: 2,
+                        bgcolor: '#FCCD7A',
+                        // marginLeft: '-200%',
+                        marginRight: '20%',
+                        // marginTop: '-2%',
                     }}
                 >
                     <Typography
@@ -98,12 +106,37 @@ function ReportProblemPage() {
                         sx={{
                             textAlign: 'center',
                             fontWeight: 500,
-                            color: '#808080',
+                            color: '#472F05',
                             marginBottom: '3vh',
                         }}
                     >
                         🐾 Please tell us what problem you found 🐾
                     </Typography>
+                    <CustomTextField 
+                        fullWidth
+                        select 
+                        label="Category" 
+                        defaultValue={'system'}
+                        onChange={(e) => setCategory(e.target.value)}
+                        sx={{
+                            mb: 2,
+                            backgroundColor: '#FEF1DA'
+                        }}
+                    >
+                        {category_master.map((option) => (
+                            <MenuItem
+                                key={option.value}
+                                value={option.value}
+                                sx={{
+                                    fontFamily: fira_sans_600.style.fontFamily,
+                                    '&:hover': { backgroundColor: '#F3DDD1' },
+                                    '&:focus': { backgroundColor: 'rgb(272, 174, 133) !important' },
+                                }}
+                            >
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </CustomTextField>
                     <TextField
                         id="outlined-multiline-static"
                         multiline
@@ -113,13 +146,15 @@ function ReportProblemPage() {
                         placeholder="Please provide your report here..."
                         InputProps={{
                             sx: {
-                                borderRadius: 3
+                                borderRadius: 0,
+                                border: '2px solid #472F05',
                             }
                         }}
                         sx={{
                             width: '100%',
                             marginBottom: '2vh',
-                            backgroundColor: '#FFFFFF',
+                            backgroundColor: '#FEF1DA',
+                            
                         }}
                     />
                     <ColorButton
