@@ -1,63 +1,58 @@
 'use client';
-import { Box, Button, Rating, Typography } from '@mui/material';
+import { Box, Button,  Rating,  Typography, Stack } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { SubmitHandler } from 'react-hook-form';
-import { CustomGreenButton, CustomGreenTextField, fira_sans_600, fira_sans_800 } from '@core/theme/theme';
-import { useRouter } from 'next/navigation';
+import { CustomGreenButton,  CustomGreenTextField, fira_sans_400, fira_sans_600, fira_sans_800 } from '@core/theme/theme';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import useToastUI from '@core/hooks/useToastUI';
 import useGetSession from '@core/auth/useGetSession';
-import Stack from '@mui/system/Stack';
-import { useState } from 'react';
 import useSubmitReview from '@services/api/v1/review/useSubmitReview';
+import { useState } from 'react';
 import { ISubmitReviewPayload } from '@services/api/v1/review/type';
+import { ColorButton, CustomTextField } from '@components/core/CustomInput/type';
 
 export default function ReportFormPage() {
-    interface ReviewFormData {
-        rating: number;
-        topic: string;
-        description: string;
-    }
-
+    
     const router = useRouter();
-    const form = useForm<ReviewFormData>();
+    const form = useForm<ISubmitReviewPayload>();
+    const searchParams = useSearchParams()
     const toastUI = useToastUI();
     const session = useGetSession();
 
+    const [ratingScore, setRatingScore] = useState<number>(0);
+
     const { mutateAsync: mutateSubmitReview } = useSubmitReview({
         onSuccess: () => {
+            router.push('/user/transaction-history')
             toastUI.toastSuccess('Review Submitted!');
-            window.location.reload();
+            // window.location.reload();
         },
         onError: (err) => {
             toastUI.toastError(err.message);
         },
     });
 
-    const handleSubmitReview = async (data: ISubmitReviewPayload) => {
+    const onSubmit: SubmitHandler<ISubmitReviewPayload> = async (data: ISubmitReviewPayload) => {
         try {
-            await mutateSubmitReview(data);
-        } catch (err) {
-            throw err;
-        }
-    };
-
-    const onSubmit: SubmitHandler<ReviewFormData> = async (data: ReviewFormData) => {
-        try {
-            router.push('/user/account'); //ไม่รุ้ต้องไปไหน
+            const bid = searchParams.get('bid')
+            const sid = searchParams.get('sid')
+            if(bid !== null && sid !== null) {
+                data.reviewer_id = bid
+                data.reviewee_id = sid
+                data.rating_score = ratingScore
+                console.log(data)
+                await mutateSubmitReview(data);
+            }
+            else {
+                toastUI.toastError('Error on trying to add Review')
+            }
         } catch (err) {
             console.error(err);
         }
     };
 
-    const [value, setValue] = useState(0);
-
-    const handleRatingChange = (event, newValue) => {
-        setValue(newValue);
-        // ทำอย่างอื่นที่คุณต้องการทำเมื่อมีการเปลี่ยนคะแนน
-    };
-
     return (
-        <Box sx={{ px: { xs: '8%', md: '15%' } }}>
+        <Box sx={{ px: { xs: '5%', md: '20%' } }}>
             <Typography
                 py={4}
                 align={'center'}
@@ -69,102 +64,132 @@ export default function ReportFormPage() {
             </Typography>
             <Box
                 sx={{
-                    py: 8,
+                    py: 4,
                     px: 10,
                     border: '3px solid #472F05',
                     borderRadius: 2,
                     boxShadow: '10px 10px #472F05',
-                    backgroundColor: '#EBEBD3',
+                    backgroundColor: '#FDE2B2',
                 }}
             >
+                <Stack
+                    py={3}
+                    direction={'row'}
+                    display={'flex'}
+                    flexDirection={'row'}
+                    justifyContent={'center'}
+                    spacing={2}
+                >
+                    <Typography
+                        fontFamily={fira_sans_800.style.fontFamily}
+                        fontSize={22}
+                        color={'#472F05'}
+                    >
+                        Seller Name: 
+                    </Typography>
+                    <Typography
+                        fontFamily={fira_sans_600.style.fontFamily}
+                        fontSize={20}
+                        color={'#472F05'}
+                    >
+                        {searchParams.get('sname')}
+                    </Typography>
+                </Stack>
                 <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
                     <Box
                         sx={{
+                            p: 3,
                             width: '100%',
                             height: 'auto',
                             display: 'flex',
                             flexDirection: 'column',
-                            gap: 4,
+                            border: '2px solid #472F05',
+                            borderRadius: 1,
+                            boxShadow: '3px 3px #472F05',
+                            backgroundColor: '#FEEED2',
+                            gap: 2,
                         }}
                     >
-                        <Typography
-                            align={'center'}
-                            fontFamily={fira_sans_800.style.fontFamily}
-                            fontSize={30}
-                            color={'#472F05'}
+                        <Stack
+                            direction={'row'}
+                            display={'flex'}
+                            flexDirection={'row'}
+                            justifyContent={'center'}
+                            spacing={3}
                         >
-                            Give Your Rating
-                        </Typography>
+                            <Typography
+                                align={'center'}
+                                fontFamily={fira_sans_800.style.fontFamily}
+                                fontSize={20}
+                                color={'#472F05'}
+                            >
+                                Give Your Rating:
+                            </Typography>
 
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <Stack spacing={1}>
-                                <Rating
-                                    name="half-rating"
-                                    defaultValue={0}
-                                    precision={0.5}
-                                    value={value}
-                                    onChange={handleRatingChange}
-                                />
-                            </Stack>
-                        </div>
+                            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                <Stack spacing={1} >
+                                    <Rating 
+                                        name="rating_score" 
+                                        defaultValue={0}
+                                        precision={0.5} 
+                                        value={ratingScore}
+                                        size='large'
+                                        onChange={(e, newValue) => {
+                                            if(!newValue) {
+                                                setRatingScore(0)
+                                            }
+                                            else{
+                                                setRatingScore(newValue)
+                                            }
+                                        }}  
+                                    />
+                                    
+                                </Stack>
+                            </div>
+                        </Stack>   
 
-                        <CustomGreenTextField
-                            {...form.register('topic')}
-                            name="topic"
-                            label="Topic to review"
+                        <CustomTextField
+                            {...form.register('description')}
+                            name="description"
+                            label="Add Your Review"
                             variant="outlined"
+                            type='text'
                             sx={{ width: '100%' }}
                         />
-
-                        <Typography
-                            py={3}
-                            align={'center'}
-                            fontFamily={fira_sans_800.style.fontFamily}
-                            fontSize={30}
-                            color={'#472F05'}
-                        >
-                            Write Your Review
-                        </Typography>
-
-                        <textarea
-                            rows={5}
-                            name="description"
-                            placeholder="description"
-                            style={{
-                                width: 'calc(100% - 10px)',
-                                padding: '5px',
-                                backgroundColor: '#EBEBD3',
-                                boxShadow: '3px 3px #472F05',
-                                borderRadius: 0,
-                                border: '1px solid #472F05',
-                                verticalAlign: 'middle',
-                                marginBottom: '10px', // Added margin bottom for spacing
-                            }}
-                        ></textarea>
 
                         <Box
                             sx={{
                                 marginTop: 2,
-                                backgroundColor: '#74A059',
                                 display: 'flex',
                                 flexDirection: 'column',
                                 justifyContent: 'center',
                             }}
                         >
-                            <CustomGreenButton
-                                type="submit"
+                            <Button
+                                onClick={form.handleSubmit(onSubmit)}
                                 sx={{
-                                    paddingY: 1,
-                                    border: '2px solid #472F05',
-                                    borderRadius: 0,
-                                    boxShadow: '3px 2px #472F05',
-                                    fontFamily: fira_sans_600.style.fontFamily,
-                                    fontSize: 18,
+                                    '&.MuiButton-root': {
+                                        border: '2px solid #472F05',
+                                        boxShadow: '2px 2px #472F05',
+                                        color: '#472F05',
+                                        borderRadius: 0,
+                                        backgroundColor: '#FAA943',
+                                        px: 2,
+                                        py: 1,
+                                    },
+                                    '&:hover': {
+                                        backgroundColor: '#F79762',
+                                    },
                                 }}
-                                onClick={() => form.handleSubmit(onSubmit)}
                             >
-                                Add Review
-                            </CustomGreenButton>
+                                <Typography
+                                    color={'#472F05'}
+                                    fontFamily={fira_sans_800.style.fontFamily}
+                                    fontSize={16}
+                                >
+                                    Add Review
+                                </Typography>
+                            </Button>
                         </Box>
                     </Box>
                 </form>

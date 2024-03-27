@@ -8,6 +8,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateRange } from '@mui/x-date-pickers-pro';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import transactionTheme from '@core/theme/transactionTheme';
+import { LicenseInfo } from '@mui/x-license';
+
+LicenseInfo.setLicenseKey('e0d9bb8070ce0054c9d9ecb6e82cb58fTz0wLEU9MzI0NzIxNDQwMDAwMDAsUz1wcmVtaXVtLExNPXBlcnBldHVhbCxLVj0y');
 
 function TransactionFilter({ data, filter }: { data: any, filter: any }) {
     const [dateRange, setDateRange] = React.useState<DateRange<Date>>([null, null]);
@@ -38,6 +41,7 @@ function TransactionFilter({ data, filter }: { data: any, filter: any }) {
             spacing={5}
             columns={{xs: 12}}
             paddingBottom={6}
+            paddingTop={6}
         >
             <Grid item xs={3.6}>
                 <LocalizationProvider dateAdapter={AdapterDayjs} >
@@ -84,9 +88,14 @@ function TransactionFilter({ data, filter }: { data: any, filter: any }) {
                 <ColorButton
                     variant='contained'
                     sx={{
-                        border: '1px solid #472F05',
-                        borderRadius: 1.25,
+                        border: '2px solid #472F05',
+                        borderRadius: 0,
+                        boxShadow: '4px 4px #472F05',
                         fontSize: 19,
+                        '&:hover': {
+                            border: '2px solid #472F05',
+                            boxShadow: '4px 4px #472F05',
+                        }
                     }}
                     onClick={handleSubmit}
                 >
