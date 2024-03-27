@@ -5,6 +5,7 @@ import { fira_sans_600, fira_sans_800, fira_sans_400 } from '@core/theme/theme';
 import { Box, Grid, Stack, Typography, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import InfoIcon from '@mui/icons-material/Info';
+import useGetUserProfile from '@services/api/v1/user/useGetUserProfile';
 
 interface ItemProps {
     id: string;
@@ -15,9 +16,15 @@ interface ItemProps {
 }
 
 export default function ReportItem(props: ItemProps) {
+    
+    const {data: userProfile, isSuccess: userProfileSuccess} = useGetUserProfile(props.reporter || '')
     const [showDesc, setShowDesc] = useState(false);
 
     const renderDescription = () => {};
+
+    if(!userProfileSuccess) {
+        return null
+    }
 
     return (
         <Stack
@@ -34,27 +41,27 @@ export default function ReportItem(props: ItemProps) {
             <Grid container>
                 <Grid item xs={12} md={8}>
                     <Stack>
-                        <Stack direction={'column'}>
+                        <Stack direction={'column'} spacing={1}>
                             <Typography fontFamily={fira_sans_800.style.fontFamily} fontSize={24} color={'#213948'}>
-                                Topic: {props.topic}
+                                ID: {props.id}
                             </Typography>
                             <Stack direction={'row'} spacing={2}>
-                                <Stack direction={'row'} spacing={1}>
+                                {/* <Stack direction={'row'} spacing={1}>
                                     <Typography
                                         fontFamily={fira_sans_600.style.fontFamily}
-                                        fontSize={18}
+                                        fontSize={20}
                                         color={'#213948'}
                                     >
                                         ID:
                                     </Typography>
                                     <Typography
                                         fontFamily={fira_sans_400.style.fontFamily}
-                                        fontSize={18}
+                                        fontSize={20}
                                         color={'#213948'}
                                     >
                                         {props.id}
                                     </Typography>
-                                </Stack>
+                                </Stack> */}
 
                                 <Stack direction={'row'} spacing={1}>
                                     <Typography
@@ -86,7 +93,7 @@ export default function ReportItem(props: ItemProps) {
                                         fontSize={18}
                                         color={'#213948'}
                                     >
-                                        {props.reporter}
+                                        {userProfile.first_name} {userProfile.last_name}
                                     </Typography>
                                 </Stack>
                             </Stack>
@@ -123,7 +130,8 @@ export default function ReportItem(props: ItemProps) {
                             <InfoIcon />
                         </Button>
 
-                        <Button
+                        {/* <Button
+                            disabled
                             sx={{
                                 '&.MuiButton-root': {
                                     border: '2px solid #472F05',
@@ -133,7 +141,7 @@ export default function ReportItem(props: ItemProps) {
                                     color: '#472F05',
                                     fontSize: 16,
                                     fontFamily: fira_sans_600.style.fontFamily,
-                                    backgroundColor: '#E18A7A',
+                                    backgroundColor: 'lightgray',
                                 },
                                 '&:hover': {
                                     backgroundColor: '#CF5555',
@@ -141,7 +149,7 @@ export default function ReportItem(props: ItemProps) {
                             }}
                         >
                             <DeleteIcon />
-                        </Button>
+                        </Button> */}
                     </Box>
                 </Grid>
                 {showDesc ? (
