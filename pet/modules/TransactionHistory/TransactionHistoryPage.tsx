@@ -80,7 +80,6 @@ function TransactionHistoryPage() {
     }, []);
 
     const filter = (filterQuery: any) => {
-        console.log(filterQuery);
         let filteredData = data;
         if (filterQuery.startDate) {
             filteredData = filteredData.filter((transaction: any) => {

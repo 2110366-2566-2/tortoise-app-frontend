@@ -3,7 +3,6 @@ import { Paper, Grid, Slide, Box, TextField } from '@mui/material';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Image from 'next/image';
-import mockDog from '@public/image/mockdog1.jpg';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import transactionTheme from '@core/theme/transactionTheme';
 

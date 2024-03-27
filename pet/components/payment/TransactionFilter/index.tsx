@@ -8,6 +8,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateRange } from '@mui/x-date-pickers-pro';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import transactionTheme from '@core/theme/transactionTheme';
+import { LicenseInfo } from '@mui/x-license';
+
+LicenseInfo.setLicenseKey('e0d9bb8070ce0054c9d9ecb6e82cb58fTz0wLEU9MzI0NzIxNDQwMDAwMDAsUz1wcmVtaXVtLExNPXBlcnBldHVhbCxLVj0y');
 
 function TransactionFilter({ data, filter }: { data: any, filter: any }) {
     const [dateRange, setDateRange] = React.useState<DateRange<Date>>([null, null]);
