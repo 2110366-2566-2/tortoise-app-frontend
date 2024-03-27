@@ -10,9 +10,30 @@ import MockQR from '../../public/image/MockQR.png';
 import { CustomTextField } from '../../components/core/CustomInput/type';
 import { fira_sans_600, fira_sans_800 } from '../../core/theme/theme';
 
-export default function PaymentForm() {
-    const [value, setValue] = useState(0);
-
+export default function PaymentForm({
+    paymentMethod,
+    updatePaymentMethod,
+    cardHolder,
+    updateCardHolder,
+    cardNumber,
+    updateCardNumber,
+    expDate,
+    updateExpDate,
+    cvv,
+    updateCvv
+}: {
+    paymentMethod: any,
+    updatePaymentMethod: any,
+    cardHolder: any,
+    updateCardHolder: any,
+    cardNumber: any,
+    updateCardNumber: any,
+    expDate: any,
+    updateExpDate: any,
+    cvv: any,
+    updateCvv: any
+}) {
+    
     return (
         <Fragment>
             <Box sx={{ px: 4 }}>
@@ -27,8 +48,8 @@ export default function PaymentForm() {
                 >
                     Select your Payment Method
                 </Typography>
-                <PaymentMethodTab value={value} setValue={setValue} />
-                {value == 0 ? (
+                <PaymentMethodTab value={paymentMethod} setValue={updatePaymentMethod} />
+                {paymentMethod == 0 ? (
                     <Grid container spacing={3} sx={{ py: '24px' }}>
                         <Grid item xs={12} md={6}>
                             <CustomTextField
@@ -37,6 +58,8 @@ export default function PaymentForm() {
                                 label="Name on card"
                                 fullWidth
                                 autoComplete="cc-name"
+                                value={cardHolder}
+                                onChange={updateCardHolder}
                             />
                         </Grid>
                         <Grid item xs={12} md={6}>
@@ -46,6 +69,8 @@ export default function PaymentForm() {
                                 label="Card number"
                                 fullWidth
                                 autoComplete="cc-number"
+                                value={cardNumber}
+                                onChange={updateCardNumber}
                             />
                         </Grid>
                         <Grid item xs={12} md={6}>
@@ -55,6 +80,8 @@ export default function PaymentForm() {
                                 label="Expiry date"
                                 fullWidth
                                 autoComplete="cc-exp"
+                                value={expDate}
+                                onChange={updateExpDate}
                             />
                         </Grid>
                         <Grid item xs={12} md={6}>
@@ -69,6 +96,8 @@ export default function PaymentForm() {
                                 }
                                 fullWidth
                                 autoComplete="cc-csc"
+                                value={cvv}
+                                onChange={updateCvv}
                             />
                         </Grid>
                         <Grid item xs={12} sx={{ overflow: 'hidden' }}>

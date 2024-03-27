@@ -9,18 +9,14 @@ import { CustomTabs } from '../../../core/theme/theme';
 
 type PaymentMethodTabProps = {
     value: number;
-    setValue: React.Dispatch<React.SetStateAction<number>>;
+    setValue: any;
 };
 
 export default function PaymentMethodTab(props: PaymentMethodTabProps) {
     const { value, setValue } = props;
 
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
-    };
-
     return (
-        <CustomTabs value={value} onChange={handleChange} aria-label="icon label tabs example">
+        <CustomTabs value={value} onChange={setValue} aria-label="icon label tabs example">
             <Tab icon={<CreditCardIcon />} label="CREDIT/DEBIT CARD" />
             <Tab icon={<QrCodeScannerIcon />} label="PROMPTPAY QR" />
         </CustomTabs>

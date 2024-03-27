@@ -15,10 +15,15 @@ import Typography from '@mui/material/Typography';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { fira_sans_600, fira_sans_800 } from '../../core/theme/theme';
 import { StepIcon } from '@mui/material';
 import { ColorButton } from '../../components/core/CustomInput/type';
+import { useEffect, useState } from 'react';
+import useToastUI from '@core/hooks/useToastUI';
+import { IPetQueryParams } from '@services/api/v1/pets/type';
+import useGetPetByID from '@services/api/v1/pets/useGetPetByID';
+import useCreatePayment from '@services/api/v1/payment/useCreatePayment';
 
 function Copyright() {
     return (
@@ -44,25 +49,156 @@ function Copyright() {
 
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
-function getStepContent(step: number) {
-    switch (step) {
-        case 0:
-            return <AddressForm />;
-        case 1:
-            return <PaymentForm />;
-        case 2:
-            return <Review />;
-        default:
-            throw new Error('Unknown step');
-    }
-}
 
 export default function CheckoutPage() {
+    const params = useParams();
+    const petParams: IPetQueryParams = {
+        petId: params?.petId as string,
+    };
+    const {
+            data: petFullDetail,
+            isSuccess: petSuccess,
+            isError: petError,
+            refetch,
+            isRefetching: refetchingEditPage,
+        } = useGetPetByID(petParams);
+
+    const petName = petFullDetail?.name;
+    const petDescription = petFullDetail?.description;
+    const petPrice = petFullDetail?.price.toString();
+
     const [activeStep, setActiveStep] = React.useState(0);
+
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [address1, setAddress1] = useState('');
+    const [address2, setAddress2] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
+    const [zip, setZip] = useState('');
+    const [country, setCountry] = useState('');
+
+    const updateFirstName = (e: any) => {
+        setFirstName(e.target.value);
+    };
+
+    const updateLastName = (e: any) => {
+        setLastName(e.target.value);
+    };
+
+    const updateAddress1 = (e: any) => {
+        setAddress1(e.target.value);
+    };
+
+    const updateAddress2 = (e: any) => {
+        setAddress2(e.target.value);
+    };
+
+    const updateCity = (e: any) => {
+        setCity(e.target.value);
+    };
+
+    const updateState = (e: any) => {
+        setState(e.target.value);
+    };
+
+    const updateZip = (e: any) => {
+        setZip(e.target.value);
+    };
+
+    const updateCountry = (e: any) => {
+        setCountry(e.target.value);
+    };
+
+    const [paymentMethod, setPaymentMethod] = React.useState(0);
+    const [cardHolder, setCardHolder] = React.useState('');
+    const [cardNumber, setCardNumber] = React.useState('');
+    const [expDate, setExpDate] = React.useState('');
+    const [cvv, setCvv] = React.useState('');
+
+    const updatePaymentMethod = () => {
+        setPaymentMethod(paymentMethod === 0 ? 1 : 0);
+    };
+
+    const updateCardHolder = (e: any) => {
+        setCardHolder(e.target.value);
+    };
+
+    const updateCardNumber = (e: any) => {
+        setCardNumber(e.target.value);
+    };
+
+    const updateExpDate = (e: any) => {
+        setExpDate(e.target.value);
+    };
+
+    const updateCvv = (e: any) => {
+        setCvv(e.target.value);
+    };
+
+    function getStepContent(step: number) {
+        switch (step) {
+            case 0:
+                return <AddressForm 
+                            firstName={firstName} updateFirstName={updateFirstName} 
+                            lastName={lastName} updateLastName={updateLastName}
+                            address1={address1} updateAddress1={updateAddress1}
+                            address2={address2} updateAddress2={updateAddress2}
+                            city={city} updateCity={updateCity}
+                            state={state} updateState={updateState}
+                            zip={zip} updateZip={updateZip}
+                            country={country} updateCountry={updateCountry}
+                        />;
+            case 1:
+                return <PaymentForm
+                            paymentMethod={paymentMethod} updatePaymentMethod={updatePaymentMethod}
+                            cardHolder={cardHolder} updateCardHolder={updateCardHolder}
+                            cardNumber={cardNumber} updateCardNumber={updateCardNumber}
+                            expDate={expDate} updateExpDate={updateExpDate}
+                            cvv={cvv} updateCvv={updateCvv}
+                        />;
+            case 2:
+                return <Review
+                            firstName={firstName} lastName={lastName}
+                            address1={address1} address2={address2}
+                            city={city} state={state}
+                            zip={zip} country={country}
+                            paymentMethod={paymentMethod}
+                            cardHolder={cardHolder} cardNumber={cardNumber}
+                            expDate={expDate} cvv={cvv}
+                            petName={petName} petDescription={petDescription} petPrice={petPrice}
+                        />;
+            default:
+                throw new Error('Unknown step');
+        }
+    }
+
     const router = useRouter();
 
+    const toastUI = useToastUI();
+
     const handleNext = () => {
-        setActiveStep(activeStep + 1);
+        if (firstName === '' || lastName === '' || address1 === '' || city === '' || zip === '' || country === '') {
+            toastUI.toastError('Please fill in all required fields');
+            return;
+        }
+        if (activeStep === 1 && !paymentMethod && (cardHolder === '' || cardNumber === '' || expDate === '' || cvv === '')) {
+            toastUI.toastError('Please fill in all required fields');
+            return;
+        }
+        if (activeStep === steps.length - 1) {
+            useCreatePayment(petFullDetail, paymentMethod).then((res) => {
+                if (res) {
+                    toastUI.toastSuccess('Payment successful!');
+                    setActiveStep(activeStep + 1);
+                } else {
+                    toastUI.toastError('Payment failed');
+                    return;
+                }
+            });
+        } else {
+            setActiveStep(activeStep + 1);
+        }
     };
 
     const handleBack = () => {
