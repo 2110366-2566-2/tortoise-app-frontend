@@ -6,12 +6,11 @@ import { useState } from 'react';
 import SellerReviewDialog from '../SellerReviewDialog';
 
 export default function SellerShopBriefCard() {
-
-    const [openSellerReviewDialog, setOpenSellerReviewDialog] = useState(false)
+    const [openSellerReviewDialog, setOpenSellerReviewDialog] = useState(false);
 
     const handleSellerReviewDialog = async () => {
-        console.log('Seller Review Dialog') 
-    }
+        console.log('Seller Review Dialog');
+    };
 
     const session = useGetSession();
     const { data: userProfile, isSuccess: userProfileSuccess } = useGetUserProfile(session.userID || '');
@@ -34,8 +33,8 @@ export default function SellerShopBriefCard() {
                 setOpen={setOpenSellerReviewDialog}
                 header={`${userProfile.first_name}'s Shop Reviews`}
                 handleConfirm={handleSellerReviewDialog}
-                cancelText='Close'
-                sellerId={userProfile._id}
+                cancelText="Close"
+                sellerId={session.userID || ''}
                 sellerName={userProfile.first_name}
                 isMyShop={true}
             />
@@ -84,20 +83,22 @@ export default function SellerShopBriefCard() {
                             fontFamily: fira_sans_800.style.fontFamily,
                             fontSize: 24,
                             textAlign: 'center',
-                            color: '#472F05'
+                            color: '#472F05',
                         }}
                     >
                         Seller's info
                     </Typography>
                 </Box>
                 <Divider />
-                <Stack direction="row" spacing={5} 
-                    sx={{ 
+                <Stack
+                    direction="row"
+                    spacing={5}
+                    sx={{
                         display: 'flex',
                         flexDirection: 'row',
                         justifyItems: 'center',
                         alignItems: 'center',
-                        mt: 2, 
+                        mt: 2,
                         mx: 3,
                         px: 5,
                         py: 2,
@@ -105,10 +106,10 @@ export default function SellerShopBriefCard() {
                 >
                     <Stack direction="column" spacing={1} sx={{ px: 1 }}>
                         <Avatar
-                            sx={{ 
-                                width: 150, 
-                                height: 150, 
-                                mb: 1.5, 
+                            sx={{
+                                width: 150,
+                                height: 150,
+                                mb: 1.5,
                                 boxShadow: '2px 2px 10px 3px grey',
                                 border: '1.5px solid #472F05',
                             }}
@@ -117,25 +118,37 @@ export default function SellerShopBriefCard() {
                     </Stack>
                     <Stack spacing={2.5} sx={{ flexGrow: 1 }}>
                         <Stack direction="row" spacing={3} sx={{ color: '#472F05' }}>
-                            <Typography fontFamily={fira_sans_600.style.fontFamily} fontSize={20}>Name: </Typography>
-                            <Typography fontFamily={fira_sans_400.style.fontFamily} fontSize={20}>{userProfile.first_name}  {userProfile.last_name}</Typography>   
+                            <Typography fontFamily={fira_sans_600.style.fontFamily} fontSize={20}>
+                                Name:{' '}
+                            </Typography>
+                            <Typography fontFamily={fira_sans_400.style.fontFamily} fontSize={20}>
+                                {userProfile.first_name} {userProfile.last_name}
+                            </Typography>
                         </Stack>
                         <Stack direction="row" spacing={3} sx={{ color: '#472F05' }}>
-                            <Typography fontFamily={fira_sans_600.style.fontFamily} fontSize={20}>Tel: </Typography>
-                            <Typography fontFamily={fira_sans_400.style.fontFamily} fontSize={20}>{userProfile.phoneNumber}</Typography>
+                            <Typography fontFamily={fira_sans_600.style.fontFamily} fontSize={20}>
+                                Tel:{' '}
+                            </Typography>
+                            <Typography fontFamily={fira_sans_400.style.fontFamily} fontSize={20}>
+                                {userProfile.phoneNumber}
+                            </Typography>
                         </Stack>
                         <Stack direction="row" spacing={3} sx={{ color: '#472F05' }}>
-                            <Typography fontFamily={fira_sans_600.style.fontFamily} fontSize={20}>Rating: </Typography>
-                            <Typography fontFamily={fira_sans_400.style.fontFamily} fontSize={20}>Mock Rating 404</Typography>
+                            <Typography fontFamily={fira_sans_600.style.fontFamily} fontSize={20}>
+                                Rating:{' '}
+                            </Typography>
+                            <Typography fontFamily={fira_sans_400.style.fontFamily} fontSize={20}>
+                                Mock Rating 404
+                            </Typography>
                         </Stack>
                     </Stack>
                 </Stack>
-                <Box 
-                    sx={{ 
+                <Box
+                    sx={{
                         display: 'flex',
                         flexDirection: 'row',
                         justifyContent: 'center',
-                        width: 'auto', 
+                        width: 'auto',
                         height: 'auto',
                         borderTop: 0,
                     }}
@@ -158,11 +171,7 @@ export default function SellerShopBriefCard() {
                             },
                         }}
                     >
-                        <Typography
-                            fontFamily={fira_sans_800.style.fontFamily}
-                            fontSize={18}
-                            color={'#472F05'}
-                        >
+                        <Typography fontFamily={fira_sans_800.style.fontFamily} fontSize={18} color={'#472F05'}>
                             Review from User
                         </Typography>
                     </Button>
