@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import * as React from 'react';
 import Button from '@mui/material/Button';
@@ -23,6 +23,8 @@ import useGetSession from '@core/auth/useGetSession';
 import useLogout from '@core/auth/useLogout';
 import useGetUserProfile from '@services/api/v1/user/useGetUserProfile';
 import SellerReviewItem from '../SellerReviewItem';
+import useGetSellerReviews from '@services/api/v1/review/useGetSellerReview';
+import { SellerReview } from '@services/api/v1/review/type';
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
@@ -41,98 +43,98 @@ type SellerReviewDialogProps = {
     cancelText?: string;
     confirmText?: string;
     handleConfirm: React.MouseEventHandler<HTMLButtonElement>;
-    sellerId: string,
-    sellerName: string,
-    isMyShop: boolean,
+    sellerId: string;
+    sellerName: string;
+    isMyShop: boolean;
 };
 
 const mockSellerReview = [
     {
-        "id": "65fc92785eb1483f3782566c",
-        "reviewer_id": "65d224798a12370d51961861",
-        "reviewee_id": "65c7356900dfa761aed36120",
-        "rating_score": 0,
-        "description": "It's not a dog!",
-        "comment_records": [
+        id: '65fc92785eb1483f3782566c',
+        reviewer_id: '65d224798a12370d51961861',
+        reviewee_id: '65c7356900dfa761aed36120',
+        rating_score: 0,
+        description: "It's not a dog!",
+        comment_records: [
             {
-                "user_id": "65d224798a12370d51961861",
-                "comment": "HAHAHAHAHAHA!",
-                "time": "2024-03-21T20:03:34.322Z"
+                user_id: '65d224798a12370d51961861',
+                comment: 'HAHAHAHAHAHA!',
+                time: '2024-03-21T20:03:34.322Z',
             },
             {
-                "user_id": "65d224798a12370d51961861",
-                "comment": "HAHAHAHAHAHA!",
-                "time": "2024-03-21T20:03:59.68Z"
-            }
+                user_id: '65d224798a12370d51961861',
+                comment: 'HAHAHAHAHAHA!',
+                time: '2024-03-21T20:03:59.68Z',
+            },
         ],
-        "time": "2024-03-21T20:03:04.693Z"
+        time: '2024-03-21T20:03:04.693Z',
     },
     {
-        "id": "65fc9343fa2fb34116cda9b9",
-        "reviewer_id": "65d224798a12370d51961861",
-        "reviewee_id": "65c7356900dfa761aed36120",
-        "rating_score": 0,
-        "description": "It's not a dog!",
-        "comment_records": [
+        id: '65fc9343fa2fb34116cda9b9',
+        reviewer_id: '65d224798a12370d51961861',
+        reviewee_id: '65c7356900dfa761aed36120',
+        rating_score: 0,
+        description: "It's not a dog!",
+        comment_records: [
             {
-                "user_id": "65d224798a12370d51961861",
-                "comment": "WHAT?!",
-                "time": "2024-03-21T20:06:42.24Z"
-            }
+                user_id: '65d224798a12370d51961861',
+                comment: 'WHAT?!',
+                time: '2024-03-21T20:06:42.24Z',
+            },
         ],
-        "time": "2024-03-21T20:06:27.717Z"
+        time: '2024-03-21T20:06:27.717Z',
     },
     {
-        "id": "65fc94822f423b8260607f14",
-        "reviewer_id": "65d224798a12370d51961861",
-        "reviewee_id": "65c7356900dfa761aed36120",
-        "rating_score": 1,
-        "description": "It's not a dog!",
-        "comment_records": [],
-        "time": "2024-03-21T20:11:46.713Z"
+        id: '65fc94822f423b8260607f14',
+        reviewer_id: '65d224798a12370d51961861',
+        reviewee_id: '65c7356900dfa761aed36120',
+        rating_score: 1,
+        description: "It's not a dog!",
+        comment_records: [],
+        time: '2024-03-21T20:11:46.713Z',
     },
     {
-        "id": "65fc951aba8472d4b1221fb1",
-        "reviewer_id": "65d224798a12370d51961861",
-        "reviewee_id": "65c7356900dfa761aed36120",
-        "rating_score": 2,
-        "description": "It's not a dog!",
-        "comment_records": [],
-        "time": "2024-03-21T20:14:18.842Z"
+        id: '65fc951aba8472d4b1221fb1',
+        reviewer_id: '65d224798a12370d51961861',
+        reviewee_id: '65c7356900dfa761aed36120',
+        rating_score: 2,
+        description: "It's not a dog!",
+        comment_records: [],
+        time: '2024-03-21T20:14:18.842Z',
     },
     {
-        "id": "65fc9536ba8472d4b1221fb3",
-        "reviewer_id": "65d224798a12370d51961861",
-        "reviewee_id": "65c7356900dfa761aed36120",
-        "rating_score": 1.77,
-        "description": "It's not a dog!",
-        "comment_records": [],
-        "time": "2024-03-21T20:14:46.633Z"
-    }
-]
+        id: '65fc9536ba8472d4b1221fb3',
+        reviewer_id: '65d224798a12370d51961861',
+        reviewee_id: '65c7356900dfa761aed36120',
+        rating_score: 1.77,
+        description: "It's not a dog!",
+        comment_records: [],
+        time: '2024-03-21T20:14:46.633Z',
+    },
+];
 
 export default function SellerReviewDialog(props: SellerReviewDialogProps) {
-
-    const { open, setOpen, header, description, cancelText, confirmText } = props;
-
-    const router = useRouter();
     const toastUI = useToastUI();
-    const session = useGetSession();
-
-    const [showOldPassword, setShowOldPassword] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const { open, setOpen, header, description, cancelText, confirmText, sellerId } = props;
+    const { data: sellerReviewData, isSuccess: sellerReviewSuccess } = useGetSellerReviews(sellerId);
 
     const handleClose = () => {
         setOpen(false);
     };
 
     const getCommentable = (itemLength: number) => {
-        if(itemLength === 0 && props.isMyShop) {
-            return true
+        if (itemLength === 0 && props.isMyShop) {
+            return true;
         }
-        return false
+        return false;
+    };
+
+    if (open) {
+        if (!sellerReviewSuccess) {
+            toastUI.toastError('Load Review Failed');
+        } else {
+            toastUI.toastSuccess('Load Review Success');
+        }
     }
 
     return (
@@ -171,18 +173,20 @@ export default function SellerReviewDialog(props: SellerReviewDialogProps) {
                                 overflowY: 'scroll',
                             }}
                         >
-                            {
-                                mockSellerReview.map(item => 
-                                    <SellerReviewItem 
-                                        reviewId={item.id}
-                                        reviewNo={mockSellerReview.indexOf(item) + 1}
-                                        rating={item.rating_score}
-                                        review={item.description}
-                                        shopComment={item.comment_records.at(0)?.comment}
-                                        isCommentable={getCommentable(item.comment_records.length)}
-                                    />   
-                                )
-                            }
+                            {(sellerReviewData || ([] as SellerReview[])).map((item, idx) => (
+                                <SellerReviewItem
+                                    reviewId={item.id}
+                                    reviewNo={idx + 1}
+                                    rating={item.rating_score}
+                                    review={item.description}
+                                    shopComment={item.comment_records
+                                        .map((eachRecord) => {
+                                            return eachRecord?.comment;
+                                        })
+                                        .join(',\n')}
+                                    isCommentable={getCommentable(item.comment_records.length)}
+                                />
+                            ))}
                         </Box>
                     </DialogContent>
                 }
@@ -208,7 +212,6 @@ export default function SellerReviewDialog(props: SellerReviewDialogProps) {
                     >
                         {cancelText}
                     </Button>
-
                 </DialogActions>
             </Dialog>
         </React.Fragment>
