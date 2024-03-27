@@ -7,11 +7,6 @@ import useGetAllReport from '@services/api/v1/report/useGetAllReport';
 import { useState } from 'react';
 import { AllReportQueryParams } from '@services/api/v1/report/type';
 
-const mockReport = [
-    { id: '001', topic: 'Shit User', category: 'user', reporter: 'Ruthless', desc: 'Please report seller Sia Arm.' },
-    { id: '002', topic: 'Top Bar Bug', category: 'system', reporter: 'Poom', desc: "marketplace doesn't navigate." },
-];
-
 export default function AllReportViewPage() {
     const [reportValue, setReportValue] = useState('all');
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {

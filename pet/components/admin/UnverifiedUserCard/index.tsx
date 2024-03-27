@@ -1,15 +1,41 @@
-import { fira_sans_400, fira_sans_600, fira_sans_800 } from "@core/theme/theme"
-import { Box, Grid, Stack, Typography, Button } from "@mui/material"
+import { fira_sans_400, fira_sans_600, fira_sans_800 } from '@core/theme/theme';
+import { Box, Grid, Stack, Typography, Button } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import DoNotDisturbAltIcon from '@mui/icons-material/DoNotDisturbAlt';
+import useToastUI from '@core/hooks/useToastUI';
+import useApproveSeller from '@services/api/v1/admin/useApproveSeller';
+import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
+import { ISellerProfile } from '@services/api/v1/seller/type';
 
-interface IUnverifiedUser {
-    id: string,
-    username: string,
-    role: string
-}
+type SellerProps = {
+    id: string;
+    first_name: string;
+    last_name: string;
+    license: string;
+    refetchSellers: (options?: RefetchOptions) => Promise<QueryObserverResult<any, any>>;
+};
 
-export default function UnverifiedUserCard(props: IUnverifiedUser) {
+export default function UnverifiedUserCard(props: SellerProps) {
+    const { refetchSellers } = props;
+    const toastUI = useToastUI();
+    const { mutateAsync: mutateApproveSeller } = useApproveSeller({
+        onSuccess: () => {
+            toastUI.toastSuccess('Seller Approved!');
+            refetchSellers();
+        },
+        onError: (err) => {
+            toastUI.toastError(err.message);
+        },
+    });
+
+    const handleApprove = async (sellerId: string) => {
+        try {
+            await mutateApproveSeller(sellerId);
+        } catch (err) {
+            throw err;
+        }
+    };
+
     return (
         <Grid item xs={12} md={4}>
             <Box
@@ -18,7 +44,7 @@ export default function UnverifiedUserCard(props: IUnverifiedUser) {
                 boxShadow={'3px 3px #213948'}
                 p={2}
                 sx={{
-                    backgroundColor: '#A8C4D6'
+                    backgroundColor: '#A8C4D6',
                 }}
             >
                 <Typography
@@ -27,7 +53,7 @@ export default function UnverifiedUserCard(props: IUnverifiedUser) {
                     textAlign={'center'}
                     color={'#213948'}
                 >
-                    {props.username}
+                    {`${props.first_name} ${props.last_name}`}
                 </Typography>
                 <Stack direction={'row'} spacing={1} textAlign={'center'} flex={'row'} justifyContent={'center'}>
                     <Typography
@@ -36,7 +62,7 @@ export default function UnverifiedUserCard(props: IUnverifiedUser) {
                         textAlign={'center'}
                         color={'#213948'}
                     >
-                        Role: 
+                        Seller's License NO.
                     </Typography>
                     <Typography
                         fontFamily={fira_sans_400.style.fontFamily}
@@ -44,18 +70,11 @@ export default function UnverifiedUserCard(props: IUnverifiedUser) {
                         textAlign={'center'}
                         color={'#213948'}
                     >
-                        {props.role}
+                        {props.license}
                     </Typography>
                 </Stack>
-                <Box
-                    display={'flex'}
-                    flexDirection={'row'}
-                    justifyContent={'end'}
-                    height={35}
-                    mt={1}
-                >
+                <Box display={'flex'} flexDirection={'row'} justifyContent={'end'} height={35} mt={1}>
                     <Button
-                        // onClick={}
                         sx={{
                             '&.MuiButton-root': {
                                 border: '2px solid #472F05',
@@ -72,6 +91,7 @@ export default function UnverifiedUserCard(props: IUnverifiedUser) {
                                 backgroundColor: '#9FB322',
                             },
                         }}
+                        onClick={() => handleApprove(props.id)}
                     >
                         <CheckIcon />
                     </Button>
@@ -95,9 +115,8 @@ export default function UnverifiedUserCard(props: IUnverifiedUser) {
                     >
                         <DoNotDisturbAltIcon />
                     </Button>
-
                 </Box>
             </Box>
         </Grid>
-    )
+    );
 }
