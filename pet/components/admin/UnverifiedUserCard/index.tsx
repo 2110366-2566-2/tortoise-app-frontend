@@ -95,7 +95,7 @@ export default function UnverifiedUserCard(props: SellerProps) {
                     >
                         <CheckIcon />
                     </Button>
-                    <Button
+                    {/* <Button
                         // onClick={}
                         sx={{
                             '&.MuiButton-root': {
@@ -114,7 +114,7 @@ export default function UnverifiedUserCard(props: SellerProps) {
                         }}
                     >
                         <DoNotDisturbAltIcon />
-                    </Button>
+                    </Button> */}
                 </Box>
             </Box>
         </Grid>
