@@ -3,6 +3,7 @@ import { fira_sans_400, fira_sans_600, fira_sans_800 } from '@core/theme/theme';
 import { useState } from 'react';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import { useForm } from 'react-hook-form';
 import { CustomTextField } from '@components/core/CustomInput/type';
@@ -14,6 +15,7 @@ interface SellerReviewItemProps {
     review: string;
     shopComment: string | undefined;
     isCommentable: boolean;
+    isAdmin?: boolean;
 }
 
 interface ICommentForm {
@@ -21,11 +23,17 @@ interface ICommentForm {
 }
 
 export default function SellerReviewItem(props: SellerReviewItemProps) {
+
     const form = useForm<ICommentForm>();
+
     const onSubmit = async (data: ICommentForm) => {
         console.log(data);
         console.log(props.reviewId);
     };
+    
+    const onDeleteReview = (reviewId: string) => {
+        console.log(reviewId)
+    }
 
     const [showShopResponse, setShowShopResponse] = useState(false);
 
@@ -34,7 +42,8 @@ export default function SellerReviewItem(props: SellerReviewItemProps) {
             sx={{
                 m: 3,
                 py: 1,
-                px: 3,
+                pl: 3,
+                pr: 1,
                 border: '2px solid #472F05',
                 borderRadius: 1,
                 boxShadow: '3px 3px #472F05',
@@ -81,13 +90,44 @@ export default function SellerReviewItem(props: SellerReviewItemProps) {
                         </Typography>
                     </Stack>
                 </Stack>
-                <Button onClick={() => setShowShopResponse(!showShopResponse)}>
-                    {showShopResponse ? (
-                        <ArrowDropUpIcon sx={{ color: '#472F05', width: 30 }} />
-                    ) : (
-                        <ArrowDropDownIcon sx={{ color: '#472F05', width: 30 }} />
-                    )}
-                </Button>
+                <Box
+                    display={'flex'}
+                    flexDirection={'column'}
+                    justifyContent={'center'}
+                >
+                    {
+                        (!props.isAdmin) ? null :
+                        <Button
+                            onClick={() => onDeleteReview(props.reviewId)}
+                            sx={{
+                                '&.MuiButton-root': {
+                                    height: 30,
+                                    border: '2px solid #472F05',
+                                    borderRadius: 0,
+                                    boxShadow: '2px 2px #472F05',
+                                    px: 2,
+                                    color: '#472F05',
+                                    fontSize: 16,
+                                    fontFamily: fira_sans_600.style.fontFamily,
+                                    backgroundColor: '#E18A7A',
+                                },
+                                '&:hover': {
+                                    backgroundColor: '#CF5555',
+                                },
+                            }}
+                        >
+                            <DeleteIcon fontSize='small' />
+                        </Button>
+                    }
+                    
+                    <Button onClick={() => setShowShopResponse(!showShopResponse)}>
+                        {showShopResponse ? (
+                            <ArrowDropUpIcon sx={{ color: '#472F05', width: 30 }} />
+                        ) : (
+                            <ArrowDropDownIcon sx={{ color: '#472F05', width: 30 }} />
+                        )}
+                    </Button>
+                </Box>
             </Box>
             {showShopResponse ? (
                 <Stack

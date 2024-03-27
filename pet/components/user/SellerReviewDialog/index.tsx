@@ -46,6 +46,7 @@ type SellerReviewDialogProps = {
     sellerId: string;
     sellerName: string;
     isMyShop: boolean;
+    isAdmin?: boolean; 
 };
 
 const mockSellerReview = [
@@ -173,6 +174,22 @@ export default function SellerReviewDialog(props: SellerReviewDialogProps) {
                                 overflowY: 'scroll',
                             }}
                         >
+                            {
+                                (!sellerReviewData || sellerReviewData.length === 0) ? 
+                                <Typography
+                                    height={'100%'}
+                                    display={'flex'}
+                                    flexDirection={'column'}
+                                    justifyContent={'center'}
+                                    textAlign={'center'}
+                                    fontFamily={fira_sans_600.style.fontFamily}
+                                    fontSize={18}
+                                    color={'#472F05'}
+                                >
+                                    Nobody has reviewed this shop yet.
+                                </Typography>
+                                : null
+                            }
                             {(sellerReviewData || ([] as SellerReview[])).map((item, idx) => (
                                 <SellerReviewItem
                                     reviewId={item.id}
@@ -185,6 +202,7 @@ export default function SellerReviewDialog(props: SellerReviewDialogProps) {
                                         })
                                         .join(',\n')}
                                     isCommentable={getCommentable(item.comment_records.length)}
+                                    isAdmin={props.isAdmin}
                                 />
                             ))}
                         </Box>

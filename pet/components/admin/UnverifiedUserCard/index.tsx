@@ -11,7 +11,7 @@ interface IUnverifiedUser {
 
 export default function UnverifiedUserCard(props: IUnverifiedUser) {
     return (
-        <Grid item xs={6} md={4}>
+        <Grid item xs={12} md={4}>
             <Box
                 border={'2px solid #213948'}
                 borderRadius={1}
