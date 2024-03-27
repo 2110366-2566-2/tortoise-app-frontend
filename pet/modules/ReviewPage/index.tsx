@@ -1,14 +1,15 @@
 'use client';
-import { Box, Button,  Rating,  Typography } from '@mui/material';
+import { Box, Button, Rating, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { SubmitHandler } from 'react-hook-form';
-import { CustomGreenButton,  CustomGreenTextField, fira_sans_600, fira_sans_800 } from '@core/theme/theme';
+import { CustomGreenButton, CustomGreenTextField, fira_sans_600, fira_sans_800 } from '@core/theme/theme';
 import { useRouter } from 'next/navigation';
 import useToastUI from '@core/hooks/useToastUI';
 import useGetSession from '@core/auth/useGetSession';
 import Stack from '@mui/system/Stack';
 import { useState } from 'react';
-
+import useSubmitReview from '@services/api/v1/review/useSubmitReview';
+import { ISubmitReviewPayload } from '@services/api/v1/review/type';
 
 export default function ReportFormPage() {
     interface ReviewFormData {
@@ -17,12 +18,28 @@ export default function ReportFormPage() {
         description: string;
     }
 
-    
     const router = useRouter();
     const form = useForm<ReviewFormData>();
     const toastUI = useToastUI();
     const session = useGetSession();
 
+    const { mutateAsync: mutateSubmitReview } = useSubmitReview({
+        onSuccess: () => {
+            toastUI.toastSuccess('Review Submitted!');
+            window.location.reload();
+        },
+        onError: (err) => {
+            toastUI.toastError(err.message);
+        },
+    });
+
+    const handleSubmitReview = async (data: ISubmitReviewPayload) => {
+        try {
+            await mutateSubmitReview(data);
+        } catch (err) {
+            throw err;
+        }
+    };
 
     const onSubmit: SubmitHandler<ReviewFormData> = async (data: ReviewFormData) => {
         try {
@@ -38,8 +55,6 @@ export default function ReportFormPage() {
         setValue(newValue);
         // ทำอย่างอื่นที่คุณต้องการทำเมื่อมีการเปลี่ยนคะแนน
     };
-
-
 
     return (
         <Box sx={{ px: { xs: '8%', md: '15%' } }}>
@@ -73,7 +88,6 @@ export default function ReportFormPage() {
                         }}
                     >
                         <Typography
-                            
                             align={'center'}
                             fontFamily={fira_sans_800.style.fontFamily}
                             fontSize={30}
@@ -83,19 +97,16 @@ export default function ReportFormPage() {
                         </Typography>
 
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <Stack spacing={1} >
-                                <Rating 
-                                    name="half-rating" 
-                                    defaultValue={0} 
-                                    precision={0.5} 
-                                    value={value} 
-                                    onChange={handleRatingChange}  
-                                
+                            <Stack spacing={1}>
+                                <Rating
+                                    name="half-rating"
+                                    defaultValue={0}
+                                    precision={0.5}
+                                    value={value}
+                                    onChange={handleRatingChange}
                                 />
-                                
                             </Stack>
                         </div>
-                        
 
                         <CustomGreenTextField
                             {...form.register('topic')}
@@ -104,7 +115,6 @@ export default function ReportFormPage() {
                             variant="outlined"
                             sx={{ width: '100%' }}
                         />
-
 
                         <Typography
                             py={3}
@@ -116,10 +126,7 @@ export default function ReportFormPage() {
                             Write Your Review
                         </Typography>
 
-                        
-
                         <textarea
-                            
                             rows={5}
                             name="description"
                             placeholder="description"
@@ -133,10 +140,7 @@ export default function ReportFormPage() {
                                 verticalAlign: 'middle',
                                 marginBottom: '10px', // Added margin bottom for spacing
                             }}
-                            >
-
-                        </textarea>
-
+                        ></textarea>
 
                         <Box
                             sx={{
