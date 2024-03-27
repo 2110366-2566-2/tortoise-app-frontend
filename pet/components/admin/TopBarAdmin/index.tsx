@@ -25,7 +25,7 @@ function TopBarAdmin() {
     const router = useRouter();
     const session = useGetSession();
 
-    const pages = ['Report', 'Verification'];
+    const pages = ['Report', 'Review', 'Verification'];
     const settings = ['Logout'];
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);

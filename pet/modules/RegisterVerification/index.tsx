@@ -1,16 +1,23 @@
-'use client'
+'use client';
 
-import UnverifiedUserCard from "@components/admin/UnverifiedUserCard";
-import { fira_sans_800 } from "@core/theme/theme";
-import { Box, Typography, Grid } from "@mui/material";
-
-const mockUserRegistration = [
-    {id: '001', username: 'ruthlessYeddo', role: 'buyer' },
-    {id: '002', username: 'SiaArmNotAPet', role: 'seller' },
-    {id: '002', username: 'khunKrub', role: 'buyer' },
-]
+import UnverifiedUserCard from '@components/admin/UnverifiedUserCard';
+import { fira_sans_800 } from '@core/theme/theme';
+import { Box, Typography, Grid } from '@mui/material';
+import { ISellerProfile } from '@services/api/v1/seller/type';
+import useGetSellers from '@services/api/v1/seller/useGetSellers';
 
 export default function RegisterVerificationPage() {
+    const { data: sellersData, isSuccess: isSellersSuccess, refetch: refetchSellers } = useGetSellers();
+
+    if (!isSellersSuccess) {
+        return null;
+    }
+    const unverifiedSellers = sellersData.map((eachSeller) => {
+        if (eachSeller.status !== 'verified') {
+            return eachSeller;
+        }
+    });
+
     return (
         <Box
             my={5}
@@ -21,7 +28,7 @@ export default function RegisterVerificationPage() {
             borderRadius={0}
             boxShadow={'8px 8px #315369'}
             sx={{
-                backgroundColor: 'whitesmoke'
+                backgroundColor: 'whitesmoke',
             }}
         >
             <Typography
@@ -42,16 +49,22 @@ export default function RegisterVerificationPage() {
                 }}
             >
                 <Grid container spacing={3} p={2}>
-                    {
-                        mockUserRegistration.map(item => 
-                            <UnverifiedUserCard id={item.id} username={item.username} role={item.role} />
-                        )
-                    }
+                    {(unverifiedSellers || ([] as ISellerProfile[])).map((eachSeller, idx) => {
+                        if (eachSeller?.id) {
+                            return (
+                                <UnverifiedUserCard
+                                    key={idx}
+                                    id={eachSeller.id}
+                                    first_name={eachSeller.first_name}
+                                    last_name={eachSeller.last_name}
+                                    license={eachSeller.license || '-'}
+                                    refetchSellers={refetchSellers}
+                                />
+                            );
+                        }
+                    })}
                 </Grid>
             </Box>
-            
-            
-            
         </Box>
-    )
+    );
 }

@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import { LoginInfo } from '@core/auth/type';
 import PetsIcon from '@mui/icons-material/Pets';
 import useToastUI from '@core/hooks/useToastUI';
+import useLogin from '@core/auth/useAdminLogin';
 import { useRouter } from 'next/navigation';
 
 export default function AdminLoginPage() {
@@ -22,11 +23,17 @@ export default function AdminLoginPage() {
     const [showPassword, setShowPassword] = useState(false)
 
     const onSubmit = async (data: LoginInfo) => {
-        //Mock Login Success
-        console.log(data);
-        toastUI.toastSuccess('Mock Login')
-        router.push('/admin/report')
-    }
+        const res = await useLogin(data).then((d) => {
+            return d;
+        });
+        console.log(res);
+        if (!res) {
+            toastUI.toastSuccess('Logged in successfully!');
+            router.push('/admin/report');
+        } else {
+            toastUI.toastError('Wrong username or password.');
+        }
+    };
     
     return (
         <Box
