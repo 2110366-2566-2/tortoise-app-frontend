@@ -99,13 +99,15 @@ function Transaction( { role, transaction }: { role: number, transaction: any } 
                 >
                     <Box display="flex" alignItems="center" justifyContent="space-between" width="100%" height="20px">
                         <Box>
-                            <Image width={300} height={300}
+                            <Image 
+                                width={300} 
+                                height={300}
                                 src={transaction.pet_detail.media}
                                 alt="Pet Picture"
-                                style={{ objectFit: 'cover', width: '50%', height: 'auto', maxHeight: 'fit-content', border: '2px solid black', borderRadius: 3 }}
+                                style={{ objectFit: 'cover', width: '150px', height: '150px', maxHeight: 'fit-content', border: '2px solid black', borderRadius: 3 }}
                             />
                         </Box>
-                        <Box display="flex" flexDirection="column" marginLeft="-10%">
+                        <Box display="flex" flexDirection="column" marginLeft="2%">
                             <TextField
                                 label="Pet Name"
                                 id="standard-size-small"
