@@ -30,7 +30,7 @@ function TopBar() {
         'Marketplace',
         ...(session.role === 'buyer' ? ['My Orders'] : []),
     ];
-    const settings = ['Account', 'Transaction History', 'Logout']
+    const settings = ['Account', 'Transaction History', 'Report a Problem', 'Logout'];
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -216,6 +216,9 @@ function TopBar() {
                                         }
                                         if (setting.toLowerCase() === 'transaction history') {
                                             return router.push('/user/transaction-history');
+                                        }
+                                        if (setting.toLowerCase() === 'report a problem') {
+                                            return router.push('/user/report-a-problem');
                                         }
                                         return router.push(`/user/${setting.toLowerCase()}`);
                                     }}
