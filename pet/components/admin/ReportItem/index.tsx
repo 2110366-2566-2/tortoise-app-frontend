@@ -1,26 +1,23 @@
-'use client'
+'use client';
 
-import { useState } from "react";
-import { fira_sans_600, fira_sans_800, fira_sans_400 } from "@core/theme/theme"
-import { Box, Grid, Stack, Typography, Button } from "@mui/material"
-import DeleteIcon from '@mui/icons-material/Delete'; 
+import { useState } from 'react';
+import { fira_sans_600, fira_sans_800, fira_sans_400 } from '@core/theme/theme';
+import { Box, Grid, Stack, Typography, Button } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import InfoIcon from '@mui/icons-material/Info';
 
 interface ItemProps {
-    id: string,
-    topic: string,
-    category: string,
-    reporter: string
-    desc: string
+    id: string;
+    topic: string;
+    category: string;
+    reporter: string;
+    desc: string;
 }
 
 export default function ReportItem(props: ItemProps) {
+    const [showDesc, setShowDesc] = useState(false);
 
-    const [showDesc, setShowDesc] = useState(false)
-
-    const renderDescription = () => {
-
-    }
+    const renderDescription = () => {};
 
     return (
         <Stack
@@ -34,28 +31,21 @@ export default function ReportItem(props: ItemProps) {
                 backgroundColor: '#DAE6EE',
             }}
         >
-            <Grid container xs={12}>
+            <Grid container>
                 <Grid item xs={12} md={8}>
                     <Stack>
                         <Stack direction={'column'}>
-                            <Typography
-                                fontFamily={fira_sans_800.style.fontFamily}
-                                fontSize={24}
-                                color={'#213948'}
-                            >
-                                Topic:  {props.topic}
+                            <Typography fontFamily={fira_sans_800.style.fontFamily} fontSize={24} color={'#213948'}>
+                                Topic: {props.topic}
                             </Typography>
                             <Stack direction={'row'} spacing={2}>
-                                <Stack
-                                    direction={'row'}
-                                    spacing={1}
-                                >
+                                <Stack direction={'row'} spacing={1}>
                                     <Typography
                                         fontFamily={fira_sans_600.style.fontFamily}
                                         fontSize={18}
                                         color={'#213948'}
                                     >
-                                        ID:  
+                                        ID:
                                     </Typography>
                                     <Typography
                                         fontFamily={fira_sans_400.style.fontFamily}
@@ -64,19 +54,15 @@ export default function ReportItem(props: ItemProps) {
                                     >
                                         {props.id}
                                     </Typography>
-                                    
                                 </Stack>
-                                
-                                <Stack
-                                    direction={'row'}
-                                    spacing={1}
-                                >
+
+                                <Stack direction={'row'} spacing={1}>
                                     <Typography
                                         fontFamily={fira_sans_600.style.fontFamily}
                                         fontSize={18}
                                         color={'#213948'}
                                     >
-                                        Category:  
+                                        Category:
                                     </Typography>
                                     <Typography
                                         fontFamily={fira_sans_400.style.fontFamily}
@@ -85,19 +71,15 @@ export default function ReportItem(props: ItemProps) {
                                     >
                                         {props.category}
                                     </Typography>
-                                    
                                 </Stack>
 
-                                <Stack
-                                    direction={'row'}
-                                    spacing={1}
-                                >
+                                <Stack direction={'row'} spacing={1}>
                                     <Typography
                                         fontFamily={fira_sans_600.style.fontFamily}
                                         fontSize={18}
                                         color={'#213948'}
                                     >
-                                        Reporter:  
+                                        Reporter:
                                     </Typography>
                                     <Typography
                                         fontFamily={fira_sans_400.style.fontFamily}
@@ -106,15 +88,10 @@ export default function ReportItem(props: ItemProps) {
                                     >
                                         {props.reporter}
                                     </Typography>
-                                    
                                 </Stack>
-                            
                             </Stack>
-
                         </Stack>
-                        
                     </Stack>
-                    
                 </Grid>
                 <Grid item xs={12} md={4}>
                     <Box
@@ -122,9 +99,9 @@ export default function ReportItem(props: ItemProps) {
                         flexDirection={'row'}
                         justifyContent={'end'}
                         height={'100%'}
-                        mt={{xs: 0.5, md: 0}}
+                        mt={{ xs: 0.5, md: 0 }}
                     >
-                         <Button
+                        <Button
                             onClick={() => setShowDesc(!showDesc)}
                             sx={{
                                 '&.MuiButton-root': {
@@ -167,40 +144,29 @@ export default function ReportItem(props: ItemProps) {
                         </Button>
                     </Box>
                 </Grid>
-                { 
-                    showDesc ? 
-                        <Grid item xs={12}>
-                            <Box
-                                mt={2}
-                                px={3}
-                                py={1}
-                                border={'1px solid #213948'}
-                                borderRadius={1}
-                                boxShadow={'3px 3px #213948'}
-                                sx={{
-                                    backgroundColor: '#B9D0DE'
-                                }}
-                            >
-                                <Typography
-                                    fontFamily={fira_sans_600.style.fontFamily}
-                                    fontSize={20}
-                                    color={'#213948'}
-                                >
-                                    Description:
-                                </Typography>
-                                <Typography
-                                    fontFamily={fira_sans_400.style.fontFamily}
-                                    fontSize={18}
-                                    color={'#213948'}
-                                >
-                                    {props.desc}
-                                </Typography>
-                            </Box>
-                        </Grid>
-                        : null
-                }
+                {showDesc ? (
+                    <Grid item xs={12}>
+                        <Box
+                            mt={2}
+                            px={3}
+                            py={1}
+                            border={'1px solid #213948'}
+                            borderRadius={1}
+                            boxShadow={'3px 3px #213948'}
+                            sx={{
+                                backgroundColor: '#B9D0DE',
+                            }}
+                        >
+                            <Typography fontFamily={fira_sans_600.style.fontFamily} fontSize={20} color={'#213948'}>
+                                Description:
+                            </Typography>
+                            <Typography fontFamily={fira_sans_400.style.fontFamily} fontSize={18} color={'#213948'}>
+                                {props.desc}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                ) : null}
             </Grid>
-
         </Stack>
-    )
+    );
 }
