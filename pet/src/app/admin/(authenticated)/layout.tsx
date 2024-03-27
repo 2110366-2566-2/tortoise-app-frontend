@@ -9,19 +9,19 @@ export default function HomeLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    // const router = useRouter();
+    const router = useRouter();
 
-    // const sessionCheck = async () => {
-    //     const session_id = await localStorage.getItem('session_id');
-    //     if (!session_id) {
-    //         router.push('/user/login');
-    //         return null;
-    //     }
-    // };
+    const sessionCheck = async () => {
+        const session_id = await localStorage.getItem('session_id');
+        if (!session_id) {
+            router.push('/admin/login');
+            return null;
+        }
+    };
 
-    // useEffect(() => {
-    //     sessionCheck();
-    // }, [typeof window]);
+    useEffect(() => {
+        sessionCheck();
+    }, [typeof window]);
 
     return (
         <>
