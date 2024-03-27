@@ -4,16 +4,16 @@ import { ISellerProfile } from './type';
 import useToastUI from '../../../../core/hooks/useToastUI';
 
 const fetchSellerList = async () => {
-    const {toastError} = useToastUI();
-        try {
-            //   const searchValue = queryParams?.search?.trim() ?? '';
-            const response = await requestClient.get(`api/v1/seller/`);
-            return response.data as ISellerProfile;
-        } catch (error) {
-            toastError('Failed loading pet lists');
-            throw error;
-        }
-    };
+    const { toastError } = useToastUI();
+    try {
+        //   const searchValue = queryParams?.search?.trim() ?? '';
+        const response = await requestClient.get(`api/v1/seller/`);
+        return response.data as ISellerProfile[];
+    } catch (error) {
+        toastError('Failed loading seller lists');
+        throw error;
+    }
+};
 
 export default function useGetSellers(
     // queryParams: PetSearchParams,
