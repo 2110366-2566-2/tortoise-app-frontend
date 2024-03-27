@@ -55,7 +55,8 @@ function Transaction( { role, transaction }: { role: number, transaction: any } 
                     display: 'flex',
                     boxShadow: '5px 4px #472F05',
                     alignItems: 'center',
-                    backgroundColor: hovered ? '#F9C067': '#FFFF',
+                    transition: '0.2s',
+                    backgroundColor: hovered ? '#F9C067': '#FDDFAA',
                     border: '2px solid black',
                     borderRadius: 0,
                     position: 'relative'
