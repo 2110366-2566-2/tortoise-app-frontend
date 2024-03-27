@@ -7,3 +7,10 @@ export interface SellerReview {
     comment_records: any[];
     time: string;
 }
+
+export interface ISubmitReviewPayload {
+    reviewer_id: string;
+    reviewee_id: string;
+    rating_score: number;
+    description: string;
+}
