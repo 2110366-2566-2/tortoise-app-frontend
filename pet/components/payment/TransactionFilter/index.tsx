@@ -9,7 +9,7 @@ import { DateRange } from '@mui/x-date-pickers-pro';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import transactionTheme from '@core/theme/transactionTheme';
 
-function TransactionFilter() {
+function TransactionFilter({ data, filter }: { data: any, filter: any }) {
     const [dateRange, setDateRange] = React.useState<DateRange<Date>>([null, null]);
     const [paymentMethod, setPaymentMethod] = React.useState('');
     const [status, setStatus] = React.useState('');
@@ -18,7 +18,16 @@ function TransactionFilter() {
 
     // Handle sumbit
     const handleSubmit = () => {
-        alert('Next sprint la karn');
+        const startDate = dateRange[0] ? dateRange[0].toISOString() : '';
+        const endDate = dateRange[1] ? dateRange[1].toISOString() : '';
+
+        const filterQuery = {
+            startDate,
+            endDate,
+            paymentMethod,
+            status,
+        }
+        filter(filterQuery);
     }
 
     return (
@@ -50,8 +59,8 @@ function TransactionFilter() {
                         onChange={(e: SelectChangeEvent) => setPaymentMethod(e.target.value)}
                     >
                         <MenuItem value=''>All</MenuItem>
-                        <MenuItem value='credit_card'>Credit Card</MenuItem>
-                        <MenuItem value='paypal'>Paypal</MenuItem>
+                        <MenuItem value='credit card'>Credit Card</MenuItem>
+                        <MenuItem value='prompt pay'>Prompt Pay</MenuItem>
                     </Select>
                 </FormControl>
             </Grid>

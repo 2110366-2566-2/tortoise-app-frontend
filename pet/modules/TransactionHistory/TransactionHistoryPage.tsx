@@ -14,6 +14,7 @@ import { set } from 'react-hook-form';
 
 function TransactionHistoryPage() {
     const [data, setData] = useState([]);
+    const [filterData, setFilterData] = useState([]);
     const [role, setRole] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -23,6 +24,12 @@ function TransactionHistoryPage() {
     useEffect(() => {
         const fetchData = async () => {
             const response: any = await useGetTransactionHistory();
+            if (!response.data) {
+                setLoading(response.loading);
+                setError(response.error);
+                return;
+            }
+
             const formattedData = response.data.map((transaction: any) => {
                 const ts = new Date(transaction.timestamp);
 
@@ -65,11 +72,38 @@ function TransactionHistoryPage() {
                 }
             });
             setData(formattedData);
+            setFilterData(formattedData);
             setLoading(response.loading);
             setError(response.error);
         };
         fetchData();
     }, []);
+
+    const filter = (filterQuery: any) => {
+        console.log(filterQuery);
+        let filteredData = data;
+        if (filterQuery.startDate) {
+            filteredData = filteredData.filter((transaction: any) => {
+                return new Date(transaction.timestamp) >= new Date(filterQuery.startDate);
+            });
+        }
+        if (filterQuery.endDate) {
+            filteredData = filteredData.filter((transaction: any) => {
+                return new Date(transaction.timestamp) <= new Date(filterQuery.endDate);
+            });
+        }
+        if (filterQuery.paymentMethod) {
+            filteredData = filteredData.filter((transaction: any) => {
+                return transaction.payment_method.toLowerCase() === filterQuery.paymentMethod.toLowerCase();
+            });
+        }
+        if (filterQuery.status) {
+            filteredData = filteredData.filter((transaction: any) => {
+                return transaction.status.toLowerCase() === filterQuery.status.toLowerCase();
+            });
+        }
+        setFilterData(filteredData);
+    }
 
     if (loading) return <CenterLoader />;
     if (error) return <></>;
@@ -127,35 +161,37 @@ function TransactionHistoryPage() {
                         />
                     </Box>
                 </Box>
-                <TransactionFilter />
-                <Grid container justifyContent="center" alignItems="center" columns={{ xs: 12 }} spacing={{ xs: 1 }}>
-                    <Grid item xs={2.12}>
-                        <Typography variant="subtitle1" sx={{ fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa' }}>
-                            DATE & TIME
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={2.23}>
-                        <Typography variant="subtitle1" sx={{ fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa' }}>
-                            TYPE
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={1.38}>
-                        <Typography variant="subtitle1" sx={{ fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa' }}>
-                            STATUS
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={2.12}>
-                        <Typography variant="subtitle1" sx={{ fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa' }}>
-                            AMOUNT
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={1.18}></Grid>
-                    {data.map((transaction, index) => (
-                        <Grid item xs={9} key={index}>
-                            <Transaction role={role} transaction={transaction} />
+                <TransactionFilter data={data} filter={filter}/>
+                {filterData.length > 0 && (
+                    <Grid container justifyContent="center" alignItems="center" columns={{ xs: 12 }} spacing={{ xs: 1 }}>
+                        <Grid item xs={2.12}>
+                            <Typography variant="subtitle1" sx={{ fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa' }}>
+                                DATE & TIME
+                            </Typography>
                         </Grid>
-                    ))}
-                </Grid>
+                        <Grid item xs={2.23}>
+                            <Typography variant="subtitle1" sx={{ fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa' }}>
+                                TYPE
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={1.38}>
+                            <Typography variant="subtitle1" sx={{ fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa' }}>
+                                STATUS
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={2.12}>
+                            <Typography variant="subtitle1" sx={{ fontWeight: 800, p: '0px 10% 0px', color: '#8b94aa' }}>
+                                AMOUNT
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={1.18}></Grid>
+                        {filterData.map((transaction, index) => (
+                            <Grid item xs={9} key={index}>
+                                <Transaction role={role} transaction={transaction} />
+                            </Grid>
+                        ))}
+                    </Grid>
+                )}
             </ThemeProvider>
         </>
     );
