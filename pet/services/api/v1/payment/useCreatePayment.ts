@@ -29,8 +29,8 @@ async function useCreatePayment(petFullDetail: any, payment_method: any) {
 
         const payment_id = res.data.payment_id;
         const transaction_id = res.data.transaction_id;
-        await useConfirmPayment(payment_id, transaction_id, payment_method);
-        
+        useConfirmPayment(payment_id, transaction_id, payment_method);
+
         return true;
     } catch (error) {
         return false;
