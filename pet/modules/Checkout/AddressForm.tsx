@@ -9,7 +9,33 @@ import { fira_sans_600, fira_sans_800 } from '../../core/theme/theme';
 import { CustomTextField } from '../../components/core/CustomInput/type';
 import { sxTextField } from '../../core/theme/theme';
 
-export default function AddressForm() {
+export default function AddressForm({ 
+    firstName, updateFirstName,
+    lastName, updateLastName,
+    address1, updateAddress1,
+    address2, updateAddress2,
+    city, updateCity,
+    state, updateState,
+    zip, updateZip,
+    country, updateCountry,
+}: {
+    firstName: any;
+    updateFirstName: any;
+    lastName: any;
+    updateLastName: any;
+    address1: any;
+    updateAddress1: any;
+    address2: any;
+    updateAddress2: any;
+    city: any;
+    updateCity: any;
+    state: any;
+    updateState: any;
+    zip: any;
+    updateZip: any;
+    country: any;
+    updateCountry: any;
+}) {
     return (
         <React.Fragment>
             <Box sx={{ px: 4 }}>
@@ -34,7 +60,8 @@ export default function AddressForm() {
                             label="First name"
                             fullWidth
                             autoComplete="given-name"
-                            sx={sxTextField}
+                            value={firstName}
+                            onChange={updateFirstName}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -45,7 +72,8 @@ export default function AddressForm() {
                             label="Last name"
                             fullWidth
                             autoComplete="family-name"
-                            sx={sxTextField}
+                            value={lastName}
+                            onChange={updateLastName}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -56,7 +84,8 @@ export default function AddressForm() {
                             label="Address line 1"
                             fullWidth
                             autoComplete="shipping address-line1"
-                            sx={sxTextField}
+                            value={address1}
+                            onChange={updateAddress1}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -66,7 +95,8 @@ export default function AddressForm() {
                             label="Address line 2"
                             fullWidth
                             autoComplete="shipping address-line2"
-                            sx={sxTextField}
+                            value={address2}
+                            onChange={updateAddress2}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -77,7 +107,8 @@ export default function AddressForm() {
                             label="City"
                             fullWidth
                             autoComplete="shipping address-level2"
-                            sx={sxTextField}
+                            value={city}
+                            onChange={updateCity}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -86,7 +117,8 @@ export default function AddressForm() {
                             name="state"
                             label="State/Province/Region"
                             fullWidth
-                            sx={sxTextField}
+                            value={state}
+                            onChange={updateState}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -97,7 +129,8 @@ export default function AddressForm() {
                             label="Zip / Postal code"
                             fullWidth
                             autoComplete="shipping postal-code"
-                            sx={sxTextField}
+                            value={zip}
+                            onChange={updateZip}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -108,7 +141,8 @@ export default function AddressForm() {
                             label="Country"
                             fullWidth
                             autoComplete="shipping country"
-                            sx={sxTextField}
+                            value={country}
+                            onChange={updateCountry}
                         />
                     </Grid>
                     <Grid item xs={12}>

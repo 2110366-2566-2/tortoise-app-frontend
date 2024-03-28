@@ -7,38 +7,63 @@ import Grid from '@mui/material/Grid';
 import { Box, Divider } from '@mui/material';
 import { fira_sans_600, fira_sans_800 } from '../../core/theme/theme';
 
-const products = [
-    {
-        name: 'Product 1',
-        desc: 'A nice thing',
-        price: '$9.99',
-    },
-    {
-        name: 'Product 2',
-        desc: 'Another thing',
-        price: '$3.45',
-    },
-    {
-        name: 'Product 3',
-        desc: 'Something else',
-        price: '$6.51',
-    },
-    {
-        name: 'Product 4',
-        desc: 'Best thing of all',
-        price: '$14.11',
-    },
-    { name: 'Shipping', desc: '', price: 'Free' },
-];
-const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-const payments = [
-    { name: 'Card type', detail: 'Visa' },
-    { name: 'Card holder', detail: 'Mr John Smith' },
-    { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-    { name: 'Expiry date', detail: '04/2024' },
-];
 
-export default function Review() {
+export default function Review({
+    firstName,
+    lastName,
+    address1,
+    address2,
+    city,
+    state,
+    zip,
+    country,
+    paymentMethod,
+    cardHolder,
+    cardNumber,
+    expDate,
+    cvv,
+    petName,
+    petDescription,
+    petPrice,
+}: {
+    firstName: any;
+    lastName: any;
+    address1: any;
+    address2: any;
+    city: any;
+    state: any;
+    zip: any;
+    country: any;
+    paymentMethod: any;
+    cardHolder: any;
+    cardNumber: any;
+    expDate: any;
+    cvv: any;
+    petName: any;
+    petDescription: any;
+    petPrice: any;
+}) {
+    const name = `${firstName} ${lastName}`;
+    const address = [address1, city, state, zip, country]
+        .filter(part => part !== "")
+        .join(", ");
+
+    const payments = [
+        { name: 'Card type', detail: 'Credit Card' },
+        { name: 'Card holder', detail: name },
+        { name: 'Card number', detail: 'xxxx-xxxx-xxxx-' + cardNumber.substr(cardNumber.length - 4) },
+        { name: 'Expiry date', detail: expDate },
+    ];
+
+    const products = [
+        {
+            name: petName,
+            desc: petDescription,
+            price: '฿' + petPrice,
+        },
+        { name: 'Shipping', desc: '', price: 'Free' },
+    ];
+
     return (
         <React.Fragment>
             <Box sx={{px: 4}}>
@@ -115,7 +140,7 @@ export default function Review() {
                                     px: 1
                                 }} 
                             >
-                                $34.06
+                                {'฿' + petPrice}
                             </Typography>
                     </ListItem>
                 </List>
@@ -139,7 +164,7 @@ export default function Review() {
                                 fontSize: 16, 
                             }}
                         >
-                            John Smith
+                            {name}
                         </Typography>
                         <Typography 
                             gutterBottom 
@@ -149,9 +174,10 @@ export default function Review() {
                                 fontSize: 16, 
                             }}
                         >
-                            {addresses.join(', ')}
+                            {address}
                         </Typography>
                     </Grid>
+                    {paymentMethod === 0 && (
                     <Grid item container direction="column" xs={12} sm={6}>
                         <Typography variant="h6" gutterBottom 
                             sx={{ 
@@ -189,6 +215,7 @@ export default function Review() {
                             ))}
                         </Grid>
                     </Grid>
+                    )}
                 </Grid>
             </Box>
         </React.Fragment>
