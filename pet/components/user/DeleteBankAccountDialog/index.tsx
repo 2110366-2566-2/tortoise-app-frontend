@@ -56,7 +56,7 @@ export default function DeleteBankAccountDialog(props: CustomDialogProps) {
     const onSubmit = async (data: ConfirmDeleteInput) => {
         deleteBankAccount.mutate({ seller_id: session.userID } as ISellerQueryParams);
         handleClose();
-        router.refresh();
+        window.location.reload();
     };
 
     const handleClose = () => {
