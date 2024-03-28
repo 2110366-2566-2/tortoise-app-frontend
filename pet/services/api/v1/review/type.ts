@@ -14,3 +14,7 @@ export interface ISubmitReviewPayload {
     rating_score: number;
     description: string;
 }
+
+export interface IReviewQueryParams {
+    review_id: string;
+}
