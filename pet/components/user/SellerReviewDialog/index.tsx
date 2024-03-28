@@ -46,78 +46,17 @@ type SellerReviewDialogProps = {
     sellerId: string;
     sellerName: string;
     isMyShop: boolean;
-    isAdmin?: boolean; 
+    isAdmin?: boolean;
 };
-
-const mockSellerReview = [
-    {
-        id: '65fc92785eb1483f3782566c',
-        reviewer_id: '65d224798a12370d51961861',
-        reviewee_id: '65c7356900dfa761aed36120',
-        rating_score: 0,
-        description: "It's not a dog!",
-        comment_records: [
-            {
-                user_id: '65d224798a12370d51961861',
-                comment: 'HAHAHAHAHAHA!',
-                time: '2024-03-21T20:03:34.322Z',
-            },
-            {
-                user_id: '65d224798a12370d51961861',
-                comment: 'HAHAHAHAHAHA!',
-                time: '2024-03-21T20:03:59.68Z',
-            },
-        ],
-        time: '2024-03-21T20:03:04.693Z',
-    },
-    {
-        id: '65fc9343fa2fb34116cda9b9',
-        reviewer_id: '65d224798a12370d51961861',
-        reviewee_id: '65c7356900dfa761aed36120',
-        rating_score: 0,
-        description: "It's not a dog!",
-        comment_records: [
-            {
-                user_id: '65d224798a12370d51961861',
-                comment: 'WHAT?!',
-                time: '2024-03-21T20:06:42.24Z',
-            },
-        ],
-        time: '2024-03-21T20:06:27.717Z',
-    },
-    {
-        id: '65fc94822f423b8260607f14',
-        reviewer_id: '65d224798a12370d51961861',
-        reviewee_id: '65c7356900dfa761aed36120',
-        rating_score: 1,
-        description: "It's not a dog!",
-        comment_records: [],
-        time: '2024-03-21T20:11:46.713Z',
-    },
-    {
-        id: '65fc951aba8472d4b1221fb1',
-        reviewer_id: '65d224798a12370d51961861',
-        reviewee_id: '65c7356900dfa761aed36120',
-        rating_score: 2,
-        description: "It's not a dog!",
-        comment_records: [],
-        time: '2024-03-21T20:14:18.842Z',
-    },
-    {
-        id: '65fc9536ba8472d4b1221fb3',
-        reviewer_id: '65d224798a12370d51961861',
-        reviewee_id: '65c7356900dfa761aed36120',
-        rating_score: 1.77,
-        description: "It's not a dog!",
-        comment_records: [],
-        time: '2024-03-21T20:14:46.633Z',
-    },
-];
 
 export default function SellerReviewDialog(props: SellerReviewDialogProps) {
     const toastUI = useToastUI();
     const { open, setOpen, header, description, cancelText, confirmText, sellerId } = props;
-    const { data: sellerReviewData, isSuccess: sellerReviewSuccess } = useGetSellerReviews(sellerId);
+    const {
+        data: sellerReviewData,
+        isSuccess: sellerReviewSuccess,
+        refetch: refetchReview,
+    } = useGetSellerReviews(sellerId);
 
     const handleClose = () => {
         setOpen(false);
@@ -174,8 +113,7 @@ export default function SellerReviewDialog(props: SellerReviewDialogProps) {
                                 overflowY: 'scroll',
                             }}
                         >
-                            {
-                                (!sellerReviewData || sellerReviewData.length === 0) ? 
+                            {!sellerReviewData || sellerReviewData.length === 0 ? (
                                 <Typography
                                     height={'100%'}
                                     display={'flex'}
@@ -188,8 +126,7 @@ export default function SellerReviewDialog(props: SellerReviewDialogProps) {
                                 >
                                     Nobody has reviewed this shop yet.
                                 </Typography>
-                                : null
-                            }
+                            ) : null}
                             {(sellerReviewData || ([] as SellerReview[])).map((item, idx) => (
                                 <SellerReviewItem
                                     reviewId={item.id}
@@ -203,6 +140,7 @@ export default function SellerReviewDialog(props: SellerReviewDialogProps) {
                                         .join(',\n')}
                                     isCommentable={getCommentable(item.comment_records.length)}
                                     isAdmin={props.isAdmin}
+                                    refetch={refetchReview}
                                 />
                             ))}
                         </Box>

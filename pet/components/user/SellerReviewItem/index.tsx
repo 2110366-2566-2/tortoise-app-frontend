@@ -7,6 +7,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import { useForm } from 'react-hook-form';
 import { CustomTextField } from '@components/core/CustomInput/type';
+import useRemoveReview from '@services/api/v1/review/useRemoveReview';
+import useToastUI from '@core/hooks/useToastUI';
+import { IReviewQueryParams } from '@services/api/v1/review/type';
+import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 
 interface SellerReviewItemProps {
     reviewId: string;
@@ -16,6 +20,7 @@ interface SellerReviewItemProps {
     shopComment: string | undefined;
     isCommentable: boolean;
     isAdmin?: boolean;
+    refetch?: (options?: RefetchOptions) => Promise<QueryObserverResult<any, any>>;
 }
 
 interface ICommentForm {
@@ -23,17 +28,27 @@ interface ICommentForm {
 }
 
 export default function SellerReviewItem(props: SellerReviewItemProps) {
-
     const form = useForm<ICommentForm>();
+    const toastUI = useToastUI();
 
     const onSubmit = async (data: ICommentForm) => {
         console.log(data);
         console.log(props.reviewId);
     };
-    
+
+    const deleteReview = useRemoveReview({
+        onSuccess: () => {
+            toastUI.toastSuccess('Review Deleted');
+            props.refetch && props.refetch();
+        },
+        onError: (error) => {
+            toastUI.toastError(`Deletion Failed ${error}`);
+        },
+    });
+
     const onDeleteReview = (reviewId: string) => {
-        console.log(reviewId)
-    }
+        deleteReview.mutate({ review_id: reviewId } as IReviewQueryParams);
+    };
 
     const [showShopResponse, setShowShopResponse] = useState(false);
 
@@ -90,13 +105,8 @@ export default function SellerReviewItem(props: SellerReviewItemProps) {
                         </Typography>
                     </Stack>
                 </Stack>
-                <Box
-                    display={'flex'}
-                    flexDirection={'column'}
-                    justifyContent={'center'}
-                >
-                    {
-                        (!props.isAdmin) ? null :
+                <Box display={'flex'} flexDirection={'column'} justifyContent={'center'}>
+                    {!props.isAdmin ? null : (
                         <Button
                             onClick={() => onDeleteReview(props.reviewId)}
                             sx={{
@@ -116,10 +126,10 @@ export default function SellerReviewItem(props: SellerReviewItemProps) {
                                 },
                             }}
                         >
-                            <DeleteIcon fontSize='small' />
+                            <DeleteIcon fontSize="small" />
                         </Button>
-                    }
-                    
+                    )}
+
                     <Button onClick={() => setShowShopResponse(!showShopResponse)}>
                         {showShopResponse ? (
                             <ArrowDropUpIcon sx={{ color: '#472F05', width: 30 }} />
