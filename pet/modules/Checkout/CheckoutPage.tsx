@@ -139,8 +139,8 @@ export default function CheckoutPage() {
     function getStepContent(step: number) {
         switch (step) {
             case 0:
-                return <AddressForm 
-                            firstName={firstName} updateFirstName={updateFirstName} 
+                return <AddressForm
+                            firstName={firstName} updateFirstName={updateFirstName}
                             lastName={lastName} updateLastName={updateLastName}
                             address1={address1} updateAddress1={updateAddress1}
                             address2={address2} updateAddress2={updateAddress2}
@@ -187,7 +187,8 @@ export default function CheckoutPage() {
             return;
         }
         if (activeStep === steps.length - 1) {
-            useCreatePayment(petFullDetail, paymentMethod).then((res) => {
+            const paymentMethodString = paymentMethod === 0 ? 'CreditCard': 'PromptPay';
+            useCreatePayment(petFullDetail, paymentMethodString).then((res) => {
                 if (res) {
                     toastUI.toastSuccess('Payment successful!');
                     setActiveStep(activeStep + 1);
